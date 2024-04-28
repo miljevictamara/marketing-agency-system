@@ -1,0 +1,23 @@
+<mat-toolbar class="navbar">
+    <div class="navbar-left">
+      <div class="navbar-menu">
+        <button class="logButton" mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item color="primary">Home</button>
+        </mat-menu>
+      </div>
+      <div class="logo-wrapper">
+        <img src="../assets/advertising.png" alt="logo" class="logo">
+        <a class="app-name">Marketing Agency</a>
+      </div>
+    </div>
+    <div>
+     <!--<button *ngIf="user && user.mail === ''" class="logButton" mat-button color="primary" (click)="logIn()">
+        <span>Login</span>
+      </button>
+      <button *ngIf="user && user.mail !== ''" class="logButton" mat-button color="primary" (click)="logout()">
+        Log out
+      </button>--> 
+    </div>
+  </mat-toolbar>
+  
