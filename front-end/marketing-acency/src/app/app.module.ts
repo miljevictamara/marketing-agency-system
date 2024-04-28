@@ -7,6 +7,8 @@ import { LayoutModule } from './feature-modules/layout/layout.module';
 import { FooterComponent } from './feature-modules/layout/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './infrastructure/routing/app-routing.module';
+import { HomeComponent } from './feature-modules/layout/home/home.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     LayoutModule,
-    RouterModule,
-    BrowserAnimationsModule
+    //RouterModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
