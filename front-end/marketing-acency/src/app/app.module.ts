@@ -9,6 +9,11 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './infrastructure/routing/app-routing.module';
 import { HomeComponent } from './feature-modules/layout/home/home.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterceptor';
+import { AuthModule } from './infrastructure/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +25,22 @@ import { HomeComponent } from './feature-modules/layout/home/home.component';
     //RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    RouterModule,
+    AuthModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule
   ],
-  providers: [],
+  providers: [ 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,     
+    },
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
