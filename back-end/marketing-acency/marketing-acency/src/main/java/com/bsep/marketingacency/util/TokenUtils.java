@@ -26,8 +26,11 @@ public class TokenUtils {
     public String SECRET;
 
     // Period vazenja tokena - 30 minuta
-    @Value("1800000")
+    @Value("900000")
     private int EXPIRES_IN;
+
+    @Value("172800000")
+    private int REFRESH_EXPIRES_IN;
 
     // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
     @Value("Authorization")
@@ -67,6 +70,23 @@ public class TokenUtils {
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
+                .signWith(SIGNATURE_ALGORITHM, SECRET)
+                .compact();
+    }
+
+    public String generateRefreshToken(User user) {
+        List<String> roles = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+
+        return Jwts.builder()
+                .setIssuer(APP_NAME)
+                .setSubject(user.getMail())
+                .claim("id", user.getId())
+                .claim("roles", roles)
+                .setAudience(generateAudience())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + REFRESH_EXPIRES_IN))
                 .signWith(SIGNATURE_ALGORITHM, SECRET)
                 .compact();
     }
@@ -268,6 +288,8 @@ public class TokenUtils {
     public int getExpiredIn() {
         return EXPIRES_IN;
     }
+
+    public int getRefreshExpiredIn() { return REFRESH_EXPIRES_IN; }
 
     /**
      * Funkcija za preuzimanje sadržaja AUTH_HEADER-a iz zahteva.

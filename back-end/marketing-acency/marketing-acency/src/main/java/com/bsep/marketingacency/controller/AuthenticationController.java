@@ -46,11 +46,15 @@ public class AuthenticationController {
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
 
-        String jwt = tokenUtils.generateToken(user); ///PROVERI
+        String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
 
+        String refresh_jwt = tokenUtils.generateRefreshToken(user);
+        int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
     }
 }
