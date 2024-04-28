@@ -32,17 +32,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
-    private String commonName;
-
-    private String surname;
-
-    private String givenName;
-
-    private String organization;
-
-    private String organizationUnit;
-
-    private String country;
 
     public String getRoleName() {
         return roles.get(0).getName();
