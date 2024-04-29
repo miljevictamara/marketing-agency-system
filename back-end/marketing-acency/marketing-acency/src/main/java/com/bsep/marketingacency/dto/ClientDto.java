@@ -2,6 +2,7 @@ package com.bsep.marketingacency.dto;
 
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,8 @@ public class ClientDto {
     private String companyName;
     @Nullable
     private Integer pib;
+    private Package clientPackage;
+    private String phoneNumber;
     private String address;
     private String city;
     private String country;
@@ -30,7 +33,7 @@ public class ClientDto {
     public ClientDto() {
     }
 
-    public ClientDto(Long id, User user, ClientType type, @Nullable String firstName, @Nullable String lastName, @Nullable String companyName, @Nullable Integer pib, String address, String city, String country, RegistrationRequestStatus isApproved) {
+    public ClientDto(Long id, User user, ClientType type, @Nullable String firstName, @Nullable String lastName, @Nullable String companyName, @Nullable Integer pib, Package clientPackage, String phoneNumber, String address, String city, String country, RegistrationRequestStatus isApproved) {
         Id = id;
         this.user = user;
         this.type = type;
@@ -38,6 +41,8 @@ public class ClientDto {
         this.lastName = lastName;
         this.companyName = companyName;
         this.pib = pib;
+        this.clientPackage = clientPackage;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.city = city;
         this.country = country;

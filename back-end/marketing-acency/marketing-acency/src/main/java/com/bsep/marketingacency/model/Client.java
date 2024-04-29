@@ -18,7 +18,6 @@ public class Client {
     private Long Id;
 
     @OneToOne
-    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -38,6 +37,13 @@ public class Client {
     @Column(name = "pib")
     private Integer pib;
 
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private Package clientPackage;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "address")
     private String address;
 
@@ -54,7 +60,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(Long id, User user, ClientType type, String firstName, String lastName, String companyName, Integer pib, String address, String city, String country, RegistrationRequestStatus isApproved) {
+    public Client(Long id, User user, ClientType type, String firstName, String lastName, String companyName, Integer pib, Package clientPackage, String phoneNumber, String address, String city, String country, RegistrationRequestStatus isApproved) {
         Id = id;
         this.user = user;
         this.type = type;
@@ -62,6 +68,8 @@ public class Client {
         this.lastName = lastName;
         this.companyName = companyName;
         this.pib = pib;
+        this.clientPackage = clientPackage;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.city = city;
         this.country = country;

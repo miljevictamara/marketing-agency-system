@@ -2,12 +2,14 @@ package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.RejectionNoteService;
 import com.bsep.marketingacency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +34,7 @@ public class ClientController {
 
     @Autowired
     private UserService userService;
+
 
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
@@ -58,4 +61,14 @@ public class ClientController {
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
 
     }
+
+    @PostMapping(value = "/register")
+    public ResponseEntity<String> register(@RequestBody ClientDto clientDto) {
+
+        Client savedClient = clientService.save(clientDto);
+
+        return new ResponseEntity<>("Client created.",HttpStatus.CREATED);
+    }
+
+
 }
