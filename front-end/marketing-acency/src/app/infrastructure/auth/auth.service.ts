@@ -12,8 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", roles: [{ id: 0, name: '', permissions: [] }], commonName: "", surname : "", givenName : "", organization : "", organizationUnit : "", 
-  country:"" });
+  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false});
   //user$ = new BehaviorSubject<User>({email: "", id: 0 });
   private access_token: string | null = null; 
   private refresh_token: string | null = null; 
@@ -31,10 +30,13 @@ export class AuthService {
       }
     }
 
-  register(user: User): Observable<any> {
-    console.log('Registering user:', user);
-    
-    return this.http.post('https://localhost:8443/user/auth/register', user)
+
+  findByMail(mail: string): Observable<any> {
+    return this.http.get(`https://localhost:8443/user/findByMail/${mail}`);
+  }  
+
+  createUser(user: User): Observable<any> {   
+    return this.http.post('https://localhost:8443/client/register', user)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error(error);
@@ -89,14 +91,10 @@ export class AuthService {
     const user: User = {
       id: decodedToken.id,
       mail: decodedToken.sub,
-      password: decodedToken.name || '',
-      roles: decodedToken.role || '',     
-      commonName: decodedToken.password || '',
-      surname: decodedToken.surname || '',
-      givenName: decodedToken.city || '',
-      organization: decodedToken.country || '',
-      organizationUnit: decodedToken.phoneNumber || '',
-      country: decodedToken.confirmationPassword || ''     
+      password: decodedToken.name || '',   
+      confirmationPassword: decodedToken.confirmationPassword || '',
+      isBlocked: decodedToken.isBlocked || '',
+      isActivated: decodedToken.isActivated || ''
     };
   
     this.user$.next(user);
@@ -120,7 +118,7 @@ export class AuthService {
 
     this.access_token = null;
     this.router.navigate(['/login']);
-    this.user$.next({id: 0, mail: "", password: "", roles: [{ id: 0, name: '', permissions: [] }], commonName: "", surname : "", givenName : "", organization : "", organizationUnit : "", country:"" })
+    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false })
   }
 
   tokenIsPresent() {

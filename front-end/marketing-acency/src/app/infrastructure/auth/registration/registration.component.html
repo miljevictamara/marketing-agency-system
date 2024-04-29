@@ -1,17 +1,87 @@
-<div class="registration-container">   
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!submitted" [formGroup]="form" class="registration-form"> 
+<div class="registration-container">
+    <!-- First step -->   
+    <div class="registration-div" *ngIf="!shouldRenderIndividual && !shouldRenderLegalEntity && !shouldRenderThirdStepIndividual && !shouldRenderLastStepIndividual"> 
         <div class="imageTitle">
             <img src="assets/registration.png" alt="Registration Image" class="registration-image">
             <p class="registrationTitle">Registration</p>
-        </div>    
+        </div>
+        
+        <p class="subtitle">Are you?</p>
 
-        <div class="inputDiv">
+        <div class="s">
+            <button class="individualButton">
+                <img src="assets/individual.png" alt="Individual" (click)="registerIndividual()">Individual
+            </button>
+            <button class="legalEntityButton">
+                <img src="assets/legalEntity.png" alt="Legal Entity" (click)="registerLegalEntity()">Legal Entity
+        </button>
+    </div>
+        
+        
+
+        <!--<div class="inputDiv">
             <input formControlName="mail" matInput placeholder="mail" required>
             <input formControlName="password" matInput placeholder="password" required type="password">
-        </div>
+        </div>-->
         
        <!-- <button [disabled]="!registrationForm.form.valid" color="primary"
             type="submit" class="registration">Log in</button>-->
 
-    </form>
+       </div>
+
+       
+    <div *ngIf="shouldRenderIndividual" class="registration-div">
+        <!--Second step as individual - create user -->
+        <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
+            <div class="inputDiv">
+                <input formControlName="mail" matInput placeholder="email" required>
+                <input formControlName="password" matInput placeholder="password" required type="password">
+                <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
+            </div>        
+        </form>
+
+        <button class="thirdStepButton" (click)="thirdStepIndividual()">
+            Next
+        </button>
+    </div>
+
+    <div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
+        <!-- Third step as individual-->
+        <form #individualForm="ngForm" [formGroup]="formIndividual" class="individual-form">  
+            <div class="inputDiv">
+                <input formControlName="firstname" matInput placeholder="firstname" required>
+                <input formControlName="lastname" matInput placeholder="lastname" required>
+                <input formControlName="address" matInput placeholder="address" required>
+                <input formControlName="city" matInput placeholder="city" required>
+                <input formControlName="country" matInput placeholder="country" required>
+                <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+            </div>        
+        </form>
+
+        <button class="thirdStepButton" (click)="lastStepIndividual()">
+            Next
+        </button>
+    </div>
+
+    <div *ngIf="shouldRenderLastStepIndividual" class="registration-div">
+        <div class="lastStep">
+            <p class="subtitle">Choose package</p>
+            <div class="packages">        
+                <button class="packageButton">
+                    <img src="assets/gold.png" alt="Gold Package" (click)="addGoldPackage()">Gold
+                </button>
+                <button class="packageButton">
+                    <img src="assets/silver.png" alt="Silver Package" (click)="addSilverPackage()">Silver
+                </button>
+                <button class="packageButton">
+                    <img src="assets/bronze.png" alt="Bronze Package" (click)="addBronzePackage()">Bronze
+                </button>
+            </div>
+            <button class="thirdStepButton" (click)="submit()">
+                Submit
+            </button>
+        </div>
+        
+       
+
 </div>
