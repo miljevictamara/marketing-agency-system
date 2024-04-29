@@ -1,60 +1,36 @@
-package com.bsep.marketingacency.model;
+package com.bsep.marketingacency.dto;
 
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.model.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.beans.ConstructorProperties;
-
 @Getter
 @Setter
-@Entity
-public class Client {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ClientDto {
     private Long Id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
     private ClientType type;
-
-    @Column(name = "first_name")
+    @Nullable
     private String firstName;
-
-    @Column(name = "last_name")
+    @Nullable
     private String lastName;
-
-    @Column(name = "company_name")
+    @Nullable
     private String companyName;
-
-    @Column(name = "pib")
+    @Nullable
     private Integer pib;
-
-    @Column(name = "address")
     private String address;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "country")
     private String country;
-
-    @Column(name = "is_approved")
     private RegistrationRequestStatus isApproved;
 
-
-    public Client() {
+    public ClientDto() {
     }
 
-    public Client(Long id, User user, ClientType type, String firstName, String lastName, String companyName, Integer pib, String address, String city, String country, RegistrationRequestStatus isApproved) {
+    public ClientDto(Long id, User user, ClientType type, @Nullable String firstName, @Nullable String lastName, @Nullable String companyName, @Nullable Integer pib, String address, String city, String country, RegistrationRequestStatus isApproved) {
         Id = id;
         this.user = user;
         this.type = type;

@@ -32,6 +32,12 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
+    @Column(name = "is_activated")
+    private Boolean isActivated;
+
+    @Column(name = "is_blocked")
+    private Boolean isBlocked;
+
 
     public String getRoleName() {
         return roles.get(0).getName();
@@ -51,6 +57,20 @@ public class User implements UserDetails {
         }
         return permissions;
     }
+
+    public User() {
+    }
+
+    public User(Long id, String mail, String password, List<Role> roles, Boolean isActivated, Boolean isBlocked) {
+        this.id = id;
+        this.mail = mail;
+        this.password = password;
+        this.roles = roles;
+        this.isActivated = isActivated;
+        this.isBlocked = isBlocked;
+    }
+
+
 
     @Override
     public String getUsername() {
