@@ -1,13 +1,18 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.ClientDto;
+import com.bsep.marketingacency.dto.RejectionNoteDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.model.Client;
+import com.bsep.marketingacency.model.ClientActivationToken;
 import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
+import com.bsep.marketingacency.service.EmailService;
 import com.bsep.marketingacency.service.RejectionNoteService;
 import com.bsep.marketingacency.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,6 +31,7 @@ import java.util.regex.Pattern;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/client")
 public class ClientController {
+    private Logger logger =  LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     private ClientService clientService;
@@ -35,7 +42,8 @@ public class ClientController {
     @Autowired
     private UserService userService;
 
-
+    @Autowired
+    private EmailService emailService;
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
 
@@ -70,5 +78,33 @@ public class ClientController {
         return new ResponseEntity<>("Client created.",HttpStatus.CREATED);
     }
 
+    @PutMapping(value = "/approve-registration-request/{id}")
+    public ResponseEntity<String> register(@PathVariable  Long id){
+        ClientActivationToken token = clientService.approveRegistrationRequest(id);
+        Client client = clientService.findById(id);
+        try {
+            System.out.println("Thread id: " + Thread.currentThread().getId());
+            emailService.sendRegistrationApprovalAsync(client, token);
+        }catch( Exception e ){
+            logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/reject-registration-request/{id}")
+    public ResponseEntity<String> register(@PathVariable  Long id, @RequestParam String reason){
+        clientService.rejectRegistrationRequest(id, reason);
+        Client client = clientService.findById(id);
+        User user = client.getUser();
+        try {
+            System.out.println("Thread id: " + Thread.currentThread().getId());
+            emailService.sendRegistrationRejectionAsync(client, reason);
+            clientService.delete(client);
+            userService.delete(user);
+        }catch( Exception e ){
+            logger.info("Greska prilikom slanja emaila: " + e.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

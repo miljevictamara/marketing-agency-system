@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")		// dozvoljava cross-origin zahteve ka navedenim putanjama
                 .allowedOrigins("https://localhost:4200")	// postavice Access-Control-Allow-Origin header u preflight zahtev
                 .allowedMethods("*")
+                .allowedHeaders("*")
                 .maxAge(3600);		// definise u sekundama koliko dugo se preflight response cuva u browseru
     }
 }

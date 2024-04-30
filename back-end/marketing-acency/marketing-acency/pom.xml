@@ -96,6 +96,13 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.15</version> <!-- Verzija može biti drugačija, proverite poslednju verziju -->
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

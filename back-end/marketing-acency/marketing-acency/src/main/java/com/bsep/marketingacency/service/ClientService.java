@@ -6,18 +6,29 @@ import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RejectionNoteService rejectionNoteService;
+
+    @Autowired
+    private ClientActivationTokenService clientActivationTokenService;
 
     public Client save(ClientDto clientDto) {
         Client client = new Client();
@@ -36,4 +47,37 @@ public class ClientService {
 
         return this.clientRepository.save(client);
     }
+
+    public void delete(Client client){
+        this.clientRepository.delete(client);
+    }
+
+    public ClientActivationToken approveRegistrationRequest(Long id){
+        Client client = clientRepository.getById(id);
+        client.setIsApproved(RegistrationRequestStatus.APPROVED);
+        this.clientRepository.save(client);
+        ClientActivationToken token = new ClientActivationToken();
+        token.setDuration(10);
+        token.setUser(client.getUser());
+        token.setCreationDate(new Date());
+        token.setIsUsed(false);
+        clientActivationTokenService.save(token);
+
+        return token;
+    }
+
+    public void rejectRegistrationRequest(Long id, String reason){
+        Client client = clientRepository.getById(id);
+        client.setIsApproved(RegistrationRequestStatus.REJECTED);
+        RejectionNote rejectionNote = new RejectionNote();
+        rejectionNote.setEmail(client.getUser().getMail());
+        rejectionNote.setRejectionDate(new Date());
+        rejectionNote.setReason(reason);
+        this.rejectionNoteService.save(rejectionNote);
+    }
+
+    public Client findById(Long id){
+        return this.clientRepository.findById(id).orElse(null);
+    }
+
 }

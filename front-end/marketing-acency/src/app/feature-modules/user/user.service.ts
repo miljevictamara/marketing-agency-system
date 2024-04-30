@@ -9,25 +9,17 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 export class UserService {
 
   currentUser!:any;
-  private baseUrl = 'https://localhost:8443/';
+  private baseUrl = 'https://localhost:8443';
 
   constructor(private http: HttpClient) { }
 
-  /*getMyInfo(mail: string): void {
-    this.http.get<User>(this.baseUrl + 'user/getByEmail/' + mail)
-      .subscribe(
-        user => {
-          console.log('Received User:', user);        
-          this.currentUser = user;
-          localStorage.setItem('user',JSON.stringify(this.currentUser));
-        },
-        error => {
-          console.error('Error fetching user info:', error);
-        }
-      );
+  getUserByToken(tokenId: string, hmac: string): Observable<User> {
+    const encodedHmac = encodeURIComponent(hmac);
+    return this.http.get<User>('https://localhost:8443/activation/' + tokenId + "/" + encodedHmac);
   }
 
-  getUserDetails(mail: string): Observable<User> {
-    return this.http.get<User>(this.baseUrl + `user/getByEmail/${mail}`);
-  }*/
+
+  updateIsActivated(userId: number): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/user/activation/${userId}`, {});
+  }
 }

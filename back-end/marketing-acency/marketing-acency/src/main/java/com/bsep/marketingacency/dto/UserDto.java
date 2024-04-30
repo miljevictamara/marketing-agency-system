@@ -16,6 +16,7 @@ public class UserDto {
     private Boolean isActivated;
     private Boolean isBlocked;
 
+
     public UserDto() {
     }
 

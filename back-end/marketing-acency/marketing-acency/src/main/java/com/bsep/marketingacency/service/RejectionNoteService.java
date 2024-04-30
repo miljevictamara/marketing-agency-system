@@ -1,10 +1,14 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.model.RejectionNote;
+import com.bsep.marketingacency.model.Role;
+import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.RejectionNoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,5 +39,14 @@ public class RejectionNoteService {
         }
         System.out.println("No rejection found for the user " + email + ".");
         return true;
+    }
+
+    public RejectionNote save(RejectionNote note) {
+        RejectionNote rejectionNote = new RejectionNote();
+        rejectionNote.setRejectionDate(note.getRejectionDate());
+        rejectionNote.setReason(note.getReason());
+        rejectionNote.setEmail(note.getEmail());
+
+        return this.rejectionNoteRepository.save(rejectionNote);
     }
 }

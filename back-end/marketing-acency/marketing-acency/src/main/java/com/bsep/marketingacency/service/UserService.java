@@ -38,4 +38,16 @@ public class UserService {
 
         return this.userRepository.save(user);
     }
+
+    public void delete(User user){
+        userRepository.delete(user);
+    }
+
+    public User updateIsActivated(Long id) {
+        User existingUser = userRepository.findById(id).orElseGet(null);
+
+        existingUser.setIsActivated(true);
+
+        return userRepository.save(existingUser);
+    }
 }

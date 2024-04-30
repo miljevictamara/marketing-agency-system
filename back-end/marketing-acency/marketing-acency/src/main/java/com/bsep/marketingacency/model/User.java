@@ -39,6 +39,7 @@ public class User implements UserDetails {
     private Boolean isBlocked;
 
 
+
     public String getRoleName() {
         return roles.get(0).getName();
     }
