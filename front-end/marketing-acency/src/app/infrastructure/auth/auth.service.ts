@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
 import { User } from './model/user.model';
-import { ApiService } from './service/api.service';
 import { UserService } from 'src/app/feature-modules/user/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ApiService } from './service/api.service';
 
 @Injectable({
   providedIn: 'root'

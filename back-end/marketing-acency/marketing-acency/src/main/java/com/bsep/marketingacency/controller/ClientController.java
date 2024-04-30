@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/client")
 public class ClientController {
     private Logger logger =  LoggerFactory.getLogger(ClientController.class);
