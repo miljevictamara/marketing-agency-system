@@ -15,4 +15,8 @@ export class EmployeeService {
   getEmployeeByUserId(userId: number): Observable<Employee> {
     return this.http.get<Employee>('https://localhost:8443/employee/byUserId/' + userId);
   }
+
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>('https://localhost:8443/employee/update', employee);
+  }
 }

@@ -38,4 +38,28 @@ public class EmployeeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
+        // Convert EmployeeDto to Employee object
+        Employee updatedEmployee = new Employee(
+                employeeDto.getId(),
+                employeeDto.getFirstName(),
+                employeeDto.getLastName(),
+                employeeDto.getAddress(),
+                employeeDto.getCity(),
+                employeeDto.getCountry(),
+                employeeDto.getPhoneNumber(),
+                employeeDto.getUserId()
+        );
+
+        // Call the service method to update the employee
+        Employee updated = employeeService.updateEmployee(updatedEmployee);
+
+        if (updated != null) {
+            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

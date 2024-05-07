@@ -19,6 +19,7 @@ export class EmployeeProfileComponent implements OnInit {
     if (userId !== undefined) {
       this.employeeService.getEmployeeByUserId(userId).subscribe((employee: any) => {
         this.employee = employee;
+        console.log(employee);
       });
     } else {
       console.error('User ID is undefined.');

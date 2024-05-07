@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Employee } from '../model/employee.model';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-edit-employee-profile',
@@ -8,6 +9,9 @@ import { Employee } from '../model/employee.model';
   styleUrls: ['./edit-employee-profile.component.css']
 })
 export class EditEmployeeProfileComponent implements OnChanges{
+
+  constructor(private employeeService: EmployeeService) { }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.employee) {
       this.employeeForm.patchValue(this.employee);
@@ -27,6 +31,18 @@ export class EditEmployeeProfileComponent implements OnChanges{
   })
 
   editEmployeeProfile(): void {
-    console.log(this.employeeForm.value);
+    if (this.employeeForm.valid && this.employee) {
+      const updatedEmployee: Employee = { ...this.employee, ...this.employeeForm.value };
+      this.employeeService.updateEmployee(updatedEmployee).subscribe(
+        (updated: Employee) => {
+          console.log('Employee updated successfully:', updated);
+          // Optionally, perform any additional actions after the update
+        },
+        (error) => {
+          console.error('Failed to update employee:', error);
+          // Optionally, handle the error
+        }
+      );
+    }
   }
 }

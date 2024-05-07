@@ -16,6 +16,8 @@ public class EmployeeDto {
 
     private Long userId;
 
+    public EmployeeDto() { }
+
     public EmployeeDto(Long id, String firstName, String address, String city, String country, String lastName, String phoneNumber, Long userId) {
         Id = id;
         this.firstName = firstName;
