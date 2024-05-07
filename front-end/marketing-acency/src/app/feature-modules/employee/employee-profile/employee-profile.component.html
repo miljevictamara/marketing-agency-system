@@ -1,0 +1,24 @@
+<h2>Employee profile:</h2>
+
+<table>
+    <tr *ngIf="employee">
+        <td>First Name:</td>
+        <td>{{ employee.firstName || '-' }}</td>
+    </tr>
+    <tr *ngIf="employee">
+        <td>Last Name:</td>
+        <td>{{ employee.lastName || '-' }}</td>
+    </tr>
+    <tr *ngIf="employee">
+        <td>Phone Number:</td>
+        <td>{{ employee.phoneNumber || '-' }}</td>
+    </tr>
+    <tr *ngIf="employee">
+        <td>Address:</td>
+        <td>{{ employee.address || '-' }}</td>
+    </tr>
+</table>
+
+
+       
+        

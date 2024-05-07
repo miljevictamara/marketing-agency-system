@@ -5,6 +5,7 @@ import { LoginComponent } from '../auth/login/login.component';
 import { RegistrationComponent } from '../auth/registration/registration.component';
 import { ActivationComponent } from '../auth/activation/activation.component';
 import { ForbiddenComponent } from '../auth/forbidden/forbidden.component';
+import { EmployeeProfileComponent } from 'src/app/feature-modules/employee/employee-profile/employee-profile.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'activation/:tokenId', component: ActivationComponent},
   { path: '403', component: ForbiddenComponent},
+  { path: 'employee-profile', component: EmployeeProfileComponent}
   
 ];
 
