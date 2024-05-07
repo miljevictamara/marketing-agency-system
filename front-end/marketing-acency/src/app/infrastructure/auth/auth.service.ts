@@ -128,4 +128,17 @@ export class AuthService {
   getToken() {
     return this.access_token;
   }
+
+  getCurrentUserId(): number | undefined {
+    const accessToken = this.getToken();
+    if (!accessToken) return undefined;
+
+    const jwtHelperService = new JwtHelperService();
+    const decodedToken = jwtHelperService.decodeToken(accessToken);
+
+    // Extract user ID from decoded JWT token
+    const userId = decodedToken && decodedToken.id;
+
+    return userId ? +userId : undefined; // Convert to number or return undefined
+  }
 }

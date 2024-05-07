@@ -10,13 +10,22 @@
         <td>{{ employee.lastName || '-' }}</td>
     </tr>
     <tr *ngIf="employee">
-        <td>Phone Number:</td>
-        <td>{{ employee.phoneNumber || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
         <td>Address:</td>
         <td>{{ employee.address || '-' }}</td>
     </tr>
+    <tr *ngIf="employee">
+        <td>City:</td>
+        <td>{{ employee.city || '-' }}</td>
+    </tr>
+    <tr *ngIf="employee">
+        <td>Country:</td>
+        <td>{{ employee.country || '-' }}</td>
+    </tr>
+    <tr *ngIf="employee">
+        <td>Phone Number:</td>
+        <td>{{ employee.phoneNumber || '-' }}</td>
+    </tr>
+    
 </table>
 
 

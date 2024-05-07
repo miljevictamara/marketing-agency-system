@@ -22,11 +22,17 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "address")
     private String address;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "user_id")
     private long userId;
@@ -34,12 +40,14 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String phoneNumber, String address, long userId) {
+    public Employee(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, long userId) {
         Id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
         this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
         this.userId = userId;
     }
 
@@ -55,12 +63,20 @@ public class Employee {
         return lastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public String getAddress() {
         return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public long getUserId() {
@@ -79,12 +95,20 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setUserId(long userId) {

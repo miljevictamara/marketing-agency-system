@@ -27,8 +27,10 @@ public class EmployeeController {
                     employee.getId(),
                     employee.getFirstName(),
                     employee.getLastName(),
-                    employee.getPhoneNumber(),
                     employee.getAddress(),
+                    employee.getCity(),
+                    employee.getCountry(),
+                    employee.getPhoneNumber(),
                     employee.getUserId()
             );
             return new ResponseEntity<>(employeeDto, HttpStatus.OK);

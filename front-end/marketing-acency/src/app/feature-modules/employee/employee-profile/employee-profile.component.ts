@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../model/employee.model';
 import { EmployeeService } from '../employee.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -10,12 +11,16 @@ import { EmployeeService } from '../employee.service';
 export class EmployeeProfileComponent implements OnInit {
   employee: Employee | undefined;
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    const userId = 1;
-    this.employeeService.getEmployeeByUserId(userId).subscribe((employee: any) => {
-      this.employee = employee;
-    });
+    const userId = this.authService.getCurrentUserId(); // Invoking the method to get the user ID
+    if (userId !== undefined) {
+      this.employeeService.getEmployeeByUserId(userId).subscribe((employee: any) => {
+        this.employee = employee;
+      });
+    } else {
+      console.error('User ID is undefined.');
+    }
   }
 }
