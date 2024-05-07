@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
+import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    EmployeeProfileComponent
+    EmployeeProfileComponent,
+    EditEmployeeProfileComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     EmployeeProfileComponent

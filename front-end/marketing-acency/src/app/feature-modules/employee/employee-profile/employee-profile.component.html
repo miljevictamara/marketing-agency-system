@@ -25,9 +25,10 @@
         <td>Phone Number:</td>
         <td>{{ employee.phoneNumber || '-' }}</td>
     </tr>
+    <tr *ngIf="employee">
+        <button (click)="onEditClicked(employee)">Edit</button>
+    </tr>
     
 </table>
 
-
-       
-        
+<app-edit-employee-profile *ngIf="editClicked" [employee]="employee"></app-edit-employee-profile>

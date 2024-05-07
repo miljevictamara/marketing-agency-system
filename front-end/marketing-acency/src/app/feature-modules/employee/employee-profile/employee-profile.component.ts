@@ -10,11 +10,12 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class EmployeeProfileComponent implements OnInit {
   employee: Employee | undefined;
+  editClicked: boolean = false; // Add boolean property to track edit button click
 
   constructor(private employeeService: EmployeeService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUserId(); // Invoking the method to get the user ID
+    const userId = this.authService.getCurrentUserId();
     if (userId !== undefined) {
       this.employeeService.getEmployeeByUserId(userId).subscribe((employee: any) => {
         this.employee = employee;
@@ -22,5 +23,10 @@ export class EmployeeProfileComponent implements OnInit {
     } else {
       console.error('User ID is undefined.');
     }
+  }
+
+  onEditClicked(employee: Employee) {
+    this.employee = employee;
+    this.editClicked = true; // Set editClicked to true when edit button is clicked
   }
 }
