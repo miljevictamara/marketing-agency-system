@@ -1,0 +1,17 @@
+<H2>Requests:</H2>
+<table>
+    <tr>
+        <th>Deadline</th>
+        <th>Active from:</th>
+        <th>Active to:</th>
+        <th>Request description:</th>
+    </tr>
+    <tr *ngFor="let request of requests">
+        <td>{{ request.deadline }}</td>
+        <td>{{ request.active_from }}</td>
+        <td>{{ request.active_to }}</td>
+        <td>{{ request.request_description }}</td>
+        <td><button>Accept</button></td>
+    </tr>
+</table>
+  

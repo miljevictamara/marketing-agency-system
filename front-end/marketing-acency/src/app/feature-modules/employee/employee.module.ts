@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdvertisementModule } from '../advertisement/advertisement.module';
 
 
 
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdvertisementModule
   ],
   exports: [
     EmployeeProfileComponent
