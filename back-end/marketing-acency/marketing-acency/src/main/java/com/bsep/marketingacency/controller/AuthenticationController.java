@@ -2,6 +2,7 @@ package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.TokenRefreshException;
 import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
+import com.bsep.marketingacency.dto.NewAccessToken;
 import com.bsep.marketingacency.dto.UserTokenState;
 import com.bsep.marketingacency.model.TokenRefreshRequest;
 import com.bsep.marketingacency.model.TokenRefreshResponse;
@@ -60,6 +61,8 @@ public class AuthenticationController {
         String refresh_jwt = tokenUtils.generateRefreshToken(user);
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
 
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
@@ -67,18 +70,11 @@ public class AuthenticationController {
     }
 
 
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
-        String requestRefreshToken = request.getRefreshToken();
-
-        return refreshTokenService.findByToken(requestRefreshToken)
-                .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = tokenUtils.generateToken(user);
-                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-                })
-                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-                        "Refresh token is not in database!"));
+    @PostMapping("/refreshToken")
+    public ResponseEntity<NewAccessToken> refreshtoken(@RequestBody String mail) {
+        User user = userService.findByMail(mail);
+        String jwt = tokenUtils.generateToken(user);
+        int expiresIn = tokenUtils.getExpiredIn();
+        return ResponseEntity.ok(new NewAccessToken(jwt, expiresIn));
     }
 }

@@ -7,6 +7,7 @@ import { UserService } from 'src/app/feature-modules/user/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './service/api.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,11 +69,21 @@ export class AuthService {
         this.refresh_token = res.body.refreshToken;
         localStorage.setItem("access_token", res.body.accessToken)
         localStorage.setItem("refresh_token", res.body.refreshToken)
-        this.autoLogout(res.body.accessExpiresIn)
+        //this.autoLogout(res.body.refreshExpiresIn) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
+        //this.AccessTokenExpired(res.body.accessExpiresIn)
+        this.autoLogout(100000) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
+        this.AccessTokenExpired(6000)
         //this.userService.getMyInfo(user.mail);
         this.setUser();
         return res;
       }));
+  }
+
+
+  AccessTokenExpired(expirationDate: number) {
+    this.clearTimeout = setTimeout(() => {
+      this.generateNewAccessToken();
+    }, expirationDate)
   }
 
   checkIfUserExists(): void {
@@ -106,6 +117,31 @@ export class AuthService {
     }, expirationDate)
   }
   
+generateNewAccessToken() {
+  console.log("Pokrenuta provera za kreiranje novog access tokena");
+  const refreshToken = localStorage.getItem("refresh_token");
+  localStorage.removeItem("access_token");
+
+  if (!refreshToken) {
+    this.logout();
+    return undefined;
+  }
+
+  const jwtHelperService = new JwtHelperService();
+  const decodedToken = jwtHelperService.decodeToken(refreshToken);
+  const mail = decodedToken.sub;
+
+  const requestBody = mail;
+
+  // Prosledite instancu HttpHeaders u zahtev
+  this.apiService.post(`https://localhost:8443/auth/refreshToken`, requestBody).subscribe((res: any) => {
+    this.access_token = res.body.accessToken;
+    localStorage.setItem("access_token", res.body.accessToken);
+    this.AccessTokenExpired(6000);
+    console.log("Kreiran access tokena", this.access_token);
+  });
+}
+
 
   logout() {
     this.userService.currentUser = null;

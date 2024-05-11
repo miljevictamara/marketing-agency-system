@@ -6,8 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.Instant;
 
-@Getter
+
 @Setter
+@Getter
 @Entity(name = "refreshtoken")
 public class RefreshToken {
     @Id
@@ -24,5 +25,7 @@ public class RefreshToken {
     @Column(nullable = false)
     private Instant expiryDate;
 
+    public RefreshToken() {
+    }
 
 }

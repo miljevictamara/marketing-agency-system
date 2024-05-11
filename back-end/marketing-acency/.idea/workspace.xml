@@ -25,9 +25,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feat/spring-security",
+    "git-widget-placeholder": "feat/refresh-token",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/38160/Desktop/Projekti 8.semestar/bezbednost-projekat2/bsep-ra-2024-kt2-tim-15/back-end/marketing-acency",
+    "last_opened_file_path": "C:/Users/Mina/Desktop/bsep/bsep-ra-2024-kt2-tim-15/back-end",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -47,6 +47,7 @@
       <workItem from="1714228409696" duration="598000" />
       <workItem from="1714229028817" duration="254000" />
       <workItem from="1714229417136" duration="47000" />
+      <workItem from="1715447911844" duration="42000" />
     </task>
     <servers />
   </component>

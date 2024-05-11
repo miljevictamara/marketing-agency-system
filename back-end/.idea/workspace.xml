@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f90ed797-17c9-4f14-af00-b4a212055713" name="Changes" comment="" />
+    <list default="true" id="f90ed797-17c9-4f14-af00-b4a212055713" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/marketing-acency/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/marketing-acency/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,9 +12,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2gK4EfpHfyH2ghoCYBAedqfyXrI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,7 +24,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "development",
+    "git-widget-placeholder": "feat/refresh-token",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Mina/Desktop/bsep/bsep-ra-2024-kt2-tim-15/back-end/marketing-acency/marketing-acency",
     "nodejs_package_manager_path": "npm",
@@ -38,6 +40,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715432824669</updated>
       <workItem from="1715432825773" duration="19000" />
+      <workItem from="1715447954778" duration="35000" />
     </task>
     <servers />
   </component>
