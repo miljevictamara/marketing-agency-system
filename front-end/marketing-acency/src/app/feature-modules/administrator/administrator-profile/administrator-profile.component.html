@@ -26,9 +26,9 @@
         <td>{{ administrator.phoneNumber || '-' }}</td>
     </tr>
     <tr *ngIf="administrator">
-        <!--<button (click)="onEditClicked(administrator)">Edit</button>-->
+        <button (click)="onEditClicked(administrator)">Edit</button>
     </tr>
     
 </table>
 
-<!--<app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>-->
+<app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>
