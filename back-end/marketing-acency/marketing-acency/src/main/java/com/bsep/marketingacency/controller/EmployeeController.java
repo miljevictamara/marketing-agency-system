@@ -41,7 +41,6 @@ public class EmployeeController {
 
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
-        // Convert EmployeeDto to Employee object
         Employee updatedEmployee = new Employee(
                 employeeDto.getId(),
                 employeeDto.getFirstName(),
@@ -53,7 +52,6 @@ public class EmployeeController {
                 employeeDto.getUserId()
         );
 
-        // Call the service method to update the employee
         Employee updated = employeeService.updateEmployee(updatedEmployee);
 
         if (updated != null) {
