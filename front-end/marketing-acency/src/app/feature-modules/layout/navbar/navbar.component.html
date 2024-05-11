@@ -4,6 +4,8 @@
         <button class="logButton" mat-button [matMenuTriggerFor]="menu">Menu</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item color="primary">Home</button>
+          <button mat-menu-item color="primary" (click)="navigateTo('/employee-profile')">Employee Profile</button>
+          <button mat-menu-item color="primary" (click)="navigateTo('/administrator-profile')">Admin Profile</button>
         </mat-menu>
       </div>
       <div class="logo-wrapper">

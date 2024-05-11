@@ -27,4 +27,8 @@ export class NavbarComponent {
   logIn(){
     this.router.navigate(['/login']);
   }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
 }
