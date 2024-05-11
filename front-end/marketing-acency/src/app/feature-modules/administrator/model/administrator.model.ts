@@ -1,3 +1,5 @@
+import { User } from "src/app/infrastructure/auth/model/user.model";
+
 export interface Administrator {
     id: number;
     firstName?: string | null;
@@ -6,6 +8,6 @@ export interface Administrator {
     city?: string | null;
     country?: string | null;
     phoneNumber?: string | null;
-    userId: number;
+    user: User;
 }
 

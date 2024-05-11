@@ -34,7 +34,7 @@ public class AdministratorController {
                     administrator.getCity(),
                     administrator.getCountry(),
                     administrator.getPhoneNumber(),
-                    administrator.getUserId()
+                    administrator.getUser()
             );
             return new ResponseEntity<>(administratorDto, HttpStatus.OK);
         } else {
@@ -52,7 +52,7 @@ public class AdministratorController {
                 administratorDto.getCity(),
                 administratorDto.getCountry(),
                 administratorDto.getPhoneNumber(),
-                administratorDto.getUserId()
+                administratorDto.getUser()
         );
 
         Administrator updated = administratorService.updateAdministrator(updatedAdministrator);

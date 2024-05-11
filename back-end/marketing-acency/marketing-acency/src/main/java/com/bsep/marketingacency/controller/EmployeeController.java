@@ -33,7 +33,7 @@ public class EmployeeController {
                     employee.getCity(),
                     employee.getCountry(),
                     employee.getPhoneNumber(),
-                    employee.getUserId()
+                    employee.getUser()
             );
             return new ResponseEntity<>(employeeDto, HttpStatus.OK);
         } else {
@@ -51,7 +51,7 @@ public class EmployeeController {
                 employeeDto.getCity(),
                 employeeDto.getCountry(),
                 employeeDto.getPhoneNumber(),
-                employeeDto.getUserId()
+                employeeDto.getUser()
         );
 
         Employee updated = employeeService.updateEmployee(updatedEmployee);

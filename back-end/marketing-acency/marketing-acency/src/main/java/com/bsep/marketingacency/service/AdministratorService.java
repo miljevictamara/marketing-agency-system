@@ -26,7 +26,7 @@ public class AdministratorService {
             existingAdministrator.setCity(updatedAdministrator.getCity());
             existingAdministrator.setCountry(updatedAdministrator.getCountry());
             existingAdministrator.setPhoneNumber(updatedAdministrator.getPhoneNumber());
-            existingAdministrator.setUserId(updatedAdministrator.getUserId());
+            existingAdministrator.setUser(updatedAdministrator.getUser());
 
             return administratorRepository.save(existingAdministrator);
         }

@@ -31,7 +31,7 @@ public class EmployeeService {
             existingEmployee.setCity(updatedEmployee.getCity());
             existingEmployee.setCountry(updatedEmployee.getCountry());
             existingEmployee.setPhoneNumber(updatedEmployee.getPhoneNumber());
-            existingEmployee.setUserId(updatedEmployee.getUserId());
+            existingEmployee.setUser(updatedEmployee.getUser());
 
             return employeeRepository.save(existingEmployee);
         } else {
