@@ -7,11 +7,10 @@
         <th>Request description:</th>
     </tr>
     <tr *ngFor="let request of requests">
-        <td>{{ request.deadline }}</td>
-        <td>{{ request.active_from }}</td>
-        <td>{{ request.active_to }}</td>
+        <td>{{ request.deadline | date:'dd.MM.yyyy.' }}</td>
+        <td>{{ request.active_from | date:'dd.MM.yyyy.' }}</td>
+        <td>{{ request.active_to | date:'dd.MM.yyyy.' }}</td>
         <td>{{ request.request_description }}</td>
-        <td><button>Accept</button></td>
+        <td><button (click)="onAcceptClicked(request)">Accept</button></td>
     </tr>
 </table>
-  

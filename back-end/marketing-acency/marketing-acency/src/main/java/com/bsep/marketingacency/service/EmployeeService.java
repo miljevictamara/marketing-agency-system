@@ -18,11 +18,9 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee updatedEmployee) {
-        // Retrieve the existing employee from the database
         Employee existingEmployee = employeeRepository.findById(updatedEmployee.getId())
                 .orElse(null);
         if (existingEmployee != null) {
-            // Update the fields of the existing employee with the new values
             existingEmployee.setFirstName(updatedEmployee.getFirstName());
             existingEmployee.setLastName(updatedEmployee.getLastName());
             existingEmployee.setAddress(updatedEmployee.getAddress());
@@ -31,10 +29,8 @@ public class EmployeeService {
             existingEmployee.setPhoneNumber(updatedEmployee.getPhoneNumber());
             existingEmployee.setUserId(updatedEmployee.getUserId());
 
-            // Save the updated employee to the database
             return employeeRepository.save(existingEmployee);
         } else {
-            // If the employee does not exist, return null or throw an exception as desired
             return null;
         }
     }

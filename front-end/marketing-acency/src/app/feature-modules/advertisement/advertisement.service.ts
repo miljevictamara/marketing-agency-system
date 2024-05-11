@@ -17,4 +17,8 @@ export class AdvertisementService {
   getRequests(): Observable<Advertisement[]> {
     return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/pending/');
   }
+
+  updateAdvertisement(advertisement: Advertisement): Observable<Advertisement> {
+    return this.http.put<Advertisement>('https://localhost:8443/advertisement/update', advertisement);
+  }
 }
