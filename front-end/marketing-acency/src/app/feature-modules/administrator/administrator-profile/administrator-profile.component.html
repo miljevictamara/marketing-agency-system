@@ -1,0 +1,34 @@
+<h2>Administrator profile:</h2>
+
+<table>
+    <tr *ngIf="administrator">
+        <td>First Name:</td>
+        <td>{{ administrator.firstName || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <td>Last Name:</td>
+        <td>{{ administrator.lastName || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <td>Address:</td>
+        <td>{{ administrator.address || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <td>City:</td>
+        <td>{{ administrator.city || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <td>Country:</td>
+        <td>{{ administrator.country || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <td>Phone Number:</td>
+        <td>{{ administrator.phoneNumber || '-' }}</td>
+    </tr>
+    <tr *ngIf="administrator">
+        <!--<button (click)="onEditClicked(administrator)">Edit</button>-->
+    </tr>
+    
+</table>
+
+<!--<app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>-->
