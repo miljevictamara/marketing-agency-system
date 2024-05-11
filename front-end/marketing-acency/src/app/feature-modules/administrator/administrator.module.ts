@@ -4,6 +4,7 @@ import { EditAdministratorProfileComponent } from './edit-administrator-profile/
 import { AdministratorProfileComponent } from './administrator-profile/administrator-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeModule } from '../employee/employee.module';
+import { ClientModule } from '../client/client.module';
 
 
 
@@ -15,7 +16,8 @@ import { EmployeeModule } from '../employee/employee.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    EmployeeModule
+    EmployeeModule,
+    ClientModule
   ],
   exports: [
     AdministratorProfileComponent
