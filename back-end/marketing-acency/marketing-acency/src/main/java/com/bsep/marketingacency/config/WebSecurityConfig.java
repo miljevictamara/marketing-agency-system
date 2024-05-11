@@ -86,6 +86,8 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers("/auth/login").permitAll();
         http.authorizeRequests().antMatchers("/users/**").permitAll();
         http.authorizeRequests().antMatchers("/client/**").permitAll();
+        http.authorizeRequests().antMatchers("/employee/**").permitAll();
+        http.authorizeRequests().antMatchers("/advertisement/**").permitAll();
         http.authorizeRequests().antMatchers("/user/**").permitAll();
         http.authorizeRequests().antMatchers("/activation/**/**").permitAll()
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
