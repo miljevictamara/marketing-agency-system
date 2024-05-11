@@ -19,4 +19,8 @@ export class EmployeeService {
   updateEmployee(employee: Employee): Observable<Employee> {
     return this.http.put<Employee>('https://localhost:8443/employee/update', employee);
   }
+
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>('https://localhost:8443/employee/all/');
+  }
 }

@@ -1,9 +1,13 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.model.Advertisement;
+import com.bsep.marketingacency.model.AdvertisementStatus;
 import com.bsep.marketingacency.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bsep.marketingacency.repository.EmployeeRepository;
+
+import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -33,5 +37,9 @@ public class EmployeeService {
         } else {
             return null;
         }
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 }
