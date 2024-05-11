@@ -1,8 +1,12 @@
 package com.bsep.marketingacency.controller;
 
+import com.bsep.marketingacency.TokenRefreshException;
 import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
 import com.bsep.marketingacency.dto.UserTokenState;
+import com.bsep.marketingacency.model.TokenRefreshRequest;
+import com.bsep.marketingacency.model.TokenRefreshResponse;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.service.RefreshTokenService;
 import com.bsep.marketingacency.service.UserService;
 import com.bsep.marketingacency.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-
+import javax.validation.Valid;
+import com.bsep.marketingacency.model.RefreshToken;
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "https://localhost:4200")
@@ -28,6 +33,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -56,5 +64,21 @@ public class AuthenticationController {
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
+    }
+
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = tokenUtils.generateToken(user);
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
     }
 }
