@@ -3,10 +3,7 @@ package com.bsep.marketingacency.controller;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.RejectionNoteDto;
 import com.bsep.marketingacency.dto.UserDto;
-import com.bsep.marketingacency.model.Client;
-import com.bsep.marketingacency.model.ClientActivationToken;
-import com.bsep.marketingacency.model.RejectionNote;
-import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.EmailService;
 import com.bsep.marketingacency.service.RejectionNoteService;
@@ -107,4 +104,8 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public List<Client> getAllClients() {
+        return clientService.getAllClients();
+    }
 }

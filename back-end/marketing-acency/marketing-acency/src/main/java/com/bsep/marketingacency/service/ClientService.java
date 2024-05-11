@@ -80,4 +80,8 @@ public class ClientService {
         return this.clientRepository.findById(id).orElse(null);
     }
 
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
+    }
+
 }
