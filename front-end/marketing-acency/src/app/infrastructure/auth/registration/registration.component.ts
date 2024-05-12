@@ -58,7 +58,8 @@ export class RegistrationComponent implements OnInit{
       password: this.formUser.value.password || "",
       confirmationPassword: this.formUser.value.confirmationPassword || "",
       isBlocked: false,
-      isActivated: false
+      isActivated: false,
+      roles: [] ///PROVERIIII
     };
 
 

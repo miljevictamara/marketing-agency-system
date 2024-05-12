@@ -13,7 +13,7 @@ import { ApiService } from './service/api.service';
 })
 export class AuthService {
 
-  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false});
+  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false});
   //user$ = new BehaviorSubject<User>({email: "", id: 0 });
   private access_token: string | null = null; 
   private refresh_token: string | null = null; 
@@ -33,7 +33,7 @@ export class AuthService {
 
 
   findByMail(mail: string): Observable<any> {
-    return this.http.get(`https://localhost:8443/user/findByMail/${mail}`);
+    return this.http.get(`https://localhost:8443/auth/findByEmail/${mail}`);
   }  
 
   createUser(user: User): Observable<any> {   
@@ -48,10 +48,12 @@ export class AuthService {
 
   
   login(user: User) {
+
     if (user.isBlocked) {
         console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
         return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
       }
+
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -60,10 +62,7 @@ export class AuthService {
     const body = {
       'mail': user.mail,
       'password': user.password
-    };
-
-  
-    
+    };  
     
     return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
@@ -73,9 +72,9 @@ export class AuthService {
         localStorage.setItem("access_token", res.body.accessToken)
         localStorage.setItem("refresh_token", res.body.refreshToken)
         this.autoLogout(res.body.refreshExpiresIn) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
-        this.AccessTokenExpired(40000)
+        this.AccessTokenExpired(res.body.accessExpiresIn)
+        //this.AccessTokenExpired(40000)
         //this.autoLogout(100000) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
-        //this.AccessTokenExpired(6000)
         //this.userService.getMyInfo(user.mail);
         this.setUser();
         return res;
@@ -108,12 +107,28 @@ export class AuthService {
       mail: decodedToken.sub,
       password: decodedToken.name || '',   
       confirmationPassword: decodedToken.confirmationPassword || '',
+      roles: decodedToken.roles || '',     
       isBlocked: decodedToken.isBlocked || '',
       isActivated: decodedToken.isActivated || ''
     };
   
     this.user$.next(user);
   }
+  getLoggedInUser(): Observable<User> {
+    return this.user$.asObservable();
+  }
+
+  isUserLoggedIn(): Observable<boolean> {
+    return this.getLoggedInUser().pipe(
+      map(user => {
+        if (!user) {
+          return false; 
+        }
+        return user.roles.some(role => role.name === 'ROLE_ADMIN' || role.name === 'ROLE_EMPLOYEE' || role.name === 'ROLE_CLIENT');
+      })
+    );
+  }
+  
 
   autoLogout(expirationDate: number) {
     this.clearTimeout = setTimeout(() => {
@@ -145,10 +160,9 @@ export class AuthService {
         //  console.log("Korisnik je blokiran. Izvršen je logout.");
         //  return;
        // }
-  
         this.access_token = res.body.accessToken;
         localStorage.setItem("access_token", res.body.accessToken);
-        this.AccessTokenExpired(40000);
+        this.AccessTokenExpired(res.body.accessExpiresIn);
         console.log("Kreiran access token", this.access_token);
       //} else {
      // }
@@ -172,7 +186,7 @@ export class AuthService {
 
     this.access_token = null;
     this.router.navigate(['/login']);
-    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false })
+    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false })
   }
 
   tokenIsPresent() {
