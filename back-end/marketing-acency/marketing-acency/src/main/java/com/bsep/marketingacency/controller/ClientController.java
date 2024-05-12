@@ -9,6 +9,11 @@ import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.EmailService;
+import com.bsep.marketingacency.model.Package;
+import com.bsep.marketingacency.model.RejectionNote;
+import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.service.ClientService;
+import com.bsep.marketingacency.service.PackageService;
 import com.bsep.marketingacency.service.RejectionNoteService;
 import com.bsep.marketingacency.service.UserService;
 import org.slf4j.Logger;
@@ -44,9 +49,11 @@ public class ClientController {
 
     @Autowired
     private EmailService emailService;
+
+
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
-
+        
         if (!rejectionNoteService.isUserRejectionExpired(userDto.getMail())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User has already been rejected. Please try again later.");
         }else {
@@ -57,13 +64,18 @@ public class ClientController {
             }
         }
 
-        if (userService.findByMail(userDto.getMail()) != null) {
-            return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
+
+        String emailRegex = "^(.+)@(.+)$";
+        String email = userDto.getMail();
+        if (!Pattern.matches(emailRegex, email) || userService.findByMail(userDto.getMail()) != null) {
+            return new ResponseEntity<>("Invalid email format or email is already in use.", HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         if (!userDto.getPassword().equals(userDto.getConfirmationPassword())) {
-            return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.CONFLICT);
         }
+
+
 
         User savedUser = userService.save(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
@@ -75,7 +87,7 @@ public class ClientController {
 
         Client savedClient = clientService.save(clientDto);
 
-        return new ResponseEntity<>("Client created.",HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/approve-registration-request/{id}")
