@@ -1,11 +1,8 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.AdministratorDto;
-import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Administrator;
-import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.AdministratorService;
-import com.bsep.marketingacency.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +59,13 @@ public class AdministratorController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createAdministrator(@RequestBody AdministratorDto administratorDto) {
+
+        Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
+
+        return new ResponseEntity<>("Administrator created.",HttpStatus.CREATED);
     }
 }

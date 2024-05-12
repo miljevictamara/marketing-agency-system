@@ -8,6 +8,6 @@ export interface Administrator {
     city?: string | null;
     country?: string | null;
     phoneNumber?: string | null;
-    user: User;
+    user: { id?: number };
 }
 
