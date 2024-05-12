@@ -1,0 +1,32 @@
+<div *ngIf="shouldRenderIndividual" class="registration-div">
+    <!--Second step as individual - create user -->
+    <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
+        <div class="inputDiv">
+            <input formControlName="mail" matInput placeholder="email" required>
+            <input formControlName="password" matInput placeholder="password" required type="password">
+            <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
+        </div>        
+    </form>
+
+    <button class="thirdStepButton" (click)="thirdStepIndividual()">
+        Next
+    </button>
+</div>
+
+<div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
+    <!-- Third step as individual-->
+    <form #individualForm="ngForm" [formGroup]="formIndividual" class="individual-form">  
+        <div class="inputDiv">
+            <input formControlName="firstname" matInput placeholder="firstname" required>
+            <input formControlName="lastname" matInput placeholder="lastname" required>
+            <input formControlName="address" matInput placeholder="address" required>
+            <input formControlName="city" matInput placeholder="city" required>
+            <input formControlName="country" matInput placeholder="country" required>
+            <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+        </div>        
+    </form>
+
+    <button class="thirdStepButton" (click)="submitIndividual()">
+        Next
+    </button>
+</div>

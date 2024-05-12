@@ -95,7 +95,6 @@ public class AuthenticationController {
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
     }
@@ -109,6 +108,15 @@ public class AuthenticationController {
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+    @GetMapping(value = "/findByEmail/{mail}")
+    public ResponseEntity<User> findByMail(@PathVariable String mail) {
+        User user = userService.findByMail(mail);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+
         }
     }
 }

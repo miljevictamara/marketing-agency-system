@@ -9,6 +9,10 @@ import { PasswordlessLoginComponent } from '../auth/passwordless-login/passwordl
 import { CheckYourEmailComponent } from '../auth/check-your-email/check-your-email.component';
 import { ForbiddenPasswordlessLoginComponent } from '../auth/forbidden-passwordless-login/forbidden-passwordless-login.component';
 import { SuccessfulPasswordlessLoginComponent } from '../auth/successful-passwordless-login/successful-passwordless-login.component';
+import { EmployeeProfileComponent } from 'src/app/feature-modules/employee/employee-profile/employee-profile.component';
+import { AdministratorProfileComponent } from 'src/app/feature-modules/administrator/administrator-profile/administrator-profile.component';
+import { EmployeeFormComponent } from 'src/app/feature-modules/employee/employee-form/employee-form.component';
+import { AdministratorFormComponent } from 'src/app/feature-modules/administrator/administrator-form/administrator-form.component';
 
 
 const routes: Routes = [
@@ -21,6 +25,11 @@ const routes: Routes = [
   { path: 'check-your-email', component: CheckYourEmailComponent},
   { path: 'forbidden-passwordless-login', component: ForbiddenPasswordlessLoginComponent},
   { path: 'passwordless-login-link/:tokenId', component: SuccessfulPasswordlessLoginComponent},
+  { path: 'employee-profile', component: EmployeeProfileComponent},
+  { path: 'administrator-profile', component: AdministratorProfileComponent},
+  { path: 'employee-form', component: EmployeeFormComponent},
+  { path: 'administrator-form', component: AdministratorFormComponent},
+
 ];
 
 @NgModule({

@@ -85,7 +85,7 @@ public class ClientService {
         return this.clientRepository.findByUserId(id);
     }
 
-    public Boolean checkIfClientCanLogingWithoutPassword(String mail){
+    public Boolean checkIfClientCanLoginWithoutPassword(String mail){
         User user = userService.findByMail(mail);
         Client client = clientRepository.findByUserId(user.getId());
         if (user == null || client == null || !user.getIsActivated()) {
@@ -103,6 +103,10 @@ public class ClientService {
             }
         }
         return false;
+    }
+  
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
     }
 
 }
