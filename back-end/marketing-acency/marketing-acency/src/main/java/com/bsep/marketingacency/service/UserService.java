@@ -47,7 +47,7 @@ public class UserService {
         List<Role> roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);
-        user.setIsActivated(false);
+        user.setIsActivated(true);
         user.setIsBlocked(false);
 
         return this.userRepository.save(user);
@@ -61,7 +61,7 @@ public class UserService {
         List<Role> roles = new ArrayList<>();
         roles.add(role);
         user.setRoles(roles);
-        user.setIsActivated(false);
+        user.setIsActivated(true);
         user.setIsBlocked(false);
 
         return this.userRepository.save(user);
