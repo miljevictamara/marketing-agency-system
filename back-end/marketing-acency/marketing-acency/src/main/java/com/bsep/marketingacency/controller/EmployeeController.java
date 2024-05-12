@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     @GetMapping("/byUserId/{userId}")
     public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable Long userId) {
         Employee employee = employeeService.getEmployeeByUserId(userId);
@@ -43,6 +45,7 @@ public class EmployeeController {
         }
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee updatedEmployee = new Employee(

@@ -18,7 +18,7 @@ import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterce
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EmployeeModule } from './feature-modules/employee/employee.module';
 import { AdministratorModule } from './feature-modules/administrator/administrator.module';
-
+import { PermissionPageModule } from './feature-modules/permission-page/permission-page.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,8 @@ import { AdministratorModule } from './feature-modules/administrator/administrat
     MatSnackBarModule,
     EmployeeModule,
     AdministratorModule,
+    EmployeeModule,
+    PermissionPageModule
   ],
   providers: [ 
     {

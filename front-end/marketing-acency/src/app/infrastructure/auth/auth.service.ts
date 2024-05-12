@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './service/api.service';
 import { Client } from 'src/app/feature-modules/user/model/client.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +49,11 @@ export class AuthService {
   
   login(user: User) {
 
+    if (user.isBlocked) {
+        console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
+        return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
+      }
+
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -56,10 +62,7 @@ export class AuthService {
     const body = {
       'mail': user.mail,
       'password': user.password
-    };
-
-  
-    
+    };  
     
     return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
@@ -68,11 +71,22 @@ export class AuthService {
         this.refresh_token = res.body.refreshToken;
         localStorage.setItem("access_token", res.body.accessToken)
         localStorage.setItem("refresh_token", res.body.refreshToken)
-        this.autoLogout(res.body.accessExpiresIn)
+        this.autoLogout(res.body.refreshExpiresIn) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
+        this.AccessTokenExpired(res.body.accessExpiresIn)
+        //this.AccessTokenExpired(40000)
+        //this.autoLogout(100000) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
         //this.userService.getMyInfo(user.mail);
         this.setUser();
         return res;
-      }));
+      }
+    ));
+  }
+
+
+  AccessTokenExpired(expirationDate: number) {
+    this.clearTimeout = setTimeout(() => {
+      this.generateNewAccessToken();
+    }, expirationDate)
   }
 
   passwordlessLogin(user: User) {
@@ -127,6 +141,21 @@ getTokens(mail: string) {
   
     this.user$.next(user);
   }
+  getLoggedInUser(): Observable<User> {
+    return this.user$.asObservable();
+  }
+
+  isUserLoggedIn(): Observable<boolean> {
+    return this.getLoggedInUser().pipe(
+      map(user => {
+        if (!user) {
+          return false; 
+        }
+        return user.roles.some(role => role.name === 'ROLE_ADMIN' || role.name === 'ROLE_EMPLOYEE' || role.name === 'ROLE_CLIENT');
+      })
+    );
+  }
+  
 
   autoLogout(expirationDate: number) {
     this.clearTimeout = setTimeout(() => {
@@ -134,6 +163,44 @@ getTokens(mail: string) {
     }, expirationDate)
   }
   
+  generateNewAccessToken() {
+    console.log("Pokrenuta provera za kreiranje novog access tokena");
+    const refreshToken = localStorage.getItem("refresh_token");
+    localStorage.removeItem("access_token");
+  
+    if (!refreshToken) {
+      this.logout();
+      return;
+    }
+  
+    const jwtHelperService = new JwtHelperService();
+    const decodedToken = jwtHelperService.decodeToken(refreshToken);
+    const mail = decodedToken.sub;
+  
+    const requestBody = mail;
+  
+    this.apiService.post(`https://localhost:8443/auth/refreshToken`, requestBody).subscribe((res: any) => {
+      //if (res.body && res.body.accessToken) {
+     //   const decodedAccessToken = jwtHelperService.decodeToken(res.body.accessToken);
+      //  if (decodedAccessToken && decodedAccessToken.isBlocked) {
+       //   this.logout();
+        //  console.log("Korisnik je blokiran. Izvršen je logout.");
+        //  return;
+       // }
+        this.access_token = res.body.accessToken;
+        localStorage.setItem("access_token", res.body.accessToken);
+        this.AccessTokenExpired(res.body.accessExpiresIn);
+        console.log("Kreiran access token", this.access_token);
+      //} else {
+     // }
+    }, error => {
+      console.error("Greška prilikom dohvatanja novog tokena:", error);
+      this.logout();
+    });
+  }
+  
+  
+
 
   logout() {
     this.userService.currentUser = null;

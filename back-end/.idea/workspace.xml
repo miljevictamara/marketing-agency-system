@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8c63164-62f2-4dee-ad25-fc4d9ea16fbe" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/marketing-acency/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/marketing-acency/src/main/resources/import.sql" afterDir="false" />
+    <list default="true" id="f90ed797-17c9-4f14-af00-b4a212055713" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/marketing-acency/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/marketing-acency/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,12 +10,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2fgh0s6pwZx4RyNOSaWTA6M8HS6" />
+  <component name="ProjectId" id="2gK4EfpHfyH2ghoCYBAedqfyXrI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,10 +27,6 @@
     "git-widget-placeholder": "feat/refresh-token",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Mina/Desktop/bsep/bsep-ra-2024-kt2-tim-15/back-end/marketing-acency/marketing-acency",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -41,16 +34,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e8c63164-62f2-4dee-ad25-fc4d9ea16fbe" name="Changes" comment="" />
-      <created>1714228408563</created>
+      <changelist id="f90ed797-17c9-4f14-af00-b4a212055713" name="Changes" comment="" />
+      <created>1715432824669</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1714228408563</updated>
-      <workItem from="1714228409696" duration="598000" />
-      <workItem from="1714229028817" duration="254000" />
-      <workItem from="1714229417136" duration="47000" />
-      <workItem from="1715447911844" duration="42000" />
-      <workItem from="1715526434344" duration="41000" />
+      <updated>1715432824669</updated>
+      <workItem from="1715432825773" duration="19000" />
+      <workItem from="1715447954778" duration="35000" />
     </task>
     <servers />
   </component>

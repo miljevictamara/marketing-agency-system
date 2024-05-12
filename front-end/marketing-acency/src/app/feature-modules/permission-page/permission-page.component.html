@@ -1,0 +1,20 @@
+<div class="container">
+    <h2>Permission Management</h2>
+    <label for="userRole">Select role:</label>
+    <br>
+    <select id="userRole" [(ngModel)]="selectedRole" (ngModelChange)="onRoleSelectionChange()">
+        <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
+    </select>
+    <br>
+    
+    <div  *ngIf="selectedRole" class="content">
+        <div class="permissions-container">
+            <h3>Permissions:</h3>
+            <div *ngFor="let permission of permissions" class="permission-item">
+                <label><input type="checkbox" [checked]="isChecked(permission)" (change)="onPermissionChange(permission)"> {{ permission.name }}</label>
+            </div>
+        </div>
+    </div>
+<BR>
+    <button  color="primary" class="save-button" (click)="onSavePermissions()">Save</button>
+</div>
