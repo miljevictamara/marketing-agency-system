@@ -109,7 +109,7 @@ export class RegistrationComponent implements OnInit{
             alert('User has already been rejected. Please try again later.');
           }
           else if (error.status === 422) {
-            alert('Email is already in use'); 
+            alert('Invalid email format or email is already in use.'); 
           } if (error.status === 201) {
             console.log('User saved!');
             if (this.shouldRenderIndividual)

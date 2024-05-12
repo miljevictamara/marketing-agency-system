@@ -48,9 +48,7 @@ public class ClientController {
             }
         }
 
-        if (userService.findByMail(userDto.getMail()) != null) {
-            return new ResponseEntity<>("Email is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
+
         String emailRegex = "^(.+)@(.+)$";
         String email = userDto.getMail();
         if (!Pattern.matches(emailRegex, email) || userService.findByMail(userDto.getMail()) != null) {

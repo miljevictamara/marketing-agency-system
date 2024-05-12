@@ -13,7 +13,7 @@ import { Client } from 'src/app/feature-modules/user/model/client.model';
 })
 export class AuthService {
 
-  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false});
+  user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false});
   private access_token: string | null = null; 
   private refresh_token: string | null = null; 
   isFirstLogin: boolean = false;
@@ -93,6 +93,7 @@ export class AuthService {
       mail: decodedToken.sub,
       password: decodedToken.name || '',   
       confirmationPassword: decodedToken.confirmationPassword || '',
+      roles: decodedToken.role || '',
       isBlocked: decodedToken.isBlocked || '',
       isActivated: decodedToken.isActivated || ''
     };
@@ -118,7 +119,7 @@ export class AuthService {
 
     this.access_token = null;
     this.router.navigate(['/login']);
-    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false })
+    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false })
   }
 
   tokenIsPresent() {
