@@ -2,6 +2,8 @@ package com.bsep.marketingacency.service;
 
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.ClientActivationToken;
+import com.bsep.marketingacency.model.LoginToken;
+import com.bsep.marketingacency.model.User;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -17,6 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -26,6 +29,12 @@ public class EmailService {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private  UserService userService;
+
+    @Autowired
+    private LoginTokenService loginTokenService;
 
     @Autowired
     private Environment env;
@@ -121,6 +130,48 @@ public class EmailService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Async
+    public void sendLoginToken(String mail) throws MailException, InterruptedException {
+        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+        Thread.sleep(10000);
+        System.out.println("Slanje emaila...");
+
+        User user = userService.findByMail(mail);
+        Client client = clientService.findByUserId(user.getId());
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(client.getUser().getMail());
+        message.setFrom(env.getProperty("spring.mail.username"));
+        message.setSubject("Passwordless Login");
+
+        LoginToken loginToken = new LoginToken();
+        loginToken.setUser(user);
+        loginToken.setCreationDate(new Date());
+        loginToken.setDuration(10);
+        loginToken.setIsUsed(false);
+        loginTokenService.save(loginToken);
+
+        String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
+        //String hmac = generateHmac(loginLink, hmacSecret);
+        //String loginLinkWithHmac = loginLink + "?hmac=" + hmac;
+
+
+
+        String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
+        String text = "Hello " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+                "To login without password, please click the following link:\n\n " + loginLink +
+                "\n\nBest regards,\nThe MarketingSupport Team";
+
+
+
+        message.setText(text);
+
+        javaMailSender.send(message);
+
+        System.out.println("Email sent!");
+
     }
 
 

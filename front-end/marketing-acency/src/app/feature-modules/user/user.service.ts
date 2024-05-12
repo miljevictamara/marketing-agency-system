@@ -23,6 +23,20 @@ export class UserService {
   updateIsActivated(userId: number): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/user/activation/${userId}`, {});
   }
+
+
+  getUserByLoginToken(tokenId: string): Observable<User> {
+    return this.http.get<User>('https://localhost:8443/auth/' + tokenId);
+  }
+
+  getUserByMail(mail: string): Observable<User> {
+    return this.http.get<User>('https://localhost:8443/user/' + mail);
+  }
+
+  checkIfUserHasAppropriatePackage(mail: string): Observable<boolean> {
+    return this.http.get<boolean>('https://localhost:8443/user/package/' + mail);
+  }
+
   
   getPackageByName(name: string): Observable<Package> {
     return this.http.get<Package>(`https://localhost:8443/package/${name}`);
@@ -31,5 +45,6 @@ export class UserService {
   findUserIdByEmail(mail: string): Observable<User> {
     return this.http.get<User>(`https://localhost:8443/auth/findByEmail/${mail}`);
   }
+
 
 }

@@ -15,8 +15,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EmployeeModule } from './feature-modules/employee/employee.module';
 import { AdministratorModule } from './feature-modules/administrator/administrator.module';
+
 
 @NgModule({
   declarations: [
@@ -29,8 +31,9 @@ import { AdministratorModule } from './feature-modules/administrator/administrat
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatSnackBarModule,
     EmployeeModule,
-    AdministratorModule
+    AdministratorModule,
   ],
   providers: [ 
     {

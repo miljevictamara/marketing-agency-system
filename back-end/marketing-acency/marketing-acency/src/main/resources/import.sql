@@ -2,6 +2,11 @@ INSERT INTO public.role( id, name) VALUES (1, 'ROLE_ADMIN');
 INSERT INTO public.role( id, name) VALUES (2, 'ROLE_EMPLOYEE');
 INSERT INTO public.role( id, name) VALUES (3, 'ROLE_CLIENT');
 
+
+INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 300.00, 10000);
+INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 100.00, 100);
+INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC', 50.00, 10);
+
 INSERT INTO public."users" (is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
 INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
 INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'admin.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
@@ -34,3 +39,4 @@ INSERT INTO public."advertisement"(id, active_from, active_to, client_id, deadli
 
 INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('adresa prvog klijenta', 'grad prvog klijenta', 'kompanija prvog klijenta', 'drzava prvog klijenta', 'ime prvog klijenta', 1, 'prezime prvog klijenta', '+381', '123', 'INDIVIDUAL', 1, 5);
 INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('adresa drugog klijenta', 'grad drugog klijenta', 'kompanija drugog klijenta', 'drzava drugog klijenta', 'ime drugog klijenta', 1, 'prezime drugog klijenta', '+381', '123', 'INDIVIDUAL', 1, 6);
+
