@@ -28,7 +28,7 @@ public class AdvertisementService {
         Advertisement existingAdvertisement = advertisementRepository.findById(updatedAdvertisement.getId())
                 .orElse(null);
         if (existingAdvertisement != null) {
-            existingAdvertisement.setClientId(updatedAdvertisement.getClientId());
+            existingAdvertisement.setClient(updatedAdvertisement.getClient());
             existingAdvertisement.setSlogan(updatedAdvertisement.getSlogan());
             existingAdvertisement.setDuration(updatedAdvertisement.getDuration());
             existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
@@ -42,5 +42,9 @@ public class AdvertisementService {
         } else {
             return null;
         }
+    }
+
+    public List<Advertisement> getAdvertisementsByClientUserId(Long clientUserId) {
+        return advertisementRepository.findByClientUserId(clientUserId);
     }
 }

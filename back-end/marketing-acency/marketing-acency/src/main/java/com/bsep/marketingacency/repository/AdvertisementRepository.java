@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     List<Advertisement> findByStatus(AdvertisementStatus status);
+
+    List<Advertisement> findByClientUserId(Long clientUserId);
 }

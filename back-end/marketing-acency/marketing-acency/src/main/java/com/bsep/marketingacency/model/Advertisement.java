@@ -14,8 +14,9 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id")
-    private long clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Column(name = "slogan")
     private String slogan;
@@ -43,9 +44,9 @@ public class Advertisement {
 
     public Advertisement() { }
 
-    public Advertisement(Long id, long clientId, String slogan, Long duration, String description, Date deadline, Date active_from, Date active_to, String request_description, AdvertisementStatus status) {
+    public Advertisement(Long id, Client client, String slogan, Long duration, String description, Date deadline, Date active_from, Date active_to, String request_description, AdvertisementStatus status) {
         this.id = id;
-        this.clientId = clientId;
+        this.client = client;
         this.slogan = slogan;
         this.duration = duration;
         this.description = description;
@@ -60,8 +61,8 @@ public class Advertisement {
         return id;
     }
 
-    public long getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
     public String getSlogan() {
@@ -100,8 +101,8 @@ public class Advertisement {
         this.id = id;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public void setSlogan(String slogan) {

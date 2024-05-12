@@ -39,7 +39,7 @@ public class AdvertisementController {
         // Convert EmployeeDto to Employee object
         Advertisement updatedAdvertisement = new Advertisement(
                 advertisementDto.getId(),
-                advertisementDto.getClientId(),
+                advertisementDto.getClient(),
                 advertisementDto.getSlogan(),
                 advertisementDto.getDuration(),
                 advertisementDto.getDescription(),
@@ -59,4 +59,10 @@ public class AdvertisementController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/byClientUserId/{clientUserId}")
+    public List<Advertisement> getAdvertisementsByClientUserId(@PathVariable Long clientUserId) {
+        return advertisementService.getAdvertisementsByClientUserId(clientUserId);
+    }
+
 }
