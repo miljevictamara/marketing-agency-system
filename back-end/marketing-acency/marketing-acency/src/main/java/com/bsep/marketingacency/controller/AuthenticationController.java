@@ -3,9 +3,13 @@ package com.bsep.marketingacency.controller;
 import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
 import com.bsep.marketingacency.dto.UserTokenState;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.service.ClientService;
+import com.bsep.marketingacency.service.EmailService;
+import com.bsep.marketingacency.service.LoginTokenService;
 import com.bsep.marketingacency.service.UserService;
 import com.bsep.marketingacency.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,6 +33,15 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private LoginTokenService loginTokenService;
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -56,5 +70,45 @@ public class AuthenticationController {
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
+    }
+
+    @PostMapping(value = "/passwordless-login")
+    public ResponseEntity<String> sendLoginToken(
+            @RequestBody String mail) throws InterruptedException {
+        if(!clientService.checkIfClientCanLogingWithoutPassword(mail)){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        emailService.sendLoginToken(mail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/login-tokens")
+    public ResponseEntity<UserTokenState> createAuthenticationTokenWithoutPassword(
+            @RequestBody String mail) {
+
+        User user = userService.findByMail(mail);
+
+        String jwt = tokenUtils.generateToken(user);
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        String refresh_jwt = tokenUtils.generateRefreshToken(user);
+        int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+
+        // Vrati token kao odgovor na uspesnu autentifikaciju
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
+
+    }
+
+    @GetMapping("/{tokenId}")
+    public ResponseEntity<User> findUser(@PathVariable("tokenId") UUID tokenId) {
+        User user = loginTokenService.findUser(tokenId);
+        Boolean isTokenUsed = loginTokenService.checkIfUsed(tokenId);
+        if (user != null && !isTokenUsed) {
+
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 }

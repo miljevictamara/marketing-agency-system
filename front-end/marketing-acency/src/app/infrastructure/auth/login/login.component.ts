@@ -40,4 +40,9 @@ export class LoginComponent implements OnInit {
 
 
   }
+
+  onPasswordlesLoginClick(){
+    this.router.navigate(['passwordless-login']);
+  }
+
 }

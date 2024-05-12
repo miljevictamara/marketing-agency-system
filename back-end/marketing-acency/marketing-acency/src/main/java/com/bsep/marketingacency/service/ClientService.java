@@ -4,6 +4,7 @@ import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
 import com.bsep.marketingacency.model.Client;
+import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.model.*;
@@ -78,6 +79,30 @@ public class ClientService {
 
     public Client findById(Long id){
         return this.clientRepository.findById(id).orElse(null);
+    }
+
+    public Client findByUserId(Long id){
+        return this.clientRepository.findByUserId(id);
+    }
+
+    public Boolean checkIfClientCanLogingWithoutPassword(String mail){
+        User user = userService.findByMail(mail);
+        Client client = clientRepository.findByUserId(user.getId());
+        if (user == null || client == null || !user.getIsActivated()) {
+            return false;
+        }
+
+        Package clientPackage = client.getClientPackage();
+
+        if (clientPackage != null) {
+            String packageName = clientPackage.getName();
+
+            if ("GOLD".equals(packageName) || "SILVER".equals(packageName)) {
+
+                return true;
+            }
+        }
+        return false;
     }
 
 }

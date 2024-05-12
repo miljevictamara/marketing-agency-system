@@ -22,4 +22,8 @@ export class UserService {
   updateIsActivated(userId: number): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/user/activation/${userId}`, {});
   }
+
+  getUserByLoginToken(tokenId: string): Observable<User> {
+    return this.http.get<User>('https://localhost:8443/auth/' + tokenId);
+  }
 }

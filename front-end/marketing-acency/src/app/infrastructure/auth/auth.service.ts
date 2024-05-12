@@ -75,6 +75,33 @@ export class AuthService {
       }));
   }
 
+  passwordlessLogin(user: User) {
+    this.getTokens(user.mail).subscribe({
+        next: (res: any) => {
+            console.log('Response:', res); 
+            this.access_token = res.accessToken;
+            this.refresh_token = res.refreshToken;
+            localStorage.setItem("access_token", res.accessToken);
+            localStorage.setItem("refresh_token", res.refreshToken);
+            this.autoLogout(res.accessExpiresIn);
+            this.setUser();
+        },
+        error: (error: any) => {
+            console.error('Error:', error); 
+        }
+    });
+}
+
+getTokens(mail: string) {
+    return this.http.post<any>(`https://localhost:8443/auth/login-tokens`,mail);
+}
+
+  
+
+  sendMail(mail: string) {
+    return this.http.post('https://localhost:8443/auth/passwordless-login',  mail );
+  }
+
   checkIfUserExists(): void {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken == null) {
