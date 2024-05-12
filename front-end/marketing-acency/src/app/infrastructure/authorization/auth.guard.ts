@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthGuard implements CanActivate {
   loggedInUser: User | null = null;
+  user : User | undefined
 
   constructor( private router:Router, private authService: AuthService){}
 
@@ -18,25 +19,25 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isUserLoggedIn()) {
-      return this.authService.getLoggedInUser().pipe(
-        map((user: User | null) => {
-          if (user) {
-            this.loggedInUser = user;
+        this.authService.user$.subscribe(user => {
+          this.user = user;
+        });
+          if (this.user) {
+            this.loggedInUser = this.user;
             if (
               route.routeConfig?.path === 'activation/:tokenId' &&
-              user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;
             } if (
               route.routeConfig?.path === 'employee-profile' &&
-              user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;
             } 
             if (
               route.routeConfig?.path === 'permission-page' &&
-              user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;
             }else {
@@ -47,13 +48,9 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(['/']);
             return false;
           }
-        })
-      );
-    } else {
-      this.router.navigate(['/']);
-      return false;
-    }
-  }
+        }
+    
+  
   
   
 }

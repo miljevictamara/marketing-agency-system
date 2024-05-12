@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'administrator-profile', component: AdministratorProfileComponent},
   { path: 'employee-form', component: EmployeeFormComponent},
   { path: 'administrator-form', component: AdministratorFormComponent},
-  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
+  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
   { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}}
   
 ];

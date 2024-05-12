@@ -134,7 +134,7 @@ getTokens(mail: string) {
       mail: decodedToken.sub,
       password: decodedToken.name || '',   
       confirmationPassword: decodedToken.confirmationPassword || '',
-      roles: decodedToken.role || '',
+      roles: decodedToken.roles || '',     
       isBlocked: decodedToken.isBlocked || '',
       isActivated: decodedToken.isActivated || ''
     };
