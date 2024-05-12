@@ -84,4 +84,5 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public Client getClientByUserId(Long userId) { return clientRepository.findByUserId(userId); }
 }

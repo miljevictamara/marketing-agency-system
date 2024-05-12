@@ -75,4 +75,108 @@ public class Client {
         this.country = country;
         this.isApproved = isApproved;
     }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public ClientType getType() {
+        return type;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public Integer getPib() {
+        return pib;
+    }
+
+    public Package getClientPackage() {
+        return clientPackage;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public RegistrationRequestStatus getIsApproved() {
+        return isApproved;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setType(ClientType type) {
+        this.type = type;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setPib(Integer pib) {
+        this.pib = pib;
+    }
+
+    public void setClientPackage(Package clientPackage) {
+        this.clientPackage = clientPackage;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setIsApproved(RegistrationRequestStatus isApproved) {
+        this.isApproved = isApproved;
+    }
 }

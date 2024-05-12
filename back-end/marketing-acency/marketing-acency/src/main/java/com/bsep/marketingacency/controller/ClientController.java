@@ -1,6 +1,7 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.ClientDto;
+import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.dto.RejectionNoteDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.model.*;
@@ -131,5 +132,30 @@ public class ClientController {
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
+    }
+
+    @GetMapping("/byUserId/{userId}")
+    public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) {
+        Client client = clientService.getClientByUserId(userId);
+        if (client != null) {
+            ClientDto clientDto = new ClientDto(
+                    client.getId(),
+                    client.getUser(),
+                    client.getType(),
+                    client.getFirstName(),
+                    client.getLastName(),
+                    client.getCompanyName(),
+                    client.getPib(),
+                    client.getClientPackage(),
+                    client.getPhoneNumber(),
+                    client.getAddress(),
+                    client.getCity(),
+                    client.getCountry(),
+                    client.getIsApproved()
+            );
+            return new ResponseEntity<>(clientDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
