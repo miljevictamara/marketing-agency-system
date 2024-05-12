@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8c63164-62f2-4dee-ad25-fc4d9ea16fbe" name="Changes" comment="" />
+    <list default="true" id="e8c63164-62f2-4dee-ad25-fc4d9ea16fbe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/marketing-acency/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/marketing-acency/src/main/resources/import.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +29,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feat/refresh-token",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Mina/Desktop/bsep/bsep-ra-2024-kt2-tim-15/back-end",
+    "last_opened_file_path": "C:/Users/Mina/Desktop/bsep/bsep-ra-2024-kt2-tim-15/back-end/marketing-acency/marketing-acency",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -48,6 +50,7 @@
       <workItem from="1714229028817" duration="254000" />
       <workItem from="1714229417136" duration="47000" />
       <workItem from="1715447911844" duration="42000" />
+      <workItem from="1715526434344" duration="41000" />
     </task>
     <servers />
   </component>

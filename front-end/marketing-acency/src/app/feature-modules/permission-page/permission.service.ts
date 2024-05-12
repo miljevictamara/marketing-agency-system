@@ -23,5 +23,8 @@ export class PermissionService {
     return this.http.get<Permission[]>(`https://localhost:8443/permissions/permissions`);
   }
 
+  updateRolePermissions(roleName: string, permissions: Permission[]): Observable<any> {
+    return this.http.put<any>(`https://localhost:8443/permissions/roles/${roleName}/permissions`, permissions);
+  }
 
 }

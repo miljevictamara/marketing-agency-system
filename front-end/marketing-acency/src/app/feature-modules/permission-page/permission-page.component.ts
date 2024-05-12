@@ -36,15 +36,12 @@ export class PermissionPageComponent implements OnInit {
   onRoleSelectionChange() {
     if (this.selectedRole) {
         this.permissionService.getPermissionsForRole(this.selectedRole.name).subscribe((permissions: Permission[]) => {
-            // Resetujemo mapu selektovanih permisija
             this.selectedPermissions = {};
-            // Postavljamo sve permisije za trenutno izabranu ulogu
             permissions.forEach(permission => {
                 this.selectedPermissions[permission.name] = true;
             });
         });
     } else {
-        // Ako nije izabrana uloga, resetujemo selektovane permisije
         this.selectedPermissions = {};
     }
 }
@@ -66,4 +63,17 @@ export class PermissionPageComponent implements OnInit {
       }
     }
   }
+
+  onSavePermissions() {
+    if (this.selectedRole) {
+      this.permissionService.updateRolePermissions(this.selectedRole.name, this.selectedRole.permissions)
+        .subscribe(() => {
+          alert("Successfully updated")
+          console.log('Permissions updated successfully');
+        }, error => {
+          console.error('Error updating permissions:', error);
+        });
+    }
+  }
+  
 }

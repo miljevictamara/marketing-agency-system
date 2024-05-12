@@ -13,4 +13,6 @@
             <label><input type="checkbox" [checked]="isChecked(permission)" (change)="onPermissionChange(permission)"> {{ permission.name }}</label><br>
         </div>
     </div>
+
+    <button (click)="onSavePermissions()">Save</button>
 </div>

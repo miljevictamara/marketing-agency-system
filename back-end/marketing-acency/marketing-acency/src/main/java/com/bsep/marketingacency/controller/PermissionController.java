@@ -6,6 +6,7 @@ import com.bsep.marketingacency.service.EmployeeService;
 import com.bsep.marketingacency.service.PermissionService;
 import com.bsep.marketingacency.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +36,17 @@ public class PermissionController {
     @GetMapping("/roles")
     public List<Role> getRoles() {
         return roleService.getRoles();
+    }
+    @PutMapping("/roles/{roleName}/permissions")
+    public ResponseEntity<?> updateRolePermissions(@PathVariable String roleName, @RequestBody Set<Permission> updatedPermissions) {
+        // Pronalazak uloge iz baze
+        Role role = roleService.findByName(roleName);
+        if (role == null) {
+            return ResponseEntity.notFound().build();
+        }
+        role.setPermissions(updatedPermissions);
+        roleService.save(role);
+
+        return ResponseEntity.ok().build();
     }
 }
