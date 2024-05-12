@@ -11,6 +11,7 @@ import com.bsep.marketingacency.service.RefreshTokenService;
 import com.bsep.marketingacency.service.UserService;
 import com.bsep.marketingacency.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,9 +61,7 @@ public class AuthenticationController {
 
         String refresh_jwt = tokenUtils.generateRefreshToken(user);
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
-
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
-
+        
 
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
@@ -75,6 +74,12 @@ public class AuthenticationController {
         User user = userService.findByMail(mail);
         String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
-        return ResponseEntity.ok(new NewAccessToken(jwt, expiresIn));
+
+        NewAccessToken newAccessToken = new NewAccessToken(jwt, expiresIn);
+        if (!user.getIsBlocked()) {
+            return new ResponseEntity<>(newAccessToken, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -1,8 +1,14 @@
 package com.bsep.marketingacency.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class NewAccessToken {
     private String accessToken;
     private Long accessExpiresIn;
+
 
     public NewAccessToken() {
         this.accessToken = null;
@@ -12,21 +18,5 @@ public class NewAccessToken {
     public NewAccessToken(String accessToken, long expiresIn) {
         this.accessToken = accessToken;
         this.accessExpiresIn = expiresIn;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Long getAccessExpiresIn() {
-        return accessExpiresIn;
-    }
-
-    public void setAccessExpiresIn(Long accessExpiresIn) {
-        this.accessExpiresIn = accessExpiresIn;
     }
 }

@@ -69,10 +69,10 @@ export class AuthService {
         this.refresh_token = res.body.refreshToken;
         localStorage.setItem("access_token", res.body.accessToken)
         localStorage.setItem("refresh_token", res.body.refreshToken)
-        //this.autoLogout(res.body.refreshExpiresIn) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
-        //this.AccessTokenExpired(res.body.accessExpiresIn)
-        this.autoLogout(100000) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
-        this.AccessTokenExpired(6000)
+        this.autoLogout(res.body.refreshExpiresIn) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
+        this.AccessTokenExpired(40000)
+        //this.autoLogout(100000) //KADA ISTEKNE REFRESHTOKEN -> AUTOLOGOUT
+        //this.AccessTokenExpired(6000)
         //this.userService.getMyInfo(user.mail);
         this.setUser();
         return res;
@@ -117,30 +117,47 @@ export class AuthService {
     }, expirationDate)
   }
   
-generateNewAccessToken() {
-  console.log("Pokrenuta provera za kreiranje novog access tokena");
-  const refreshToken = localStorage.getItem("refresh_token");
-  localStorage.removeItem("access_token");
-
-  if (!refreshToken) {
-    this.logout();
-    return undefined;
+  generateNewAccessToken() {
+    console.log("Pokrenuta provera za kreiranje novog access tokena");
+    const refreshToken = localStorage.getItem("refresh_token");
+    localStorage.removeItem("access_token");
+  
+    if (!refreshToken) {
+      this.logout();
+      return;
+    }
+  
+    const jwtHelperService = new JwtHelperService();
+    const decodedToken = jwtHelperService.decodeToken(refreshToken);
+    const mail = decodedToken.sub;
+  
+    const requestBody = mail;
+  
+    this.apiService.post(`https://localhost:8443/auth/refreshToken`, requestBody).subscribe((res: any) => {
+      if (res.body && res.body.accessToken) {
+        const decodedAccessToken = jwtHelperService.decodeToken(res.body.accessToken);
+        if (decodedAccessToken && decodedAccessToken.isBlocked) {
+          this.logout();
+          console.log("Korisnik je blokiran. Izvršen je logout.");
+          return;
+        }
+  
+        this.access_token = res.body.accessToken;
+        localStorage.setItem("access_token", res.body.accessToken);
+        this.AccessTokenExpired(40000);
+        console.log("Kreiran access token", this.access_token);
+      } else {
+        this.logout();
+        console.log("Prazan ili neispravan pristupni token. Izvršen je logout.");
+        return;
+      }
+    }, error => {
+      console.error("Greška prilikom dohvatanja novog tokena:", error);
+      this.logout();
+    });
   }
-
-  const jwtHelperService = new JwtHelperService();
-  const decodedToken = jwtHelperService.decodeToken(refreshToken);
-  const mail = decodedToken.sub;
-
-  const requestBody = mail;
-
-  // Prosledite instancu HttpHeaders u zahtev
-  this.apiService.post(`https://localhost:8443/auth/refreshToken`, requestBody).subscribe((res: any) => {
-    this.access_token = res.body.accessToken;
-    localStorage.setItem("access_token", res.body.accessToken);
-    this.AccessTokenExpired(6000);
-    console.log("Kreiran access tokena", this.access_token);
-  });
-}
+  
+  
 
 
   logout() {
