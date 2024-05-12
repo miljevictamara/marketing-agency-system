@@ -25,4 +25,8 @@ export class AdvertisementService {
   getAdvertisementsForUser(clientUserId: number): Observable<Advertisement[]> {
     return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/byClientUserId/' + clientUserId);
   }
+
+  createAdvertisement(advertisement: Advertisement): Observable<Advertisement> {
+    return this.http.post<Advertisement>('https://localhost:8443/advertisement/create', advertisement)
+  }
 }

@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class ClientProfileComponent {
   client: Client | undefined;
   editClicked: boolean = false;
+  addAdvertisementClicked: boolean = false;
 
   constructor(private clientService: ClientService, private authService: AuthService) { }
 
@@ -29,5 +30,9 @@ export class ClientProfileComponent {
   onEditClicked(client: Client) {
     this.client = client;
     this.editClicked = true;
+  }
+
+  onAddAdvertisementClicked() {
+    this.addAdvertisementClicked = true;
   }
 }

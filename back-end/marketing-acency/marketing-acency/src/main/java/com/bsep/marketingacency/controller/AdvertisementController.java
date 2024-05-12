@@ -1,11 +1,8 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.AdvertisementDto;
-import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Advertisement;
-import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.AdvertisementService;
-import com.bsep.marketingacency.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,4 +62,11 @@ public class AdvertisementController {
         return advertisementService.getAdvertisementsByClientUserId(clientUserId);
     }
 
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
+
+        Advertisement savedAdvertisement = advertisementService.saveAdvertisement(advertisementDto);
+
+        return new ResponseEntity<>("Employee created.",HttpStatus.CREATED);
+    }
 }

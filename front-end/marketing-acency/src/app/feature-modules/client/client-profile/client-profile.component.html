@@ -33,3 +33,5 @@
 
 <app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
 <app-advertisements-for-user></app-advertisements-for-user>
+<button (click)="onAddAdvertisementClicked()">Make a Request</button>
+<app-advertisement-form *ngIf="addAdvertisementClicked"></app-advertisement-form>
