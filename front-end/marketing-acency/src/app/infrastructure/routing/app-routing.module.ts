@@ -9,6 +9,7 @@ import { EmployeeProfileComponent } from 'src/app/feature-modules/employee/emplo
 import { AdministratorProfileComponent } from 'src/app/feature-modules/administrator/administrator-profile/administrator-profile.component';
 import { EmployeeFormComponent } from 'src/app/feature-modules/employee/employee-form/employee-form.component';
 import { AdministratorFormComponent } from 'src/app/feature-modules/administrator/administrator-form/administrator-form.component';
+import { ClientProfileComponent } from 'src/app/feature-modules/client/client-profile/client-profile.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'employee-profile', component: EmployeeProfileComponent},
   { path: 'administrator-profile', component: AdministratorProfileComponent},
   { path: 'employee-form', component: EmployeeFormComponent},
-  { path: 'administrator-form', component: AdministratorFormComponent}
+  { path: 'administrator-form', component: AdministratorFormComponent},
+  { path: 'client-profile', component: ClientProfileComponent},
   
 ];
 

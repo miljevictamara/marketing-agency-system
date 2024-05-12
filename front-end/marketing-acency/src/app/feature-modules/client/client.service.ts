@@ -15,4 +15,8 @@ export class ClientService {
   getClients(): Observable<Client[]> {
     return this.http.get<Client[]>('https://localhost:8443/client/all/');
   }
+
+  getClientByUserId(userId: number): Observable<Client> {
+    return this.http.get<Client>('https://localhost:8443/client/byUserId/' + userId);
+  }
 }

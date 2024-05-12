@@ -1,0 +1,34 @@
+<h2>Client profile:</h2>
+
+<table>
+    <tr *ngIf="client">
+        <td>First Name:</td>
+        <td>{{ client.firstName || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <td>Last Name:</td>
+        <td>{{ client.lastName || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <td>Address:</td>
+        <td>{{ client.address || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <td>City:</td>
+        <td>{{ client.city || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <td>Country:</td>
+        <td>{{ client.country || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <td>Phone Number:</td>
+        <td>{{ client.phoneNumber || '-' }}</td>
+    </tr>
+    <tr *ngIf="client">
+        <!--<button (click)="onEditClicked(employee)">Edit</button>-->
+    </tr>
+    
+</table>
+
+<!--<app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>-->
