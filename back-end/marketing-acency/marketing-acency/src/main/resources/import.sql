@@ -21,9 +21,6 @@ INSERT INTO public."user_role"(user_id, role_id) VALUES (4, 1);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (5, 3);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (6, 3);
 
-INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 300.00, 10000);
-INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 200.00, 5000);
-INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC', 100.00, 3000);
 
 INSERT INTO public."employee"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('adresa prvog zaposlenog', 'grad prvog zaposlenog', 'drzava prvog zaposlenog', 'ime prvog zaposlenog', 'prezime prvog zaposlenog', '+381631234567', 1);
 INSERT INTO public."employee"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('adresa drugog zaposlenog', 'grad drugog zaposlenog', 'drzava drugog zaposlenog', 'ime drugog zaposlenog', 'prezime drugog zaposlenog', '+381637654321', 2);
