@@ -16,6 +16,7 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterceptor';
 import { EmployeeModule } from './feature-modules/employee/employee.module';
+import { PermissionPageModule } from './feature-modules/permission-page/permission-page.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EmployeeModule } from './feature-modules/employee/employee.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    EmployeeModule
+    EmployeeModule,
+    PermissionPageModule
   ],
   providers: [ 
     {

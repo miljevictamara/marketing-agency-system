@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -39,6 +40,7 @@ public class EmployeeController {
         }
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE_PERMISSION')")
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         // Convert EmployeeDto to Employee object

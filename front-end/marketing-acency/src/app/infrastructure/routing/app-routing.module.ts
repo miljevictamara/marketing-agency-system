@@ -7,6 +7,7 @@ import { ActivationComponent } from '../auth/activation/activation.component';
 import { ForbiddenComponent } from '../auth/forbidden/forbidden.component';
 import { EmployeeProfileComponent } from 'src/app/feature-modules/employee/employee-profile/employee-profile.component';
 import { AuthGuard } from '../authorization/auth.guard';
+import { PermissionPageComponent } from 'src/app/feature-modules/permission-page/permission-page.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'activation/:tokenId', component: ActivationComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: '403', component: ForbiddenComponent},
-  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}}
+  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
+  { path: 'permission-page', component: PermissionPageComponent}
   
 ];
 
