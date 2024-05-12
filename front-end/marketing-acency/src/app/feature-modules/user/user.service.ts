@@ -15,13 +15,12 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUserByToken(tokenId: string, hmac: string): Observable<User> {
-    const encodedHmac = encodeURIComponent(hmac);
-    return this.http.get<User>('https://localhost:8443/activation/' + tokenId + "/" + encodedHmac);
+    return this.http.get<User>('https://localhost:8443/activation/' + tokenId + '/' + hmac);
   }
 
 
-  updateIsActivated(userId: number): Observable<User> {
-    return this.http.put<User>(`${this.baseUrl}/user/activation/${userId}`, {});
+  updateIsActivated(userId: number): Observable<any>{
+    return this.http.put<any>('https://localhost:8443/user/activation/' + userId, {});
   }
 
 

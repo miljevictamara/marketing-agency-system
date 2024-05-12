@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-@CrossOrigin(origins = "https://localhost:4200")
 @RestController
+@CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/activation")
 public class ClientActivationTokenController {
     @Autowired
@@ -21,7 +21,7 @@ public class ClientActivationTokenController {
     private EmailService emailService;
 
     @GetMapping("/{tokenId}/{hmac}")
-    public ResponseEntity<User> findUser(@PathVariable("tokenId") UUID tokenId, @PathVariable("hmac") String hmac) {
+    public ResponseEntity<User> findUser(@PathVariable UUID tokenId, @PathVariable String hmac) {
         User user = clientActivationTokenService.findUser(tokenId);
         Boolean isTokenUsed = clientActivationTokenService.checkIfUsed(tokenId);
         Boolean isHmacMatches = emailService.verifyHmac("https://localhost:4200/activation/" + tokenId, hmac);

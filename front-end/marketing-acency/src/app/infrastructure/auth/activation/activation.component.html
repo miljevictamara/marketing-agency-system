@@ -3,9 +3,9 @@
       <div class="message">
         <h1>Activation Successful</h1>
         <p>Your account is now activated.</p>
-        <a routerLink="/login">
+        <a>
             <img src="assets/activation.png" alt="Check Email Image">
-            <button class="action-button">LOG IN</button>
+            <button class="action-button" (click)="onLogin()">LOG IN</button>
         </a>
       </div>
     </div>

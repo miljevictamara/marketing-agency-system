@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'registration', component: RegistrationComponent},
-  { path: 'activation/:tokenId', component: ActivationComponent},
+  { path: 'activation/:tokenId/:hmac', component: ActivationComponent},
   { path: '403', component: ForbiddenComponent},
   { path: 'passwordless-login', component: PasswordlessLoginComponent},
   { path: 'check-your-email', component: CheckYourEmailComponent},
