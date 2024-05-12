@@ -67,7 +67,6 @@ public class TokenUtils {
                 .setSubject(user.getMail())
                 .claim("id", user.getId())
                 .claim("roles", roles)
-                .claim("isBlocked", user.getIsBlocked())
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())

@@ -61,10 +61,14 @@ public class AuthenticationController {
 
         String refresh_jwt = tokenUtils.generateRefreshToken(user);
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
-        
+
 
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
+        if(!user.getIsBlocked() && user.getIsActivated()){
+            return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
     }
 

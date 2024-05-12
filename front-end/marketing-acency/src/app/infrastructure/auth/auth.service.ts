@@ -48,7 +48,10 @@ export class AuthService {
 
   
   login(user: User) {
-
+    if (user.isBlocked) {
+        console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
+        return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
+      }
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -76,7 +79,8 @@ export class AuthService {
         //this.userService.getMyInfo(user.mail);
         this.setUser();
         return res;
-      }));
+      }
+    ));
   }
 
 
@@ -134,23 +138,20 @@ export class AuthService {
     const requestBody = mail;
   
     this.apiService.post(`https://localhost:8443/auth/refreshToken`, requestBody).subscribe((res: any) => {
-      if (res.body && res.body.accessToken) {
-        const decodedAccessToken = jwtHelperService.decodeToken(res.body.accessToken);
-        if (decodedAccessToken && decodedAccessToken.isBlocked) {
-          this.logout();
-          console.log("Korisnik je blokiran. Izvršen je logout.");
-          return;
-        }
+      //if (res.body && res.body.accessToken) {
+     //   const decodedAccessToken = jwtHelperService.decodeToken(res.body.accessToken);
+      //  if (decodedAccessToken && decodedAccessToken.isBlocked) {
+       //   this.logout();
+        //  console.log("Korisnik je blokiran. Izvršen je logout.");
+        //  return;
+       // }
   
         this.access_token = res.body.accessToken;
         localStorage.setItem("access_token", res.body.accessToken);
         this.AccessTokenExpired(40000);
         console.log("Kreiran access token", this.access_token);
-      } else {
-        this.logout();
-        console.log("Prazan ili neispravan pristupni token. Izvršen je logout.");
-        return;
-      }
+      //} else {
+     // }
     }, error => {
       console.error("Greška prilikom dohvatanja novog tokena:", error);
       this.logout();
