@@ -85,4 +85,21 @@ public class ClientService {
     }
 
     public Client getClientByUserId(Long userId) { return clientRepository.findByUserId(userId); }
+
+    public Client updateClient(Client updatedClient) {
+        Client existingClient = clientRepository.findById(updatedClient.getId())
+                .orElse(null);
+        if(existingClient != null) {
+            existingClient.setFirstName(updatedClient.getFirstName());
+            existingClient.setLastName(updatedClient.getLastName());
+            existingClient.setAddress(updatedClient.getAddress());
+            existingClient.setCity(updatedClient.getCity());
+            existingClient.setCountry(updatedClient.getCountry());
+            existingClient.setPhoneNumber(updatedClient.getPhoneNumber());
+
+            return clientRepository.save(existingClient);
+        } else {
+            return null;
+        }
+    }
 }

@@ -158,4 +158,31 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) {
+        Client updatedClient = new Client(
+                clientDto.getId(),
+                clientDto.getUser(),
+                clientDto.getType(),
+                clientDto.getFirstName(),
+                clientDto.getLastName(),
+                clientDto.getCompanyName(),
+                clientDto.getPib(),
+                clientDto.getClientPackage(),
+                clientDto.getPhoneNumber(),
+                clientDto.getAddress(),
+                clientDto.getCity(),
+                clientDto.getCountry(),
+                clientDto.getIsApproved()
+        );
+
+        Client updated = clientService.updateClient(updatedClient);
+
+        if (updated != null) {
+            return new ResponseEntity<>(clientDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

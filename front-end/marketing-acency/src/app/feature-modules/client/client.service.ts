@@ -19,4 +19,8 @@ export class ClientService {
   getClientByUserId(userId: number): Observable<Client> {
     return this.http.get<Client>('https://localhost:8443/client/byUserId/' + userId);
   }
+
+  updateClient(client: Client): Observable<Client> {
+    return this.http.put<Client>('https://localhost:8443/client/update', client);
+  }
 }

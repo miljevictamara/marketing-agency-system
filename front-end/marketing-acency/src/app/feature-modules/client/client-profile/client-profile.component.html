@@ -26,9 +26,9 @@
         <td>{{ client.phoneNumber || '-' }}</td>
     </tr>
     <tr *ngIf="client">
-        <!--<button (click)="onEditClicked(employee)">Edit</button>-->
+        <button (click)="onEditClicked(client)">Edit</button>
     </tr>
     
 </table>
 
-<!--<app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>-->
+<app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
