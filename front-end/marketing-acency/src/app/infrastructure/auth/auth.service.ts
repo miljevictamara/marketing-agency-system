@@ -98,6 +98,7 @@ export class AuthService {
             localStorage.setItem("access_token", res.accessToken);
             localStorage.setItem("refresh_token", res.refreshToken);
             this.autoLogout(res.accessExpiresIn);
+            this.AccessTokenExpired(res.accessExpiresIn)
             this.setUser();
         },
         error: (error: any) => {
