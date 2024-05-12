@@ -75,7 +75,7 @@ public class AuthenticationController {
     @PostMapping(value = "/passwordless-login")
     public ResponseEntity<String> sendLoginToken(
             @RequestBody String mail) throws InterruptedException {
-        if(!clientService.checkIfClientCanLogingWithoutPassword(mail)){
+        if(!clientService.checkIfClientCanLoginWithoutPassword(mail)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         emailService.sendLoginToken(mail);
@@ -108,9 +108,11 @@ public class AuthenticationController {
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
 
     @GetMapping(value = "/findByEmail/{mail}")
-    public ResponseEntity<User> findByMail(@PathVariable String mail) {
+    public ResponseEntity<User> findByMail(@PathVariable String mail){
         User user = userService.findByMail(mail);
         if (user != null) {
             return ResponseEntity.ok(user);

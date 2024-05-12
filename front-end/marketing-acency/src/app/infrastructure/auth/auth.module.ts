@@ -40,7 +40,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ForbiddenComponent,
     PasswordlessLoginComponent,
     CheckYourEmailComponent,
-    ForbiddenPasswordlessLoginComponent
+    ForbiddenPasswordlessLoginComponent,
+    SuccessfulPasswordlessLoginComponent
   ]
 })
 export class AuthModule { }

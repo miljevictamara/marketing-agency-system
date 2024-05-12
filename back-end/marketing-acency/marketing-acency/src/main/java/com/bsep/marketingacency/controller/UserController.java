@@ -38,7 +38,7 @@ public class UserController {
     @GetMapping(value = "/package/{mail}")
     public ResponseEntity<Boolean> checkIfUserHasAppropriatePackage(@PathVariable String mail){
         User user = userService.findByMail(mail);
-        if(user == null && !clientService.checkIfClientCanLogingWithoutPassword(mail)){
+        if(user == null && !clientService.checkIfClientCanLoginWithoutPassword(mail)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(true);
