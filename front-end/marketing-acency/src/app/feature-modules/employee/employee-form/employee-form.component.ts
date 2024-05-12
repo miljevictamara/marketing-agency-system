@@ -151,21 +151,18 @@ export class EmployeeFormComponent {
           id: 0
         };
       
-        // Sada možete poslati ovaj objekt na vaš endpoint za registraciju klijenta
         this.employeeService.createEmployee(employee).subscribe(
           (response) => {
-            console.log('Employee uspešno registrovan!');
-            // Dodajte logiku za preusmeravanje na odgovarajuću stranicu nakon registracije
+            console.log('Zaposleni uspešno registrovan!');
           },
           (error) => {
-            console.error('Greška prilikom registracije employee-a:', error);
-            // Dodajte logiku za upravljanje greškama prilikom registracije
+            console.error('Greška prilikom registracije zaposlenog:', error);
           }
         );
+        this.router.navigate(['/administrator-profile']);
       },
       (error) => {
         console.error('Error finding user ID:', error);
-        // Ovde možete dodati logiku za upravljanje greškama
       }
     );
   }

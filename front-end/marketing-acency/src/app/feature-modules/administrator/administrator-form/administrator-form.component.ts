@@ -150,21 +150,18 @@ export class AdministratorFormComponent {
           id: 0
         };
       
-        // Sada možete poslati ovaj objekt na vaš endpoint za registraciju klijenta
         this.administratorService.createAdministrator(administrator).subscribe(
           (response) => {
             console.log('Administrator uspešno registrovan!');
-            // Dodajte logiku za preusmeravanje na odgovarajuću stranicu nakon registracije
           },
           (error) => {
-            console.error('Greška prilikom registracije employee-a:', error);
-            // Dodajte logiku za upravljanje greškama prilikom registracije
+            console.error('Greška prilikom registracije administratora:', error);
           }
         );
+        this.router.navigate(['/administrator-profile']);
       },
       (error) => {
         console.error('Error finding user ID:', error);
-        // Ovde možete dodati logiku za upravljanje greškama
       }
     );
   }
