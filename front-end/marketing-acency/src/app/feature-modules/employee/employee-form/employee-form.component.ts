@@ -80,7 +80,7 @@ export class EmployeeFormComponent {
       }
    
 
-      this.employeeService.createUser(
+      this.employeeService.createEmployeeUser(
         this.user = this.formUser.value
       )
       .subscribe(

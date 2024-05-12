@@ -21,8 +21,8 @@ export class AdministratorService {
     return this.http.put<Administrator>('https://localhost:8443/administrator/update', administrator);
   }
 
-  createUser(user: User): Observable<any> {
-    return this.http.post<any>('https://localhost:8443/client/save-user-simpler', user);
+  createAdminUser(user: User): Observable<any> {
+    return this.http.post<any>('https://localhost:8443/client/save-admin-user', user);
   }
   
 

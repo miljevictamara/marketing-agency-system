@@ -39,6 +39,34 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
+    public User saveEmployeeUser(UserDto userDto) {
+        User user = new User();
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setMail(userDto.getMail());
+        Role role = roleService.findByName("ROLE_EMPLOYEE");
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+        user.setIsActivated(false);
+        user.setIsBlocked(false);
+
+        return this.userRepository.save(user);
+    }
+
+    public User saveAdminUser(UserDto userDto) {
+        User user = new User();
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setMail(userDto.getMail());
+        Role role = roleService.findByName("ROLE_ADMIN");
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+        user.setIsActivated(false);
+        user.setIsBlocked(false);
+
+        return this.userRepository.save(user);
+    }
+
     public void delete(User user){
         userRepository.delete(user);
     }

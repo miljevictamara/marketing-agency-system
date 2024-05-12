@@ -67,9 +67,15 @@ public class ClientController {
 
     }
 
-    @PostMapping(value = "/save-user-simpler")
-    public ResponseEntity<String> saveUserSimpler(@RequestBody UserDto userDto) {
-        User savedUser = userService.save(userDto);
+    @PostMapping(value = "/save-employee-user")
+    public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
+        User savedUser = userService.saveEmployeeUser(userDto);
+        return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/save-admin-user")
+    public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
+        User savedUser = userService.saveAdminUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
     }
 

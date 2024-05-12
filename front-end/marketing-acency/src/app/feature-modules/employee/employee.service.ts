@@ -25,8 +25,8 @@ export class EmployeeService {
     return this.http.get<Employee[]>('https://localhost:8443/employee/all/');
   }
 
-  createUser(user: User): Observable<any> {
-    return this.http.post<any>('https://localhost:8443/client/save-user-simpler', user);
+  createEmployeeUser(user: User): Observable<any> {
+    return this.http.post<any>('https://localhost:8443/client/save-employee-user', user);
   }
   
 

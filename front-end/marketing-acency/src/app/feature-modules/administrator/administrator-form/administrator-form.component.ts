@@ -79,7 +79,7 @@ export class AdministratorFormComponent {
       }
    
 
-      this.administratorService.createUser(
+      this.administratorService.createAdminUser(
         this.user = this.formUser.value
       )
       .subscribe(
