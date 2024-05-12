@@ -26,4 +26,12 @@ export class UserService {
   getUserByLoginToken(tokenId: string): Observable<User> {
     return this.http.get<User>('https://localhost:8443/auth/' + tokenId);
   }
+
+  getUserByMail(mail: string): Observable<User> {
+    return this.http.get<User>('https://localhost:8443/user/' + mail);
+  }
+
+  checkIfUserHasAppropriatePackage(mail: string): Observable<boolean> {
+    return this.http.get<boolean>('https://localhost:8443/user/package/' + mail);
+  }
 }

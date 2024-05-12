@@ -97,7 +97,7 @@ public class ClientService {
         if (clientPackage != null) {
             String packageName = clientPackage.getName();
 
-            if ("GOLD".equals(packageName) || "SILVER".equals(packageName)) {
+            if ("GOLD".equals(packageName) || "STANDARD".equals(packageName)) {
 
                 return true;
             }

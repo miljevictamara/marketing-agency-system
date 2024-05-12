@@ -26,7 +26,7 @@ export class SuccessfulPasswordlessLoginComponent  implements OnInit{
       next: user => {
         this.user = user;
         this.auth.passwordlessLogin(this.user);
-        //this.router.navigate(['']); 
+        this.router.navigate(['']); 
       },
       error: error => {
         console.error('Forbidden', error);

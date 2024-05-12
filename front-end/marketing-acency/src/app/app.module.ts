@@ -15,6 +15,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterce
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [ 
     {

@@ -11,6 +11,7 @@ import { PasswordlessLoginComponent } from './passwordless-login/passwordless-lo
 import { CheckYourEmailComponent } from './check-your-email/check-your-email.component';
 import { ForbiddenPasswordlessLoginComponent } from './forbidden-passwordless-login/forbidden-passwordless-login.component';
 import { SuccessfulPasswordlessLoginComponent } from './successful-passwordless-login/successful-passwordless-login.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { SuccessfulPasswordlessLoginComponent } from './successful-passwordless-
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
+    MatSnackBarModule,
   ],
   exports: [
     LoginComponent,
