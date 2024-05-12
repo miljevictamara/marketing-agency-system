@@ -88,6 +88,7 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers("/client/**").permitAll();
         http.authorizeRequests().antMatchers("/employee/**").permitAll();
         http.authorizeRequests().antMatchers("/advertisement/**").permitAll();
+        http.authorizeRequests().antMatchers("/administrator/**").permitAll();
         http.authorizeRequests().antMatchers("/user/**").permitAll();
         http.authorizeRequests().antMatchers("/activation/**/**").permitAll()
         http.authorizeRequests().antMatchers("/package/**").permitAll();

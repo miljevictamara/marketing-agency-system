@@ -1,5 +1,7 @@
 package com.bsep.marketingacency.dto;
 
+import com.bsep.marketingacency.model.User;
+
 public class EmployeeDto {
     private Long Id;
 
@@ -14,11 +16,11 @@ public class EmployeeDto {
     private String lastName;
     private String phoneNumber;
 
-    private Long userId;
+    private User user;
 
     public EmployeeDto() { }
 
-    public EmployeeDto(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, Long userId) {
+    public EmployeeDto(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, User user) {
         Id = id;
         this.firstName = firstName;
         this.address = address;
@@ -26,7 +28,7 @@ public class EmployeeDto {
         this.country = country;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -57,8 +59,8 @@ public class EmployeeDto {
         return phoneNumber;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     public void setId(Long id) {
@@ -89,8 +91,8 @@ public class EmployeeDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

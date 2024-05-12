@@ -1,6 +1,8 @@
 package com.bsep.marketingacency.controller;
 
+import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.EmployeeService;
 import org.slf4j.Logger;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -31,7 +35,7 @@ public class EmployeeController {
                     employee.getCity(),
                     employee.getCountry(),
                     employee.getPhoneNumber(),
-                    employee.getUserId()
+                    employee.getUser()
             );
             return new ResponseEntity<>(employeeDto, HttpStatus.OK);
         } else {
@@ -41,7 +45,6 @@ public class EmployeeController {
 
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
-        // Convert EmployeeDto to Employee object
         Employee updatedEmployee = new Employee(
                 employeeDto.getId(),
                 employeeDto.getFirstName(),
@@ -50,10 +53,9 @@ public class EmployeeController {
                 employeeDto.getCity(),
                 employeeDto.getCountry(),
                 employeeDto.getPhoneNumber(),
-                employeeDto.getUserId()
+                employeeDto.getUser()
         );
 
-        // Call the service method to update the employee
         Employee updated = employeeService.updateEmployee(updatedEmployee);
 
         if (updated != null) {
@@ -61,5 +63,18 @@ public class EmployeeController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/all")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createEmployee(@RequestBody EmployeeDto employeeDto) {
+
+        Employee savedEmployee = employeeService.saveEmployee(employeeDto);
+
+        return new ResponseEntity<>("Employee created.",HttpStatus.CREATED);
     }
 }

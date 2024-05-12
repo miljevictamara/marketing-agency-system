@@ -4,13 +4,17 @@ import { EmployeeProfileComponent } from './employee-profile/employee-profile.co
 import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdvertisementModule } from '../advertisement/advertisement.module';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeFormComponent } from './employee-form/employee-form.component';
 
 
 
 @NgModule({
   declarations: [
     EmployeeProfileComponent,
-    EditEmployeeProfileComponent
+    EditEmployeeProfileComponent,
+    EmployeesComponent,
+    EmployeeFormComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +22,9 @@ import { AdvertisementModule } from '../advertisement/advertisement.module';
     AdvertisementModule
   ],
   exports: [
-    EmployeeProfileComponent
+    EmployeeProfileComponent,
+    EmployeesComponent,
+    EmployeeFormComponent
   ]
 })
 export class EmployeeModule { }

@@ -3,10 +3,7 @@ package com.bsep.marketingacency.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -34,13 +31,14 @@ public class Employee {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "user_id")
-    private long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, long userId) {
+    public Employee(Long id, String firstName, String lastName, String address, String city, String country, String phoneNumber, User user) {
         Id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +46,7 @@ public class Employee {
         this.city = city;
         this.country = country;
         this.phoneNumber = phoneNumber;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -79,8 +77,8 @@ public class Employee {
         return phoneNumber;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     public void setId(Long id) {
@@ -111,7 +109,7 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

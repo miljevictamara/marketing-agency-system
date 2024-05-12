@@ -8,18 +8,17 @@ import { EmployeeService } from '../employee.service';
   templateUrl: './edit-employee-profile.component.html',
   styleUrls: ['./edit-employee-profile.component.css']
 })
-export class EditEmployeeProfileComponent implements OnChanges{
+export class EditEmployeeProfileComponent implements OnChanges {
 
   constructor(private employeeService: EmployeeService) { }
+
+  @Input() employee: Employee | undefined;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.employee) {
       this.employeeForm.patchValue(this.employee);
     }
   }
-  
-
-  @Input() employee: Employee | undefined;
 
   employeeForm = new FormGroup ({
     firstName: new FormControl('', Validators.required),
@@ -36,11 +35,9 @@ export class EditEmployeeProfileComponent implements OnChanges{
       this.employeeService.updateEmployee(updatedEmployee).subscribe(
         (updated: Employee) => {
           console.log('Employee updated successfully:', updated);
-          // Optionally, perform any additional actions after the update
         },
         (error) => {
           console.error('Failed to update employee:', error);
-          // Optionally, handle the error
         }
       );
     }

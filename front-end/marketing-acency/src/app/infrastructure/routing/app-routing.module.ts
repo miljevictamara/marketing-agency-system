@@ -6,6 +6,9 @@ import { RegistrationComponent } from '../auth/registration/registration.compone
 import { ActivationComponent } from '../auth/activation/activation.component';
 import { ForbiddenComponent } from '../auth/forbidden/forbidden.component';
 import { EmployeeProfileComponent } from 'src/app/feature-modules/employee/employee-profile/employee-profile.component';
+import { AdministratorProfileComponent } from 'src/app/feature-modules/administrator/administrator-profile/administrator-profile.component';
+import { EmployeeFormComponent } from 'src/app/feature-modules/employee/employee-form/employee-form.component';
+import { AdministratorFormComponent } from 'src/app/feature-modules/administrator/administrator-form/administrator-form.component';
 
 
 const routes: Routes = [
@@ -14,7 +17,10 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'activation/:tokenId', component: ActivationComponent},
   { path: '403', component: ForbiddenComponent},
-  { path: 'employee-profile', component: EmployeeProfileComponent}
+  { path: 'employee-profile', component: EmployeeProfileComponent},
+  { path: 'administrator-profile', component: AdministratorProfileComponent},
+  { path: 'employee-form', component: EmployeeFormComponent},
+  { path: 'administrator-form', component: AdministratorFormComponent}
   
 ];
 

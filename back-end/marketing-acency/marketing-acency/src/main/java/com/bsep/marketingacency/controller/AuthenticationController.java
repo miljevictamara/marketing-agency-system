@@ -58,7 +58,6 @@ public class AuthenticationController {
 
     }
 
-
     @GetMapping(value = "/findByEmail/{mail}")
     public ResponseEntity<User> findByMail(@PathVariable String mail) {
         User user = userService.findByMail(mail);

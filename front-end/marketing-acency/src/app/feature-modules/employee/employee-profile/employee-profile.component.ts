@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class EmployeeProfileComponent implements OnInit {
   employee: Employee | undefined;
-  editClicked: boolean = false; // Add boolean property to track edit button click
+  editClicked: boolean = false;
 
   constructor(private employeeService: EmployeeService, private authService: AuthService) { }
 
@@ -28,6 +28,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   onEditClicked(employee: Employee) {
     this.employee = employee;
-    this.editClicked = true; // Set editClicked to true when edit button is clicked
+    this.editClicked = true;
   }
 }

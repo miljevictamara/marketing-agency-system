@@ -18,4 +18,3 @@ export interface Client {
     country: string;
     isApproved: RegistrationRequestStatus;
 }
-

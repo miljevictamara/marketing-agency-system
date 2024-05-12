@@ -3,10 +3,7 @@ package com.bsep.marketingacency.controller;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.RejectionNoteDto;
 import com.bsep.marketingacency.dto.UserDto;
-import com.bsep.marketingacency.model.Client;
-import com.bsep.marketingacency.model.ClientActivationToken;
-import com.bsep.marketingacency.model.RejectionNote;
-import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.EmailService;
 import com.bsep.marketingacency.model.Package;
@@ -82,6 +79,18 @@ public class ClientController {
 
     }
 
+    @PostMapping(value = "/save-employee-user")
+    public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
+        User savedUser = userService.saveEmployeeUser(userDto);
+        return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/save-admin-user")
+    public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
+        User savedUser = userService.saveAdminUser(userDto);
+        return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
+    }
+
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody ClientDto clientDto) {
 
@@ -119,4 +128,8 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public List<Client> getAllClients() {
+        return clientService.getAllClients();
+    }
 }
