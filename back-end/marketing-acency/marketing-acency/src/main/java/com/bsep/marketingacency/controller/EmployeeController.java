@@ -1,6 +1,8 @@
 package com.bsep.marketingacency.controller;
 
+import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.EmployeeService;
 import org.slf4j.Logger;
@@ -66,5 +68,13 @@ public class EmployeeController {
     @GetMapping("/all")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createEmployee(@RequestBody EmployeeDto employeeDto) {
+
+        Employee savedEmployee = employeeService.saveEmployee(employeeDto);
+
+        return new ResponseEntity<>("Employee created.",HttpStatus.CREATED);
     }
 }

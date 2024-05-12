@@ -67,6 +67,12 @@ public class ClientController {
 
     }
 
+    @PostMapping(value = "/save-user-simpler")
+    public ResponseEntity<String> saveUserSimpler(@RequestBody UserDto userDto) {
+        User savedUser = userService.save(userDto);
+        return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
+    }
+
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody ClientDto clientDto) {
 

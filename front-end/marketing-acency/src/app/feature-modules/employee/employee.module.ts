@@ -5,6 +5,7 @@ import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-emplo
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdvertisementModule } from '../advertisement/advertisement.module';
 import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeFormComponent } from './employee-form/employee-form.component';
 
 
 
@@ -12,7 +13,8 @@ import { EmployeesComponent } from './employees/employees.component';
   declarations: [
     EmployeeProfileComponent,
     EditEmployeeProfileComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    EmployeeFormComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { EmployeesComponent } from './employees/employees.component';
   ],
   exports: [
     EmployeeProfileComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    EmployeeFormComponent
   ]
 })
 export class EmployeeModule { }

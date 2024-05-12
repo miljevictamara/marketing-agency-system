@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Administrator } from '../model/administrator.model';
 import { AdministratorService } from '../administrator.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administrator-profile',
@@ -12,7 +13,7 @@ export class AdministratorProfileComponent implements OnInit {
   administrator: Administrator | undefined;
   editClicked: boolean = false;
 
-  constructor(private administratorService: AdministratorService, private authService: AuthService) { }
+  constructor(private router: Router, private administratorService: AdministratorService, private authService: AuthService) { }
 
   ngOnInit(): void {
     const userId = this.authService.getCurrentUserId();
@@ -29,5 +30,9 @@ export class AdministratorProfileComponent implements OnInit {
   onEditClicked(administrator: Administrator) {
     this.administrator = administrator;
     this.editClicked = true;
+  }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
   }
 }
