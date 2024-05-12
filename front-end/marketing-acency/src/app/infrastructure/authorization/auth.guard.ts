@@ -28,12 +28,18 @@ export class AuthGuard implements CanActivate {
               user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;
-            } else if (
+            } if (
               route.routeConfig?.path === 'employee-profile' &&
               user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;
-            } else {
+            } 
+            if (
+              route.routeConfig?.path === 'permission-page' &&
+              user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+            ) {
+              return true;
+            }else {
               this.router.navigate(['/']);
               return false;
             }

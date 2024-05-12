@@ -14,10 +14,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'registration', component: RegistrationComponent},
-  { path: 'activation/:tokenId', component: ActivationComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
+  { path: 'activation/:tokenId', component: ActivationComponent},
   { path: '403', component: ForbiddenComponent},
-  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
-  { path: 'permission-page', component: PermissionPageComponent}
+  { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
+  { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}}
   
 ];
 

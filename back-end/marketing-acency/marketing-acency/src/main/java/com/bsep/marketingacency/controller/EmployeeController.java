@@ -20,6 +20,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     @GetMapping("/byUserId/{userId}")
     public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable Long userId) {
         Employee employee = employeeService.getEmployeeByUserId(userId);
@@ -40,7 +41,7 @@ public class EmployeeController {
         }
     }
 
-    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE_PERMISSION')")
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         // Convert EmployeeDto to Employee object

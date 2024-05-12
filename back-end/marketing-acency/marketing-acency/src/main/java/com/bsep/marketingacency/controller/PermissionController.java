@@ -7,6 +7,7 @@ import com.bsep.marketingacency.service.PermissionService;
 import com.bsep.marketingacency.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,21 +23,29 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
+    @PreAuthorize("hasAuthority('GET_PERMISSIONS_FOR_ROLE_ADMIN_PERMISSION')")
+
     @GetMapping("/roles/{roleName}/permissions")
     public Set<Permission> getPermissionsForRole(@PathVariable String roleName) {
         Role role = roleService.findByName(roleName);
         return role.getPermissions();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN_PERMISSION')")
+
     @GetMapping("/permissions")
     public List<Permission> getPermissions() {
         return permissionService.getPermissions();
     }
 
+    @PreAuthorize("hasAuthority('GET_PERMISSIONS_ADMIN_PERMISSION')")
+
     @GetMapping("/roles")
     public List<Role> getRoles() {
         return roleService.getRoles();
     }
+    @PreAuthorize("hasAuthority('UPDATE_ADMIN_PERMISSION')")
+
     @PutMapping("/roles/{roleName}/permissions")
     public ResponseEntity<?> updateRolePermissions(@PathVariable String roleName, @RequestBody Set<Permission> updatedPermissions) {
         // Pronalazak uloge iz baze
