@@ -123,6 +123,7 @@
 
 .individualButton:hover {
   border: 2px solid white;
+  cursor: pointer;
 }
 
 .legalEntityButton:hover {

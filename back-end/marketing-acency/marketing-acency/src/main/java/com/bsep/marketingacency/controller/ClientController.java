@@ -3,20 +3,18 @@ package com.bsep.marketingacency.controller;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.model.Client;
+import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
+import com.bsep.marketingacency.service.PackageService;
 import com.bsep.marketingacency.service.RejectionNoteService;
 import com.bsep.marketingacency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -36,9 +34,10 @@ public class ClientController {
     private UserService userService;
 
 
+
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
-
+        //email regex dodati
         if (!rejectionNoteService.isUserRejectionExpired(userDto.getMail())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User has already been rejected. Please try again later.");
         }else {
@@ -50,11 +49,11 @@ public class ClientController {
         }
 
         if (userService.findByMail(userDto.getMail()) != null) {
-            return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Email is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         if (!userDto.getPassword().equals(userDto.getConfirmationPassword())) {
-            return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.CONFLICT);
         }
 
         User savedUser = userService.save(userDto);
@@ -67,8 +66,7 @@ public class ClientController {
 
         Client savedClient = clientService.save(clientDto);
 
-        return new ResponseEntity<>("Client created.",HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
 }

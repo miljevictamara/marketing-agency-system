@@ -6,6 +6,7 @@ import { User } from './model/user.model';
 import { ApiService } from './service/api.service';
 import { UserService } from 'src/app/feature-modules/user/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Client } from 'src/app/feature-modules/user/model/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   user$ = new BehaviorSubject<User>({id: 0, mail: "", password: "", confirmationPassword: "", isBlocked: false, isActivated:false});
-  //user$ = new BehaviorSubject<User>({email: "", id: 0 });
   private access_token: string | null = null; 
   private refresh_token: string | null = null; 
   isFirstLogin: boolean = false;
@@ -32,18 +32,18 @@ export class AuthService {
 
 
   findByMail(mail: string): Observable<any> {
-    return this.http.get(`https://localhost:8443/user/findByMail/${mail}`);
+    return this.http.get(`https://localhost:8443/auth/findByEmail/${mail}`);
   }  
 
-  createUser(user: User): Observable<any> {   
-    return this.http.post('https://localhost:8443/client/register', user)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError("Failed to register user");
-        })
-      );
+
+  saveUser(user: User): Observable<any> { 
+    return this.http.post<User>(`https://localhost:8443/client/save-user`, user);
   }
+
+  registerClient(client: Client): Observable<any> {
+    return this.http.post<Client>(`https://localhost:8443/client/register`, client);
+  }
+  
 
   
   login(user: User) {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Package } from './model/package.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +14,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  /*getMyInfo(mail: string): void {
-    this.http.get<User>(this.baseUrl + 'user/getByEmail/' + mail)
-      .subscribe(
-        user => {
-          console.log('Received User:', user);        
-          this.currentUser = user;
-          localStorage.setItem('user',JSON.stringify(this.currentUser));
-        },
-        error => {
-          console.error('Error fetching user info:', error);
-        }
-      );
+  getPackageByName(name: string): Observable<Package> {
+    return this.http.get<Package>(`https://localhost:8443/package/${name}`);
   }
 
-  getUserDetails(mail: string): Observable<User> {
-    return this.http.get<User>(this.baseUrl + `user/getByEmail/${mail}`);
-  }*/
+  findUserIdByEmail(mail: string): Observable<User> {
+    return this.http.get<User>(`https://localhost:8443/auth/findByEmail/${mail}`);
+  }
+
 }
