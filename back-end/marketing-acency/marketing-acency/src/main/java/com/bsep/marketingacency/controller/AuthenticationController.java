@@ -57,4 +57,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
     }
+
+    @GetMapping(value = "/findByEmail/{mail}")
+    public ResponseEntity<User> findByMail(@PathVariable String mail) {
+        User user = userService.findByMail(mail);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import { User } from './model/user.model';
 import { UserService } from 'src/app/feature-modules/user/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './service/api.service';
+import { Client } from 'src/app/feature-modules/user/model/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -140,5 +141,13 @@ export class AuthService {
     const userId = decodedToken && decodedToken.id;
 
     return userId ? +userId : undefined; // Convert to number or return undefined
+  }
+
+  saveUser(user: User): Observable<any> { 
+    return this.http.post<User>(`https://localhost:8443/client/save-user`, user);
+  }
+
+  registerClient(client: Client): Observable<any> {
+    return this.http.post<Client>(`https://localhost:8443/client/register`, client);
   }
 }
