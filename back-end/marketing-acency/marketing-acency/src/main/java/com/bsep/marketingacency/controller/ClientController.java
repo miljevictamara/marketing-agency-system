@@ -51,10 +51,17 @@ public class ClientController {
         if (userService.findByMail(userDto.getMail()) != null) {
             return new ResponseEntity<>("Email is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
+        String emailRegex = "^(.+)@(.+)$";
+        String email = userDto.getMail();
+        if (!Pattern.matches(emailRegex, email) || userService.findByMail(userDto.getMail()) != null) {
+            return new ResponseEntity<>("Invalid email format or email is already in use.", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
         if (!userDto.getPassword().equals(userDto.getConfirmationPassword())) {
             return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.CONFLICT);
         }
+
+
 
         User savedUser = userService.save(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);

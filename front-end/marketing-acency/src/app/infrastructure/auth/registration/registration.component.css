@@ -223,3 +223,6 @@
   margin-top: 90px;
 }
 
+.selected {
+  border: 2px solid rgb(128,0,32);
+}

@@ -1,6 +1,6 @@
 <div class="registration-container">
     <!-- First step -->   
-    <div class="registration-div" *ngIf="!shouldRenderIndividual && !shouldRenderLegalEntity && !shouldRenderThirdStepIndividual && !shouldRenderLastStepIndividual"> 
+    <div class="registration-div" *ngIf="!shouldRenderIndividual && !shouldRenderLegalEntity && !shouldRenderThirdStepIndividual && !shouldRenderLastStepIndividual && !shouldRenderThirdStepLegalEntity && !shouldRenderLastStepLegalEntity"> 
         <div class="imageTitle">
             <img src="assets/registration.png" alt="Registration Image" class="registration-image">
             <p class="registrationTitle">Registration</p>
@@ -30,7 +30,7 @@
        </div>
 
        
-    <div *ngIf="shouldRenderIndividual" class="registration-div">
+    <div *ngIf="shouldRenderIndividual || shouldRenderLegalEntity" class="registration-div">
         <!--Second step as individual - create user -->
         <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
             <div class="inputDiv">
@@ -63,25 +63,48 @@
         </button>
     </div>
 
-    <div *ngIf="shouldRenderLastStepIndividual" class="registration-div">
+    <div *ngIf="shouldRenderThirdStepLegalEntity" class="registration-div">
+        <!-- Third step as legal entity-->
+        <form #individualForm="ngForm" [formGroup]="formLegalEntity" class="individual-form">  
+            <div class="inputDiv">
+                <input formControlName="companyName" matInput placeholder="company name" required>
+                <input formControlName="pib" matInput placeholder="pib" required>
+                <input formControlName="address" matInput placeholder="address" required>
+                <input formControlName="city" matInput placeholder="city" required>
+                <input formControlName="country" matInput placeholder="country" required>
+                <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+            </div>        
+        </form>
+
+        <button class="thirdStepButton" (click)="lastStepLegalEntity()">
+            Next
+        </button>
+    </div>
+   
+
+    <div *ngIf="shouldRenderLastStepIndividual || shouldRenderLastStepLegalEntity" class="registration-div">
         <div class="lastStep">
             <p class="subtitle">Choose package</p>
             <div class="packages">        
+                <button class="packageButton" [ngClass]="{ 'selected': selectedPackage === 'gold' }" (click)="addGoldPackage()">
+                    <img src="assets/gold.png" alt="Gold Package">Gold
+                </button>                
                 <button class="packageButton">
-                    <img src="assets/gold.png" alt="Gold Package" (click)="addGoldPackage()">Gold
+                    <img src="assets/silver.png" alt="Standard Package" (click)="addStandardPackage()">Standard
                 </button>
                 <button class="packageButton">
-                    <img src="assets/silver.png" alt="Standard Package" (click)="addStandardPackage()">Silver
-                </button>
-                <button class="packageButton">
-                    <img src="assets/bronze.png" alt="Basic Package" (click)="addBasicPackage()">Bronze
+                    <img src="assets/bronze.png" alt="Basic Package" (click)="addBasicPackage()">Basic
                 </button>
             </div>
-            <button class="thirdStepButton" (click)="submitIndividual()">
+            <button class="thirdStepButton" *ngIf="shouldRenderLastStepIndividual" (click)="submitIndividual()">
+                Submit
+            </button>
+            <button class="thirdStepButton" *ngIf="shouldRenderLastStepLegalEntity" (click)="submitLegalEntity()">
                 Submit
             </button>
         </div>
         
-       
+
+        
 
 </div>

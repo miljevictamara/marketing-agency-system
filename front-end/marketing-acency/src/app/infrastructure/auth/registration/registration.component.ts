@@ -17,15 +17,18 @@ import { Client } from 'src/app/feature-modules/user/model/client.model';
 export class RegistrationComponent implements OnInit{
   formUser!: FormGroup;
   formIndividual!: FormGroup;
+  formLegalEntity!: FormGroup;
   submitted = false;
   registrationError = '';
   shouldRenderIndividual:boolean = false;
   shouldRenderLegalEntity:boolean = false;
   shouldRenderThirdStepIndividual:boolean = false;
+  shouldRenderThirdStepLegalEntity:boolean = false;
   shouldRenderLastStepIndividual:boolean = false;
+  shouldRenderLastStepLegalEntity:boolean = false;
   user!: User;
-  firstName?: string | null;
-  lastName?: string | null;
+  firstname?: string | null;
+  lastname?: string | null;
   companyName?: string | null;
   pib?: number | null;
   phoneNumber!: string;
@@ -35,6 +38,8 @@ export class RegistrationComponent implements OnInit{
   country!: string;
   isApproved!: RegistrationRequestStatus;
   userId!: number | undefined;
+  selectedPackage: string = '';
+
 
   constructor(private formBuilder: FormBuilder, 
               private authService: AuthService, 
@@ -53,6 +58,15 @@ export class RegistrationComponent implements OnInit{
     this.formIndividual = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      phoneNumber: ['', Validators.required]
+    });
+
+    this.formLegalEntity = this.formBuilder.group({
+      companyName: ['', Validators.required],
+      pib: ['', Validators.required],
       address: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
@@ -98,8 +112,16 @@ export class RegistrationComponent implements OnInit{
             alert('Email is already in use'); 
           } if (error.status === 201) {
             console.log('User saved!');
-            this.shouldRenderThirdStepIndividual = true;
-            this.shouldRenderIndividual = false;
+            if (this.shouldRenderIndividual)
+            {
+              this.shouldRenderThirdStepIndividual = true;
+              this.shouldRenderIndividual = false;
+            }
+            else{
+              this.shouldRenderLegalEntity = false;
+              this.shouldRenderThirdStepLegalEntity = true;
+            }
+            
           }
            else {
             alert('An unexpected error occurred.'); // or display an error message on the UI
@@ -114,8 +136,8 @@ export class RegistrationComponent implements OnInit{
 
   lastStepIndividual()  {  
     if (this.formIndividual.valid) {
-      this.firstName = this.formIndividual.value.firstname;
-      this.lastName = this.formIndividual.value.lastname;
+      this.firstname = this.formIndividual.value.firstname;
+      this.lastname = this.formIndividual.value.lastname;
       this.address = this.formIndividual.value.address;
       this.city = this.formIndividual.value.city;
       this.country = this.formIndividual.value.country;
@@ -129,8 +151,26 @@ export class RegistrationComponent implements OnInit{
        
   }
 
+  lastStepLegalEntity()  {  
+    if (this.formLegalEntity.valid) {
+      this.companyName = this.formLegalEntity.value.companyName;
+      this.pib = this.formLegalEntity.value.pib;
+      this.address = this.formLegalEntity.value.address;
+      this.city = this.formLegalEntity.value.city;
+      this.country = this.formLegalEntity.value.country;
+      this.phoneNumber = this.formLegalEntity.value.phoneNumber;
 
-  addBasicPackage()  {   
+      this.shouldRenderThirdStepLegalEntity = false;
+      this.shouldRenderLastStepLegalEntity = true;
+    } else{
+      alert('Form is invalid. Please fill in all required fields.');
+    }
+       
+  }
+
+
+  addBasicPackage()  { 
+    this.selectedPackage = 'basic';  
     this.userService.getPackageByName('BASIC').subscribe(
       (packagee: Package) => {
         this.clientPackage = packagee;
@@ -142,7 +182,8 @@ export class RegistrationComponent implements OnInit{
     );
   }
 
-  addStandardPackage()  {  
+  addStandardPackage()  {
+    this.selectedPackage = 'standard';  
     this.userService.getPackageByName('STANDARD').subscribe(
       (packagee: Package) => {
         this.clientPackage = packagee;
@@ -155,6 +196,7 @@ export class RegistrationComponent implements OnInit{
   }
 
   addGoldPackage()  { 
+    this.selectedPackage = 'gold';
     this.userService.getPackageByName('GOLD').subscribe(
       (packagee: Package) => {
         this.clientPackage = packagee;
@@ -174,15 +216,15 @@ export class RegistrationComponent implements OnInit{
         const client: Client = {
           user: { id: this.userId },
           type: ClientType.INDIVIDUAL, 
-          firstName: this.formIndividual.value.firstname,
-          lastName: this.formIndividual.value.lastname,
+          firstName: this.firstname,
+          lastName: this.lastname,
           companyName: null,
           pib: null,
           clientPackage: this.clientPackage, 
-          phoneNumber: this.formIndividual.value.phoneNumber,
-          address: this.formIndividual.value.address,
-          city: this.formIndividual.value.city,
-          country: this.formIndividual.value.country,
+          phoneNumber: this.phoneNumber,
+          address: this.address,
+          city: this.city,
+          country: this.country,
           isApproved: RegistrationRequestStatus.PENDING 
         };
       
@@ -190,7 +232,8 @@ export class RegistrationComponent implements OnInit{
         this.authService.registerClient(client).subscribe(
           (response) => {
             console.log('Klijent uspešno registrovan!');
-            // Dodajte logiku za preusmeravanje na odgovarajuću stranicu nakon registracije
+            alert("Successfully sent a registration request!");
+            this.router.navigate(['/']);
           },
           (error) => {
             console.error('Greška prilikom registracije klijenta:', error);
@@ -204,6 +247,47 @@ export class RegistrationComponent implements OnInit{
       }
     );
   }
+
+
+    submitLegalEntity() {
+      this.userService.findUserIdByEmail(this.user.mail).subscribe(
+        (user) => {
+          this.userId = user.id;
+    
+          const client: Client = {
+            user: { id: this.userId },
+            type: ClientType.LEGAL_ENTITY, 
+            firstName: null,
+            lastName: null,
+            companyName: this.companyName,
+            pib: this.pib,
+            clientPackage: this.clientPackage, 
+            phoneNumber: this.phoneNumber,
+            address: this.address,
+            city: this.city,
+            country: this.country,
+            isApproved: RegistrationRequestStatus.PENDING 
+          };
+        
+          // Sada možete poslati ovaj objekt na vaš endpoint za registraciju klijenta
+          this.authService.registerClient(client).subscribe(
+            (response) => {
+              console.log('Klijent uspešno registrovan!');
+              alert("Successfully sent a registration request!");
+            },
+            (error) => {
+              console.error('Greška prilikom registracije klijenta:', error);
+              // Dodajte logiku za upravljanje greškama prilikom registracije
+            }
+          );
+        },
+        (error) => {
+          console.error('Error finding user ID:', error);
+          // Ovde možete dodati logiku za upravljanje greškama
+        }
+      );
+    }
+  
   
   
 
