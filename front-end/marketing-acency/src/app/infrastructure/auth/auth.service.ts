@@ -142,12 +142,4 @@ export class AuthService {
 
     return userId ? +userId : undefined; // Convert to number or return undefined
   }
-
-  saveUser(user: User): Observable<any> { 
-    return this.http.post<User>(`https://localhost:8443/client/save-user`, user);
-  }
-
-  registerClient(client: Client): Observable<any> {
-    return this.http.post<Client>(`https://localhost:8443/client/register`, client);
-  }
 }
