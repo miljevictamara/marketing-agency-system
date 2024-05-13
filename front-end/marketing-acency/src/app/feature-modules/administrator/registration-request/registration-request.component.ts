@@ -15,12 +15,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegistrationRequestComponent implements OnInit {
   individuals: any[] = [];
+  legalEntities: any[] = [];
   user!: User;
   userId!: number | undefined;
   shouldRenderAddRejectionNote:boolean = false;
   reason: string = '';
   addReasonForm: FormGroup;
-  selectedIndividual: any;
+  selectedClient: any;
+  
 
   constructor(private authService: AuthService, 
               private router: Router,
@@ -34,6 +36,7 @@ export class RegistrationRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadIndividuals();
+    this.loadLegalEntities();
   }
 
   getEmail(individual: any): Observable<string> {
@@ -42,20 +45,21 @@ export class RegistrationRequestComponent implements OnInit {
     );
   }
 
-  onRejectForm(individual: any){
+  onRejectForm(client: any){
     this.shouldRenderAddRejectionNote = true;
-    this.selectedIndividual = individual;
+    this.selectedClient = client;
   }
 
   onApproveClicked(individual: any){
     this.userId = individual.id;
     this.userService.approveRegistration(this.userId!).subscribe({
       next: () => {
-        console.log('Registracija odobrena!');
+        console.log('Registration confirmed!');
         this.loadIndividuals();
+        this.loadLegalEntities();
       },
       error: (error) => {
-        console.error('Greška prilikom odobravanja registracije:', error);
+        console.error('Error approving registration:', error);
       }
     });
   }
@@ -63,10 +67,12 @@ export class RegistrationRequestComponent implements OnInit {
   onRejectClicked(){
     this.shouldRenderAddRejectionNote = false;
     this.reason =  this.addReasonForm.value.reason;
-    this.userService.rejectRegistration(this.selectedIndividual!.id, this.reason).subscribe({
+    this.userService.rejectRegistration(this.selectedClient!.id, this.reason).subscribe({
       next: () => {
         console.log('Registration rejected!');
         this.loadIndividuals();
+        this.loadLegalEntities();
+        this.addReasonForm.reset();
       },
       error: (error) => {
         console.error('Error rejecting registration:', error);
@@ -77,6 +83,12 @@ export class RegistrationRequestComponent implements OnInit {
   loadIndividuals() {
     this.userService.getAllIndividuals().subscribe((individuals: Client[]) => {
       this.individuals = individuals;
+    });
+  }
+
+  loadLegalEntities() {
+    this.userService.getAllLegalEntities().subscribe((legalEntities: Client[]) => {
+      this.legalEntities = legalEntities;
     });
   }
 

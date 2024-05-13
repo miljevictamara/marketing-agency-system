@@ -13,5 +13,5 @@ INSERT INTO public."user_role"(user_id, role_id) VALUES (1, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (2, 2);
 
 INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('adresa prvog klijenta', 'grad prvog klijenta', 'kompanija prvog klijenta', 'drzava prvog klijenta', 'ime prvog klijenta', 0, 'prezime prvog klijenta', '+381', '123', 'INDIVIDUAL', 1, 1);
-INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('adresa drugog klijenta', 'grad drugog klijenta', 'kompanija drugog klijenta', 'drzava drugog klijenta', 'ime drugog klijenta', 0, 'prezime drugog klijenta', '+381', '123', 'INDIVIDUAL', 1, 2);
+INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('adresa drugog klijenta', 'grad drugog klijenta', 'kompanija drugog klijenta', 'drzava drugog klijenta', 'ime drugog klijenta', 0, 'prezime drugog klijenta', '+381', '123', 'LEGAL_ENTITY', 1, 2);
 

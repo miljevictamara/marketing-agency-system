@@ -95,4 +95,15 @@ public class AuthenticationController {
         return ResponseEntity.ok(filteredClients);
     }
 
+    @GetMapping(value = "/allLegalEntities")
+    public ResponseEntity<List<Client>> getAllLegalEntities() {
+        List<Client> legalEntityClients = userService.getAllLegalEntities();
+
+        List<Client> filteredClients = legalEntityClients.stream()
+                .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filteredClients);
+    }
+
 }

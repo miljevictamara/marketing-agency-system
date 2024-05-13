@@ -41,6 +41,10 @@ export class UserService {
     return this.http.get<Client[]>(`https://localhost:8443/auth/allIndividuals`);
   }
 
+  getAllLegalEntities(): Observable<Client[]> {
+    return this.http.get<Client[]>(`https://localhost:8443/auth/allLegalEntities`);
+  }
+
   approveRegistration(userId: number): Observable<any>{
     const url = `https://localhost:8443/client/approve-registration-request/${userId}`;
     return this.http.put(url, {});

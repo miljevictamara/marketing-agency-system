@@ -61,8 +61,12 @@ public class UserService {
     }
 
     public List<Client> getAllIndividuals() {
-        // Dohvati sve individualne klijente iz baze podataka
         List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
         return individualClients;
+    }
+
+    public List<Client> getAllLegalEntities() {
+        List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
+        return legalEntityClients;
     }
 }

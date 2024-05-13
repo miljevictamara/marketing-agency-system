@@ -1,4 +1,5 @@
 <div class="table-container">
+    <p class="title">Manage Registration Requests</p>
     <table class="table">
         <thead>
             <tr>
@@ -19,6 +20,33 @@
                 </td>
                 <td>
                     <button class="rejectButton" (click)="onRejectForm(individual)" >
+                        Reject
+                    </button>
+                  </td>
+              </tr>
+        </tbody>
+    </table>
+
+    <table class="table-legalEntity">
+        <thead>
+            <tr>
+                <th>Company name</th>
+                <th>Pib</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let legalEntity of legalEntities">
+                <td>{{ legalEntity.companyName }}</td>
+                <td>{{ legalEntity.pib }}</td>
+                <td>
+                  <button class="approveButton" (click)="onApproveClicked(legalEntity)">
+                      Approve
+                  </button>
+                </td>
+                <td>
+                    <button class="rejectButton" (click)="onRejectForm(legalEntity)" >
                         Reject
                     </button>
                   </td>
