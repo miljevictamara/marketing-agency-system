@@ -23,6 +23,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    // pristup: Employee
     @GetMapping("/byUserId/{userId}")
     public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable Long userId) {
         Employee employee = employeeService.getEmployeeByUserId(userId);
@@ -43,6 +44,7 @@ public class EmployeeController {
         }
     }
 
+    // pristup: Employee
     @PutMapping("/update")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee updatedEmployee = new Employee(
@@ -65,11 +67,13 @@ public class EmployeeController {
         }
     }
 
+    // pristup: Administrator
     @GetMapping("/all")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/create")
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeDto employeeDto) {
 

@@ -19,6 +19,7 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
+    // pristup: Administrator
     @GetMapping("/byUserId/{userId}")
     public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
         Administrator administrator = administratorService.getAdministratorByUserId(userId);
@@ -39,6 +40,7 @@ public class AdministratorController {
         }
     }
 
+    // pristup: Administrator
     @PutMapping("/update")
     public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
         Administrator updatedAdministrator = new Administrator(
@@ -61,6 +63,7 @@ public class AdministratorController {
         }
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/create")
     public ResponseEntity<String> createAdministrator(@RequestBody AdministratorDto administratorDto) {
 

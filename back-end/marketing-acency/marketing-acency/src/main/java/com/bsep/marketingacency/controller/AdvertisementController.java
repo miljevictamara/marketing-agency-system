@@ -21,16 +21,19 @@ public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
 
+    // pristup: Employee
     @GetMapping("/pending")
     public List<Advertisement> getPendingAdvertisements() {
         return advertisementService.getPendingAdvertisements();
     }
 
+    // pristup: Employee
     @GetMapping("/accepted")
     public List<Advertisement> getAcceptedAdvertisements() {
         return advertisementService.getAcceptedAdvertisements();
     }
 
+    // pristup: Employee, Client
     @PutMapping("/update")
     public ResponseEntity<AdvertisementDto> updateAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
         // Convert EmployeeDto to Employee object
@@ -57,11 +60,13 @@ public class AdvertisementController {
         }
     }
 
+    // pristup: Client
     @GetMapping("/byClientUserId/{clientUserId}")
     public List<Advertisement> getAdvertisementsByClientUserId(@PathVariable Long clientUserId) {
         return advertisementService.getAdvertisementsByClientUserId(clientUserId);
     }
 
+    // pristup: Client
     @PostMapping(value = "/create")
     public ResponseEntity<String> createAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
 

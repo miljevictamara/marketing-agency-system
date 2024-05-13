@@ -80,12 +80,14 @@ public class ClientController {
 
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/save-employee-user")
     public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveEmployeeUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/save-admin-user")
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveAdminUser(userDto);
@@ -129,11 +131,13 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // pristup: Administrator
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
 
+    // pristup: Client
     @GetMapping("/byUserId/{userId}")
     public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) {
         Client client = clientService.getClientByUserId(userId);
@@ -159,6 +163,7 @@ public class ClientController {
         }
     }
 
+    // pristup: Client
     @PutMapping("/update")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) {
         Client updatedClient = new Client(
