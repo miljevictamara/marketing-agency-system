@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,6 +83,7 @@ public class ClientController {
 
     // pristup: Administrator
     @PostMapping(value = "/save-employee-user")
+    @PreAuthorize("hasAuthority('SAVE_EMPLOYEE_USER')")
     public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveEmployeeUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
@@ -89,6 +91,7 @@ public class ClientController {
 
     // pristup: Administrator
     @PostMapping(value = "/save-admin-user")
+    @PreAuthorize("hasAuthority('SAVE_ADMIN_USER')")
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveAdminUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
@@ -133,12 +136,14 @@ public class ClientController {
 
     // pristup: Administrator
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('GET_ALL_CLIENTS')")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
     }
 
     // pristup: Client
     @GetMapping("/byUserId/{userId}")
+    @PreAuthorize("hasAuthority('GET_CLIENT_BYUSERID')")
     public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) {
         Client client = clientService.getClientByUserId(userId);
         if (client != null) {
@@ -165,6 +170,7 @@ public class ClientController {
 
     // pristup: Client
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('UPDATE_CLIENT')")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) {
         Client updatedClient = new Client(
                 clientDto.getId(),

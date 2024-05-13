@@ -42,7 +42,7 @@ export class AdvertisementFormComponent {
       
           const newAdvertisement: Advertisement = {
             id: 0, // RESITI
-            client: client,
+            client: client.id,
             slogan: formData.slogan!,
             duration: duration,
             description: formData.description!,

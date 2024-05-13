@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,7 @@ public class AdministratorController {
 
     // pristup: Administrator
     @GetMapping("/byUserId/{userId}")
+    @PreAuthorize("hasAuthority('GET_BYUSERID')")
     public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
         Administrator administrator = administratorService.getAdministratorByUserId(userId);
         if (administrator != null) {
@@ -41,7 +43,9 @@ public class AdministratorController {
     }
 
     // pristup: Administrator
+
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
     public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
         Administrator updatedAdministrator = new Administrator(
                 administratorDto.getId(),
@@ -64,7 +68,9 @@ public class AdministratorController {
     }
 
     // pristup: Administrator
+
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     public ResponseEntity<String> createAdministrator(@RequestBody AdministratorDto administratorDto) {
 
         Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);

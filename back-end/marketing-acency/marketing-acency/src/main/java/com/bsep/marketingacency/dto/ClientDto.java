@@ -1,9 +1,11 @@
 package com.bsep.marketingacency.dto;
 
+import com.bsep.marketingacency.deserilizer.UserDeserializer;
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
 import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.User;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @Setter
 public class ClientDto {
     private Long Id;
+    @JsonDeserialize(using = UserDeserializer.class)
     private User user;
     private ClientType type;
     @Nullable

@@ -1,7 +1,6 @@
 package com.bsep.marketingacency.dto;
 
 import com.bsep.marketingacency.model.AdvertisementStatus;
-import com.bsep.marketingacency.model.Client;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
 public class AdvertisementDto {
     private Long id;
 
-    private Client client;
+    private Long client;
 
     private String slogan;
 
@@ -31,7 +30,7 @@ public class AdvertisementDto {
 
     public AdvertisementDto() { }
 
-    public AdvertisementDto(Long id, Client client, String slogan, Long duration, String description, Date deadline, Date active_from, Date active_to, String request_description, AdvertisementStatus status) {
+    public AdvertisementDto(Long id, Long client, String slogan, Long duration, String description, Date deadline, Date active_from, Date active_to, String request_description, AdvertisementStatus status) {
         this.id = id;
         this.client = client;
         this.slogan = slogan;
@@ -48,7 +47,7 @@ public class AdvertisementDto {
         return id;
     }
 
-    public Client getClient() {
+    public Long getClientId() {
         return client;
     }
 
@@ -88,7 +87,7 @@ public class AdvertisementDto {
         this.id = id;
     }
 
-    public void setClient(Client client) {
+    public void setClientId(Long client) {
         this.client = client;
     }
 

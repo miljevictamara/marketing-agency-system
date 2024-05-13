@@ -4,8 +4,10 @@ import com.bsep.marketingacency.dto.AdvertisementDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Advertisement;
 import com.bsep.marketingacency.model.AdvertisementStatus;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.repository.AdvertisementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
 @Service
 public class AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
+    @Autowired
+    private ClientService clientService;
 
     public AdvertisementService(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
@@ -26,11 +30,14 @@ public class AdvertisementService {
         return advertisementRepository.findByStatus(AdvertisementStatus.ACCEPTED);
     }
 
-    public Advertisement updateAdvertisement(Advertisement updatedAdvertisement) {
+    public Advertisement updateAdvertisement(AdvertisementDto updatedAdvertisement) {
         Advertisement existingAdvertisement = advertisementRepository.findById(updatedAdvertisement.getId())
                 .orElse(null);
+        Long id = updatedAdvertisement.getClientId();
+        Client client = clientService.findById(id);
+
         if (existingAdvertisement != null) {
-            existingAdvertisement.setClient(updatedAdvertisement.getClient());
+            existingAdvertisement.setClient(client);
             existingAdvertisement.setSlogan(updatedAdvertisement.getSlogan());
             existingAdvertisement.setDuration(updatedAdvertisement.getDuration());
             existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
@@ -51,8 +58,11 @@ public class AdvertisementService {
     }
 
     public Advertisement saveAdvertisement(AdvertisementDto advertisementDto) {
+        Long id = advertisementDto.getClientId();
+        Client client = clientService.findById(id);
+
         Advertisement advertisement = new Advertisement();
-        advertisement.setClient(advertisementDto.getClient());
+        advertisement.setClient(client);
         advertisement.setSlogan(advertisementDto.getSlogan());
         advertisement.setDuration(advertisementDto.getDuration());
         advertisement.setDescription(advertisementDto.getDescription());
@@ -63,5 +73,10 @@ public class AdvertisementService {
         advertisement.setStatus(advertisementDto.getStatus());
 
         return this.advertisementRepository.save(advertisement);
+    }
+
+    public Long getClientIdByAdvertismentId(Long advertismentId){
+      Advertisement a =  advertisementRepository.getById(advertismentId);
+      return a.getClient().getId();
     }
 }

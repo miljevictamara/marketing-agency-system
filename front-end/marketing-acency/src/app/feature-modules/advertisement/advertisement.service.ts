@@ -29,4 +29,8 @@ export class AdvertisementService {
   createAdvertisement(advertisement: Advertisement): Observable<Advertisement> {
     return this.http.post<Advertisement>('https://localhost:8443/advertisement/create', advertisement)
   }
+
+  getClientIdByAdvertismentId(requestId: number){
+    return this.http.get<number>('https://localhost:8443/advertisement/getClientIdByAdvertismentId/' + requestId);
+  }
 }

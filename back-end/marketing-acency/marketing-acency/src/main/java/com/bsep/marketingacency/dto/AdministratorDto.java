@@ -1,6 +1,9 @@
 package com.bsep.marketingacency.dto;
 
+import com.bsep.marketingacency.deserilizer.UserDeserializer;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.util.GrantedAuthorityDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class AdministratorDto {
     private Long Id;
@@ -15,7 +18,7 @@ public class AdministratorDto {
 
     private String lastName;
     private String phoneNumber;
-
+   @JsonDeserialize(using = UserDeserializer.class)
     private User user;
 
     public AdministratorDto() { }

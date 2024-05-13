@@ -25,7 +25,25 @@ export class AuthGuard implements CanActivate {
           if (this.user) {
             this.loggedInUser = this.user;
             if (
-              route.routeConfig?.path === 'activation/:tokenId' &&
+              route.routeConfig?.path === 'administrator-form' &&
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+            ) {
+              return true;
+            }
+            if (
+              route.routeConfig?.path === 'employee-form' &&
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+            ) {
+              return true;
+            }
+            if (
+              route.routeConfig?.path === 'administrator-profile' &&
+              this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
+            ) {
+              return true;
+            }
+            if (
+              route.routeConfig?.path === 'client-profile' &&
               this.user.roles.some((role: Role) => route.data['role'][0]===this.loggedInUser?.roles[0])
             ) {
               return true;

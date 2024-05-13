@@ -140,7 +140,7 @@ export class AdministratorFormComponent {
         this.userId = user.id;
   
         const administrator: Administrator = {
-          user: { id: this.userId },
+          user: user,
           firstName: this.formIndividual.value.firstname,
           lastName: this.formIndividual.value.lastname,
           phoneNumber: this.formIndividual.value.phoneNumber,

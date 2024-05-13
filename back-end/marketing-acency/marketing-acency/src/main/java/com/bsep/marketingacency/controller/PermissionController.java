@@ -23,7 +23,7 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @PreAuthorize("hasAuthority('GET_PERMISSIONS_FOR_ROLE_ADMIN_PERMISSION')")
+    @PreAuthorize("hasAuthority('GET_PERMISSIONS_FOR_ROLE')")
 
     @GetMapping("/roles/{roleName}/permissions")
     public Set<Permission> getPermissionsForRole(@PathVariable String roleName) {
@@ -31,20 +31,20 @@ public class PermissionController {
         return role.getPermissions();
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN_PERMISSION')")
+    @PreAuthorize("hasAuthority('GET_ALL_PERMISSIONS')")
 
     @GetMapping("/permissions")
     public List<Permission> getPermissions() {
         return permissionService.getPermissions();
     }
 
-    @PreAuthorize("hasAuthority('GET_PERMISSIONS_ADMIN_PERMISSION')")
+    @PreAuthorize("hasAuthority('GET_ALL_ROLES')")
 
     @GetMapping("/roles")
     public List<Role> getRoles() {
         return roleService.getRoles();
     }
-    @PreAuthorize("hasAuthority('UPDATE_ADMIN_PERMISSION')")
+    @PreAuthorize("hasAuthority('UPDATE_ROLE_PERMISSION')")
 
     @PutMapping("/roles/{roleName}/permissions")
     public ResponseEntity<?> updateRolePermissions(@PathVariable String roleName, @RequestBody Set<Permission> updatedPermissions) {

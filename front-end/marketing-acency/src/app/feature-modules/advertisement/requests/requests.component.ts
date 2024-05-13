@@ -22,12 +22,25 @@ export class RequestsComponent {
   }
 
   onAcceptClicked(request: Advertisement) {
-    // Update the status to ACCEPTED
-    request.status = AdvertisementStatus.ACCEPTED;
-
-    // Call the update method from the service
-    this.advertisementService.updateAdvertisement(request)
-      .subscribe(updatedRequest => {
-      });
+    this.advertisementService.getClientIdByAdvertismentId(request.id).subscribe(clientId => {
+      const newAdvertisement: Advertisement = {
+        id: request.id,
+        client: clientId,
+        slogan: request.slogan,
+        duration: request.duration,
+        description: request.description,
+        deadline: request.deadline,
+        active_from: request.active_from,
+        active_to: request.active_to,
+        request_description: request.request_description,
+        status: AdvertisementStatus.ACCEPTED
+      };
+      // Call the update method from the service
+      this.advertisementService.updateAdvertisement(newAdvertisement)
+        .subscribe(updatedRequest => {
+          // Do something with the updatedRequest if needed
+        });
+    });
   }
+  
 }

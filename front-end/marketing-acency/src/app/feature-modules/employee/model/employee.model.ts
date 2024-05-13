@@ -8,6 +8,6 @@ export interface Employee {
     city?: string | null;
     country?: string | null;
     phoneNumber?: string | null;
-    user: { id?: number };
+    user: User;
 }
 

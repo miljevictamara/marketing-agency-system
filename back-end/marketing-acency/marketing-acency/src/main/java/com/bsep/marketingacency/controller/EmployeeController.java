@@ -25,8 +25,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     // pristup: Employee
-    @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
+    //@PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     @GetMapping("/byUserId/{userId}")
+    @PreAuthorize("hasAuthority('GET_EMPLOYEE_BYUSERID')")
     public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable Long userId) {
         Employee employee = employeeService.getEmployeeByUserId(userId);
         if (employee != null) {
@@ -47,8 +48,8 @@ public class EmployeeController {
     }
 
     // pristup: Employee
-    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     @PutMapping("/update")
+    @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee updatedEmployee = new Employee(
                 employeeDto.getId(),
@@ -72,12 +73,15 @@ public class EmployeeController {
 
     // pristup: Administrator
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('GET_ALL_EMPLOYEES')")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
     // pristup: Administrator
+
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('CREATE_EMPLOYEE')")
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeDto employeeDto) {
 
         Employee savedEmployee = employeeService.saveEmployee(employeeDto);

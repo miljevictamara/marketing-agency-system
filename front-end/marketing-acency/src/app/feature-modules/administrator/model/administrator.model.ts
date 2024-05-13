@@ -1,3 +1,4 @@
+import { Role } from "src/app/infrastructure/auth/model/role.model";
 import { User } from "src/app/infrastructure/auth/model/user.model";
 
 export interface Administrator {
@@ -8,6 +9,6 @@ export interface Administrator {
     city?: string | null;
     country?: string | null;
     phoneNumber?: string | null;
-    user: { id?: number };
+    user: User;
 }
 
