@@ -28,6 +28,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   onEditClicked(employee: Employee) {
     this.employee = employee;
-    this.editClicked = true;
+    this.editClicked = !this.editClicked; // Toggle the value
   }
+  
 }

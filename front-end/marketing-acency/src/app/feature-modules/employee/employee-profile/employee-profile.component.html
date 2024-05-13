@@ -1,35 +1,34 @@
-<h2>Employee profile:</h2>
+<h1>Employee profile</h1>
 
-<table>
-    <tr *ngIf="employee">
-        <td>First Name:</td>
-        <td>{{ employee.firstName || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <td>Last Name:</td>
-        <td>{{ employee.lastName || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <td>Address:</td>
-        <td>{{ employee.address || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <td>City:</td>
-        <td>{{ employee.city || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <td>Country:</td>
-        <td>{{ employee.country || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <td>Phone Number:</td>
-        <td>{{ employee.phoneNumber || '-' }}</td>
-    </tr>
-    <tr *ngIf="employee">
-        <button (click)="onEditClicked(employee)">Edit</button>
-    </tr>
-    
-</table>
+<div class="employee-profile-container">
+    <div class="employee-info" *ngIf="employee">
+        <label>First Name:</label>
+        <span>{{ employee.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Last Name:</label>
+        <span>{{ employee.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Address:</label>
+        <span>{{ employee.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>City:</label>
+        <span>{{ employee.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Country:</label>
+        <span>{{ employee.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Phone Number:</label>
+        <span>{{ employee.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="employee">
+        <button class="edit-button" (click)="onEditClicked(employee)">Edit</button>
+    </div>
+</div>
 
 <app-edit-employee-profile *ngIf="editClicked" [employee]="employee"></app-edit-employee-profile>
 <app-advertisements></app-advertisements>
