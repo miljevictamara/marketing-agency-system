@@ -2,9 +2,6 @@ INSERT INTO public.role( id, name) VALUES (1, 'ROLE_ADMIN');
 INSERT INTO public.role( id, name) VALUES (2, 'ROLE_EMPLOYEE');
 INSERT INTO public.role( id, name) VALUES (3, 'ROLE_CLIENT');
 
-INSERT INTO public.users(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public.users(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-
 INSERT INTO user_role (user_id, role_id) VALUES (1,2);
 INSERT INTO user_role (user_id, role_id) VALUES (2,2);
 
