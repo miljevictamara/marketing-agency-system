@@ -1,6 +1,7 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.ClientDto;
+import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.dto.RejectionNoteDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.model.*;
@@ -79,12 +80,14 @@ public class ClientController {
 
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/save-employee-user")
     public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveEmployeeUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
     }
 
+    // pristup: Administrator
     @PostMapping(value = "/save-admin-user")
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveAdminUser(userDto);
@@ -128,8 +131,63 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // pristup: Administrator
     @GetMapping("/all")
     public List<Client> getAllClients() {
         return clientService.getAllClients();
+    }
+
+    // pristup: Client
+    @GetMapping("/byUserId/{userId}")
+    public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) {
+        Client client = clientService.getClientByUserId(userId);
+        if (client != null) {
+            ClientDto clientDto = new ClientDto(
+                    client.getId(),
+                    client.getUser(),
+                    client.getType(),
+                    client.getFirstName(),
+                    client.getLastName(),
+                    client.getCompanyName(),
+                    client.getPib(),
+                    client.getClientPackage(),
+                    client.getPhoneNumber(),
+                    client.getAddress(),
+                    client.getCity(),
+                    client.getCountry(),
+                    client.getIsApproved()
+            );
+            return new ResponseEntity<>(clientDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // pristup: Client
+    @PutMapping("/update")
+    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) {
+        Client updatedClient = new Client(
+                clientDto.getId(),
+                clientDto.getUser(),
+                clientDto.getType(),
+                clientDto.getFirstName(),
+                clientDto.getLastName(),
+                clientDto.getCompanyName(),
+                clientDto.getPib(),
+                clientDto.getClientPackage(),
+                clientDto.getPhoneNumber(),
+                clientDto.getAddress(),
+                clientDto.getCity(),
+                clientDto.getCountry(),
+                clientDto.getIsApproved()
+        );
+
+        Client updated = clientService.updateClient(updatedClient);
+
+        if (updated != null) {
+            return new ResponseEntity<>(clientDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

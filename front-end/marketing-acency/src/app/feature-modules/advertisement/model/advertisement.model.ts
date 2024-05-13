@@ -1,6 +1,8 @@
+import { Client } from "../../client/model/client.model";
+
 export interface Advertisement {
     id: number;
-    clientId: number;
+    client: Client;
     slogan: string;
     duration: number;
     description: string;

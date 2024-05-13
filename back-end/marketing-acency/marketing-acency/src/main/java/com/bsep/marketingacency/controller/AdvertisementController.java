@@ -1,11 +1,8 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.AdvertisementDto;
-import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Advertisement;
-import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.AdvertisementService;
-import com.bsep.marketingacency.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +21,25 @@ public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
 
+    // pristup: Employee
     @GetMapping("/pending")
     public List<Advertisement> getPendingAdvertisements() {
         return advertisementService.getPendingAdvertisements();
     }
 
+    // pristup: Employee
     @GetMapping("/accepted")
     public List<Advertisement> getAcceptedAdvertisements() {
         return advertisementService.getAcceptedAdvertisements();
     }
 
+    // pristup: Employee, Client
     @PutMapping("/update")
     public ResponseEntity<AdvertisementDto> updateAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
         // Convert EmployeeDto to Employee object
         Advertisement updatedAdvertisement = new Advertisement(
                 advertisementDto.getId(),
-                advertisementDto.getClientId(),
+                advertisementDto.getClient(),
                 advertisementDto.getSlogan(),
                 advertisementDto.getDuration(),
                 advertisementDto.getDescription(),
@@ -58,5 +58,20 @@ public class AdvertisementController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    // pristup: Client
+    @GetMapping("/byClientUserId/{clientUserId}")
+    public List<Advertisement> getAdvertisementsByClientUserId(@PathVariable Long clientUserId) {
+        return advertisementService.getAdvertisementsByClientUserId(clientUserId);
+    }
+
+    // pristup: Client
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
+
+        Advertisement savedAdvertisement = advertisementService.saveAdvertisement(advertisementDto);
+
+        return new ResponseEntity<>("Employee created.",HttpStatus.CREATED);
     }
 }

@@ -15,6 +15,7 @@ import { EmployeeFormComponent } from 'src/app/feature-modules/employee/employee
 import { AdministratorFormComponent } from 'src/app/feature-modules/administrator/administrator-form/administrator-form.component';
 import { AuthGuard } from '../authorization/auth.guard';
 import { PermissionPageComponent } from 'src/app/feature-modules/permission-page/permission-page.component';
+import { ClientProfileComponent } from 'src/app/feature-modules/client/client-profile/client-profile.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'employee-form', component: EmployeeFormComponent},
   { path: 'administrator-form', component: AdministratorFormComponent},
   { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
-  { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}}
+  { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
+  { path: 'client-profile', component: ClientProfileComponent},
   
 ];
 

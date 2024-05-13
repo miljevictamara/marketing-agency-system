@@ -1,5 +1,7 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.dto.AdvertisementDto;
+import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Advertisement;
 import com.bsep.marketingacency.model.AdvertisementStatus;
 import com.bsep.marketingacency.model.Employee;
@@ -28,7 +30,7 @@ public class AdvertisementService {
         Advertisement existingAdvertisement = advertisementRepository.findById(updatedAdvertisement.getId())
                 .orElse(null);
         if (existingAdvertisement != null) {
-            existingAdvertisement.setClientId(updatedAdvertisement.getClientId());
+            existingAdvertisement.setClient(updatedAdvertisement.getClient());
             existingAdvertisement.setSlogan(updatedAdvertisement.getSlogan());
             existingAdvertisement.setDuration(updatedAdvertisement.getDuration());
             existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
@@ -42,5 +44,24 @@ public class AdvertisementService {
         } else {
             return null;
         }
+    }
+
+    public List<Advertisement> getAdvertisementsByClientUserId(Long clientUserId) {
+        return advertisementRepository.findByClientUserId(clientUserId);
+    }
+
+    public Advertisement saveAdvertisement(AdvertisementDto advertisementDto) {
+        Advertisement advertisement = new Advertisement();
+        advertisement.setClient(advertisementDto.getClient());
+        advertisement.setSlogan(advertisementDto.getSlogan());
+        advertisement.setDuration(advertisementDto.getDuration());
+        advertisement.setDescription(advertisementDto.getDescription());
+        advertisement.setDeadline(advertisementDto.getDeadline());
+        advertisement.setActive_from(advertisementDto.getActive_from());
+        advertisement.setActive_to(advertisementDto.getActive_to());
+        advertisement.setRequest_description(advertisementDto.getRequest_description());
+        advertisement.setStatus(advertisementDto.getStatus());
+
+        return this.advertisementRepository.save(advertisement);
     }
 }

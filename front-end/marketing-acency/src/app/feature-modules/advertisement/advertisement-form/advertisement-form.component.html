@@ -1,0 +1,34 @@
+<H2>Make a request for an Advertisement:</H2>
+<form [formGroup] = "advertisementForm">
+    <div>
+        <label>Slogan:</label>
+        <input type="text" formControlName="slogan">
+    </div>
+    <div>
+        <label>Duration (in seconds):</label>
+        <input type="number" formControlName="duration">
+    </div>
+    <div>
+        <label>Description:</label>
+        <input type="text" formControlName="description">
+    </div>
+    <div>
+        <label>Deadline:</label>
+        <input type="date" formControlName="deadline">
+    </div>
+    <div>
+        <label>Active from:</label>
+        <input type="date" formControlName="activeFrom">
+    </div>
+    <div>
+        <label>Active to:</label>
+        <input type="date" formControlName="activeTo">
+    </div>
+    <div>
+        <label>Request Description:</label>
+        <input type="text" formControlName="requestDescription">
+    </div>
+    <div>
+        <button type="submit" (click)="addAdvertisement()">Send a Request</button>
+    </div>
+</form>
