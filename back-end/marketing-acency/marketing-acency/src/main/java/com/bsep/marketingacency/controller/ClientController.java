@@ -104,7 +104,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/reject-registration-request/{id}")
-    public ResponseEntity<String> register(@PathVariable  Long id, @RequestParam String reason){
+    public ResponseEntity<String> register(@PathVariable  Long id, @RequestBody String reason){
         clientService.rejectRegistrationRequest(id, reason);
         Client client = clientService.findById(id);
         User user = client.getUser();

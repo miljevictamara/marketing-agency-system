@@ -1,0 +1,43 @@
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let individual of individuals">
+                <td>{{ individual.firstName }}</td>
+                <td>{{ individual.lastName }}</td>
+                <td>
+                  <button class="approveButton" (click)="onApproveClicked(individual)">
+                      Approve
+                  </button>
+                </td>
+                <td>
+                    <button class="rejectButton" (click)="onRejectForm(individual)" >
+                        Reject
+                    </button>
+                  </td>
+              </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="shouldRenderAddRejectionNote" class="message-form-wrapper">
+    <!--<button mat-icon-button class="close-button" (click)="onCloseFormClicked()">
+        <mat-icon>close</mat-icon>
+    </button>-->
+    <form [formGroup]="addReasonForm" class="center-class">
+        <mat-form-field>
+            <input matInput type="text" placeholder="Enter your reason..." formControlName="reason">
+        </mat-form-field>                  
+        <button class="rejectButton" (click)="onRejectClicked()">
+            Reject
+        </button>
+    </form>  
+    
+</div>

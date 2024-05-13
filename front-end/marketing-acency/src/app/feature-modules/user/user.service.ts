@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Package } from './model/package.model';
+import { Client } from './model/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,24 @@ export class UserService {
   findUserIdByEmail(mail: string): Observable<User> {
     return this.http.get<User>(`https://localhost:8443/auth/findByEmail/${mail}`);
   }
+
+  findByUserId(userId: number): Observable<User> {
+    return this.http.get<User>(`https://localhost:8443/auth/findByUserId/${userId}`);
+  }
+
+  getAllIndividuals(): Observable<Client[]> {
+    return this.http.get<Client[]>(`https://localhost:8443/auth/allIndividuals`);
+  }
+
+  approveRegistration(userId: number): Observable<any>{
+    const url = `https://localhost:8443/client/approve-registration-request/${userId}`;
+    return this.http.put(url, {});
+  }
+
+  rejectRegistration(userId: number, reason: string): Observable<any>{
+    return this.http.put<any>('https://localhost:8443/client/reject-registration-request/' + userId,  reason );
+}
+
+  
 
 }

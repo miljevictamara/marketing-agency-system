@@ -90,9 +90,9 @@ public class EmailService {
         javaMailSender.send(mail);
 
         System.out.println("Email sent!");
-        javaMailSender.send(mail);
+        //javaMailSender.send(mail);
 
-        System.out.println("Email sent!");
+        //System.out.println("Email sent!");
     }
 
 

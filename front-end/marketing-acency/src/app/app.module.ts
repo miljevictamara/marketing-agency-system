@@ -16,10 +16,14 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { TokenInterceptor } from './infrastructure/auth/interceptor/TokenInterceptor';
 import { EmployeeModule } from './feature-modules/employee/employee.module';
+import { RegistrationRequestComponent } from './feature-modules/administrator/registration-request/registration-request.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegistrationRequestComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,10 @@ import { EmployeeModule } from './feature-modules/employee/employee.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    EmployeeModule
+    EmployeeModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule 
   ],
   providers: [ 
     {

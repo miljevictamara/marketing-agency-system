@@ -1,7 +1,10 @@
 package com.bsep.marketingacency.controller;
 
+import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
 import com.bsep.marketingacency.dto.UserTokenState;
+import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.UserService;
 import com.bsep.marketingacency.util.TokenUtils;
@@ -15,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,4 +73,26 @@ public class AuthenticationController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping(value = "/findByUserId/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "/allIndividuals")
+    public ResponseEntity<List<Client>> getAllIndividuals() {
+        List<Client> individualClients = userService.getAllIndividuals();
+
+        List<Client> filteredClients = individualClients.stream()
+                .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filteredClients);
+    }
+
 }

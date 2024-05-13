@@ -1,8 +1,12 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
+import com.bsep.marketingacency.enumerations.ClientType;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +21,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -24,6 +31,8 @@ public class UserService {
     public User findByMail(String mail) {
         return userRepository.findByMail(mail);
     }
+
+    public User findUserById(Long id) { return userRepository.findUserById(id); }
 
     public User save(UserDto userDto) {
         User user = new User();
@@ -49,5 +58,11 @@ public class UserService {
         existingUser.setIsActivated(true);
 
         return userRepository.save(existingUser);
+    }
+
+    public List<Client> getAllIndividuals() {
+        // Dohvati sve individualne klijente iz baze podataka
+        List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
+        return individualClients;
     }
 }
