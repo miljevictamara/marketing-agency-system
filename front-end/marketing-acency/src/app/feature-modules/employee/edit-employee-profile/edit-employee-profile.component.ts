@@ -35,6 +35,7 @@ export class EditEmployeeProfileComponent implements OnChanges {
       this.employeeService.updateEmployee(updatedEmployee).subscribe(
         (updated: Employee) => {
           console.log('Employee updated successfully:', updated);
+          alert('Employee profile updated successfully!');
         },
         (error) => {
           console.error('Failed to update employee:', error);

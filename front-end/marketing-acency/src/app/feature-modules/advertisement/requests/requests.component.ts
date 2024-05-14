@@ -28,6 +28,7 @@ export class RequestsComponent {
     // Call the update method from the service
     this.advertisementService.updateAdvertisement(request)
       .subscribe(updatedRequest => {
+        alert('Request for an advertisement accepted!');
       });
   }
 }

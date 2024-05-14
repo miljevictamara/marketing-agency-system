@@ -29,10 +29,10 @@ export class ClientProfileComponent {
 
   onEditClicked(client: Client) {
     this.client = client;
-    this.editClicked = true;
+    this.editClicked = !this.editClicked;
   }
 
   onAddAdvertisementClicked() {
-    this.addAdvertisementClicked = true;
+    this.addAdvertisementClicked = !this.addAdvertisementClicked;
   }
 }

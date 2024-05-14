@@ -1,37 +1,38 @@
-<h2>Client profile:</h2>
+<h1>Client profile</h1>
 
-<table>
-    <tr *ngIf="client">
-        <td>First Name:</td>
-        <td>{{ client.firstName || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <td>Last Name:</td>
-        <td>{{ client.lastName || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <td>Address:</td>
-        <td>{{ client.address || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <td>City:</td>
-        <td>{{ client.city || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <td>Country:</td>
-        <td>{{ client.country || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <td>Phone Number:</td>
-        <td>{{ client.phoneNumber || '-' }}</td>
-    </tr>
-    <tr *ngIf="client">
-        <button (click)="onEditClicked(client)">Edit</button>
-    </tr>
-    
-</table>
+<div class="employee-profile-container">
+    <div class="employee-info" *ngIf="client">
+        <label>First Name:</label>
+        <span>{{ client.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Last Name:</label>
+        <span>{{ client.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Address:</label>
+        <span>{{ client.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>City:</label>
+        <span>{{ client.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Country:</label>
+        <span>{{ client.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Phone Number:</label>
+        <span>{{ client.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="client">
+        <button class="edit-button" (click)="onEditClicked(client)">Edit</button>
+    </div>
+</div>
 
 <app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
 <app-advertisements-for-user></app-advertisements-for-user>
-<button (click)="onAddAdvertisementClicked()">Make a Request</button>
+<div class="edit-button-container">
+    <button class="edit-button" (click)="onAddAdvertisementClicked()">Make a Request</button>
+</div>
 <app-advertisement-form *ngIf="addAdvertisementClicked"></app-advertisement-form>

@@ -1,0 +1,55 @@
+.employee-profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid rgb(128,0,32);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.employee-info {
+    margin-bottom: 10px;
+}
+
+.employee-info label {
+    font-weight: bold;
+}
+
+.employee-info span {
+    padding: 8px;
+}
+
+.edit-button-container {
+    text-align: center;
+}
+
+.edit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(128,0,32);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: rgb(76, 0, 19);
+}
+
+.advertisements-container,
+.requests-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
