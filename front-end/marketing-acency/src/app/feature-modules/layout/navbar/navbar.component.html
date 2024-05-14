@@ -4,9 +4,10 @@
         <button class="logButton" mat-button [matMenuTriggerFor]="menu">Menu</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item color="primary" routerLink="">Home</button>
-          <button mat-menu-item color="primary" (click)="navigateTo('/client-profile')">Client Profile</button>
-          <button mat-menu-item color="primary" (click)="navigateTo('/employee-profile')">Employee Profile</button>
-          <button mat-menu-item color="primary" (click)="navigateTo('/administrator-profile')">Admin Profile</button>
+          <button mat-menu-item color="primary" *ngIf="user && user.mail !== '' && hasClientRole()" (click)="navigateTo('/client-profile')">Client Profile</button>
+          <button mat-menu-item color="primary"  *ngIf="user && user.mail !== '' && hasEmployeeRole()" (click)="navigateTo('/employee-profile')">Employee Profile</button>
+          <button mat-menu-item color="primary"  *ngIf="user && user.mail !== '' && hasAdminRole()" (click)="navigateTo('/administrator-profile')">Admin Profile</button>
+          <button mat-menu-item color="primary"  *ngIf="user && user.mail === ''" (click)="navigateTo('/registration')">Register</button>
         </mat-menu>
       </div>
       <div class="logo-wrapper">
