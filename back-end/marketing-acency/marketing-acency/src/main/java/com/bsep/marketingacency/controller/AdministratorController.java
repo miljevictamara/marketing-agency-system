@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/administrator")
@@ -65,10 +68,11 @@ public class AdministratorController {
 
     // pristup: Administrator
     @PostMapping(value = "/create")
-    public ResponseEntity<String> createAdministrator(@RequestBody AdministratorDto administratorDto) {
-
+    public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
         Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
-
-        return new ResponseEntity<>("Administrator created.",HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Administrator created.");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 }

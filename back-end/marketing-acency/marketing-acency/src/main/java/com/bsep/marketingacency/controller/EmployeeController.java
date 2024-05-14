@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
@@ -78,10 +80,11 @@ public class EmployeeController {
 
     // pristup: Administrator
     @PostMapping(value = "/create")
-    public ResponseEntity<String> createEmployee(@RequestBody EmployeeDto employeeDto) {
-
+    public ResponseEntity<Map<String, String>> createEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee savedEmployee = employeeService.saveEmployee(employeeDto);
-
-        return new ResponseEntity<>("Employee created.",HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Employee created.");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 }
