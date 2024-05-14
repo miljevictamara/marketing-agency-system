@@ -1,3 +1,6 @@
+<head>
+    <script src="https://unpkg.com/@edgeworkscreative/pwned-password@latest/dist/pwned-password.js"></script>
+</head>
 <div class="registration-container">
     <!-- First step -->   
     <div class="registration-div" *ngIf="!shouldRenderIndividual && !shouldRenderLegalEntity && !shouldRenderThirdStepIndividual && !shouldRenderLastStepIndividual && !shouldRenderThirdStepLegalEntity && !shouldRenderLastStepLegalEntity"> 
@@ -35,7 +38,9 @@
         <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
             <div class="inputDiv">
                 <input formControlName="mail" matInput placeholder="email" required>
-                <input formControlName="password" matInput placeholder="password" required type="password">
+                <!--<input formControlName="password" matInput placeholder="password" required type="password">-->
+                <pwned-password class="pwned-password" name="password" placeholder="password"></pwned-password>
+                <!--<input formControlName="password" matInput placeholder="password" class="password-input" required type="password">-->
                 <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
             </div>        
         </form>
