@@ -33,6 +33,5 @@
 <app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
 <app-advertisements-for-user></app-advertisements-for-user>
 <div class="edit-button-container">
-    <button class="edit-button" (click)="onAddAdvertisementClicked()">Make a Request</button>
+    <button class="edit-button" (click)="navigateTo('/advertisement-form')">Make a request</button>
 </div>
-<app-advertisement-form *ngIf="addAdvertisementClicked"></app-advertisement-form>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Client } from '../model/client.model';
 import { ClientService } from '../client.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-profile',
@@ -11,9 +12,8 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 export class ClientProfileComponent {
   client: Client | undefined;
   editClicked: boolean = false;
-  addAdvertisementClicked: boolean = false;
 
-  constructor(private clientService: ClientService, private authService: AuthService) { }
+  constructor(private router: Router, private clientService: ClientService, private authService: AuthService) { }
 
   ngOnInit(): void {
     const userId = this.authService.getCurrentUserId();
@@ -32,7 +32,7 @@ export class ClientProfileComponent {
     this.editClicked = !this.editClicked;
   }
 
-  onAddAdvertisementClicked() {
-    this.addAdvertisementClicked = !this.addAdvertisementClicked;
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
   }
 }

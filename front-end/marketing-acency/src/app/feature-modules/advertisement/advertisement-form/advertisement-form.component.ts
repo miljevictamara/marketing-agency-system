@@ -4,6 +4,7 @@ import { AdvertisementService } from '../advertisement.service';
 import { Advertisement, AdvertisementStatus } from '../model/advertisement.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { ClientService } from '../../client/client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-advertisement-form',
@@ -11,8 +12,9 @@ import { ClientService } from '../../client/client.service';
   styleUrls: ['./advertisement-form.component.css']
 })
 export class AdvertisementFormComponent {
+  shouldRenderThirdStepIndividual:boolean = true;
 
-  constructor(private advertisementService: AdvertisementService, private authService: AuthService, private clientService: ClientService) { }
+  constructor(private router: Router, private advertisementService: AdvertisementService, private authService: AuthService, private clientService: ClientService) { }
 
   advertisementForm = new FormGroup ({
     slogan: new FormControl('', Validators.required),
@@ -59,6 +61,8 @@ export class AdvertisementFormComponent {
             }, error => {
               // Handle error
             });
+            
+            this.router.navigate(['/client-profile']);
         } else {
           // Handle case when client is not found
         }
