@@ -5,13 +5,13 @@ import { Package } from "./package.model";
 
 export interface Client {
     id?: number; 
-    user: { id?: number };
+    user: String ;
     type: ClientType;
     firstName?: string | null;
     lastName?: string | null;
     companyName?: string | null;
     pib?: number | null;
-    clientPackage: Package;
+    clientPackage:String ;
     phoneNumber: string;
     address: string;
     city: string;

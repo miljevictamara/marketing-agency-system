@@ -214,13 +214,13 @@ export class RegistrationComponent implements OnInit{
         this.userId = user.id;
   
         const client: Client = {
-          user: { id: this.userId },
+          user: user.mail,
           type: ClientType.INDIVIDUAL, 
           firstName: this.firstname,
           lastName: this.lastname,
           companyName: null,
           pib: null,
-          clientPackage: this.clientPackage, 
+          clientPackage: this.clientPackage.name, 
           phoneNumber: this.phoneNumber,
           address: this.address,
           city: this.city,
@@ -255,13 +255,13 @@ export class RegistrationComponent implements OnInit{
           this.userId = user.id;
     
           const client: Client = {
-            user: { id: this.userId },
+            user: user.mail,
             type: ClientType.LEGAL_ENTITY, 
             firstName: null,
             lastName: null,
             companyName: this.companyName,
             pib: this.pib,
-            clientPackage: this.clientPackage, 
+            clientPackage: this.clientPackage.name, 
             phoneNumber: this.phoneNumber,
             address: this.address,
             city: this.city,

@@ -1,22 +1,16 @@
 package com.bsep.marketingacency.dto;
 
-import com.bsep.marketingacency.deserilizer.UserDeserializer;
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
-import com.bsep.marketingacency.model.Package;
-import com.bsep.marketingacency.model.User;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.*;
 @Getter
 @Setter
 public class ClientDto {
     private Long Id;
-    @JsonDeserialize(using = UserDeserializer.class)
-    private User user;
+    private String user;
     private ClientType type;
     @Nullable
     private String firstName;
@@ -26,7 +20,7 @@ public class ClientDto {
     private String companyName;
     @Nullable
     private Integer pib;
-    private Package clientPackage;
+    private String clientPackage;
     private String phoneNumber;
     private String address;
     private String city;
@@ -36,7 +30,7 @@ public class ClientDto {
     public ClientDto() {
     }
 
-    public ClientDto(Long id, User user, ClientType type, @Nullable String firstName, @Nullable String lastName, @Nullable String companyName, @Nullable Integer pib, Package clientPackage, String phoneNumber, String address, String city, String country, RegistrationRequestStatus isApproved) {
+    public ClientDto(Long id, String user, ClientType type, @Nullable String firstName, @Nullable String lastName, @Nullable String companyName, @Nullable Integer pib, String clientPackage, String phoneNumber, String address, String city, String country, RegistrationRequestStatus isApproved) {
         Id = id;
         this.user = user;
         this.type = type;
@@ -56,7 +50,7 @@ public class ClientDto {
         return Id;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
@@ -84,7 +78,7 @@ public class ClientDto {
         return pib;
     }
 
-    public Package getClientPackage() {
+    public String getClientPackage() {
         return clientPackage;
     }
 
@@ -112,7 +106,7 @@ public class ClientDto {
         Id = id;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -136,7 +130,7 @@ public class ClientDto {
         this.pib = pib;
     }
 
-    public void setClientPackage(Package clientPackage) {
+    public void setClientPackage(String clientPackage) {
         this.clientPackage = clientPackage;
     }
 

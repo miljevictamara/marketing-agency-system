@@ -31,15 +31,24 @@ public class ClientService {
     @Autowired
     private ClientActivationTokenService clientActivationTokenService;
 
+    @Autowired
+    private PackageService packageService;
+
     public Client save(ClientDto clientDto) {
+        String mail = clientDto.getUser();
+        User user = userService.findByMail(mail);
+
+        String packageName = clientDto.getClientPackage();
+        Package pack = packageService.findByName(packageName);
+
         Client client = new Client();
-        client.setUser(clientDto.getUser());
+        client.setUser(user);
         client.setType(clientDto.getType());
         client.setFirstName(clientDto.getFirstName());
         client.setLastName(clientDto.getLastName());
         client.setCompanyName(clientDto.getCompanyName());
         client.setPib(clientDto.getPib());
-        client.setClientPackage(clientDto.getClientPackage());
+        client.setClientPackage(pack);
         client.setPhoneNumber(clientDto.getPhoneNumber());
         client.setAddress(clientDto.getAddress());
         client.setCity(clientDto.getCity());

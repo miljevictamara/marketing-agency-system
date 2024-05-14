@@ -49,7 +49,8 @@ public class ClientController {
     @Autowired
     private EmailService emailService;
 
-
+    @Autowired
+    private PackageService packageService;
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
         
@@ -149,13 +150,13 @@ public class ClientController {
         if (client != null) {
             ClientDto clientDto = new ClientDto(
                     client.getId(),
-                    client.getUser(),
+                    client.getUser().getMail(),
                     client.getType(),
                     client.getFirstName(),
                     client.getLastName(),
                     client.getCompanyName(),
                     client.getPib(),
-                    client.getClientPackage(),
+                    client.getClientPackage().getName(),
                     client.getPhoneNumber(),
                     client.getAddress(),
                     client.getCity(),
@@ -172,15 +173,21 @@ public class ClientController {
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('UPDATE_CLIENT')")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) {
+        String mail = clientDto.getUser();
+        User user = userService.findByMail(mail);
+
+        String packageName = clientDto.getClientPackage();
+        Package pack = packageService.findByName(packageName);
+
         Client updatedClient = new Client(
                 clientDto.getId(),
-                clientDto.getUser(),
+                user,
                 clientDto.getType(),
                 clientDto.getFirstName(),
                 clientDto.getLastName(),
                 clientDto.getCompanyName(),
                 clientDto.getPib(),
-                clientDto.getClientPackage(),
+                pack,
                 clientDto.getPhoneNumber(),
                 clientDto.getAddress(),
                 clientDto.getCity(),
