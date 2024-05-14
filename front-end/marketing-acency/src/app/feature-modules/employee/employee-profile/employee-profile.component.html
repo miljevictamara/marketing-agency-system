@@ -1,6 +1,6 @@
-<h2>Employee profile:</h2>
+<h2 *ngIf="getById || updateEmployee || getAcceptedRequests || getPendingRequests">Employee profile:</h2>
 
-<table>
+<table *ngIf="getById && updateEmployee">
     <tr *ngIf="employee">
         <td>First Name:</td>
         <td>{{ employee.firstName || '-' }}</td>
@@ -32,5 +32,5 @@
 </table>
 
 <app-edit-employee-profile *ngIf="editClicked" [employee]="employee"></app-edit-employee-profile>
-<app-advertisements></app-advertisements>
-<app-requests></app-requests>
+<app-advertisements *ngIf="getAcceptedRequests"></app-advertisements>
+<app-requests *ngIf="getPendingRequests"></app-requests>

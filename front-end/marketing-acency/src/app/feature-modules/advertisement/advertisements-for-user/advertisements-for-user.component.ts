@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 })
 export class AdvertisementsForUserComponent {
   advertisements: Advertisement[] | undefined;
-
   constructor(private advertisementService: AdvertisementService, private authService: AuthService) { }
 
   ngOnInit(): void {

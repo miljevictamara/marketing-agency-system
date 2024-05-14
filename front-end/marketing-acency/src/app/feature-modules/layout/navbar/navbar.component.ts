@@ -19,22 +19,17 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
-      this.hasClientRole()
     });
   }
 
   hasClientRole(): boolean {
-   return (this.user?.roles[0]?.toString() === 'ROLE_CLIENT') 
-  }
+    return (this.user?.roles[0]?.toString() === 'ROLE_CLIENT') }
 
   hasEmployeeRole(): boolean {
-    return (this.user?.roles[0]?.toString() === 'ROLE_EMPLOYEE') 
-  }
+    return (this.user?.roles[0]?.toString() === 'ROLE_EMPLOYEE') }
 
   hasAdminRole(): boolean {
-    return (this.user?.roles[0]?.toString() === 'ROLE_ADMIN') 
-
-  }
+    return (this.user?.roles[0]?.toString() === 'ROLE_ADMIN') }
   logout():void {
     this.authService.logout();
   }

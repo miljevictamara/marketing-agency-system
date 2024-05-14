@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
 import { AdministratorService } from '../administrator.service';
 import { Administrator } from '../model/administrator.model';
+import { PermissionService } from '../../permission-page/permission.service';
 
 @Component({
   selector: 'app-administrator-form',
@@ -36,12 +37,13 @@ export class AdministratorFormComponent {
   country!: string;
   isApproved!: RegistrationRequestStatus;
   userId!: number | undefined;
-
+  createAdmin: boolean = false;
   constructor(private formBuilder: FormBuilder, 
               private authService: AuthService, 
               private router: Router, 
               private userService: UserService,
-              private administratorService: AdministratorService){
+              private administratorService: AdministratorService,
+              private permission: PermissionService){
   }
 
   ngOnInit(): void {
@@ -59,6 +61,14 @@ export class AdministratorFormComponent {
       city: ['', Validators.required],
       country: ['', Validators.required],
       phoneNumber: ['', Validators.required]
+    });
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.permission.hasPermission(this.user.mail, 'CREATE_ADMIN').subscribe(hasPermission => {
+        this.createAdmin = hasPermission;
+      });
+     
     });
   }
 

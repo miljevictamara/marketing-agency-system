@@ -27,4 +27,9 @@ export class PermissionService {
     return this.http.put<any>(`https://localhost:8443/permissions/roles/${roleName}/permissions`, permissions);
   }
 
+  hasPermission(mail: string,permissionName: string): Observable<boolean> {
+    return this.http.get<boolean>(`https://localhost:8443/permissions/${mail}/${permissionName}`);
+   
+  }
+
 }

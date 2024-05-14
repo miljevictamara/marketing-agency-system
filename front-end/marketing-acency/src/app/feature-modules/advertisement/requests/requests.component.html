@@ -11,6 +11,6 @@
         <td>{{ request.active_from | date:'dd.MM.yyyy.' }}</td>
         <td>{{ request.active_to | date:'dd.MM.yyyy.' }}</td>
         <td>{{ request.request_description }}</td>
-        <td><button (click)="onAcceptClicked(request)">Accept</button></td>
+        <td><button *ngIf="updateAdvertisment" (click)="onAcceptClicked(request)">Accept</button></td>
     </tr>
 </table>

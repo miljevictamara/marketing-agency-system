@@ -1,3 +1,4 @@
+<div *ngIf="createEmployee">
 <div *ngIf="shouldRenderIndividual" class="registration-div">
         <!--Second step as individual - create user -->
         <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
@@ -30,3 +31,4 @@
             Next
         </button>
     </div>
+</div>

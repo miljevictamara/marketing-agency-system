@@ -1,6 +1,6 @@
-<h2>Administrator profile:</h2>
-<button (click)="navigateTo('/administrator-form')">Add new Administrator</button>
-<table>
+<h2 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h2>
+<button *ngIf="createAdmin" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
+<table *ngIf="getByUserId && updateAdmin">
     <tr *ngIf="administrator">
         <td>First Name:</td>
         <td>{{ administrator.firstName || '-' }}</td>
@@ -32,7 +32,7 @@
 </table>
 
 <app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>
-<app-employees></app-employees>
-<button (click)="navigateTo('/employee-form')">Add new Employee</button>
-<app-clients></app-clients>
-<button (click)="navigateTo('/permission-page')">Manage permissions</button>
+<app-employees *ngIf="hasEmployeePermission"></app-employees>
+<button *ngIf="createEmployee" (click)="navigateTo('/employee-form')">Add new Employee</button>
+<app-clients *ngIf="getAllCLients"></app-clients>
+<button *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>

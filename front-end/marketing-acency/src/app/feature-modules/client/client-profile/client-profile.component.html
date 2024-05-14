@@ -1,6 +1,6 @@
-<h2>Client profile:</h2>
+<h2 *ngIf="createAdvertisment || updateClient || getByUserId || advByClient  || createAdvertisment">Client profile:</h2>
 
-<table>
+<table *ngIf="getByUserId && updateClient">
     <tr *ngIf="client">
         <td>First Name:</td>
         <td>{{ client.firstName || '-' }}</td>
@@ -32,6 +32,6 @@
 </table>
 
 <app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
-<app-advertisements-for-user></app-advertisements-for-user>
-<button (click)="onAddAdvertisementClicked()">Make a Request</button>
+<app-advertisements-for-user *ngIf="advByClient"></app-advertisements-for-user>
+<button *ngIf="createAdvertisment" (click)="onAddAdvertisementClicked()">Make a Request</button>
 <app-advertisement-form *ngIf="addAdvertisementClicked"></app-advertisement-form>

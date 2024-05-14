@@ -237,4 +237,8 @@ getTokens(mail: string) {
 
     return userId ? +userId : undefined; // Convert to number or return undefined
   }
+
+  checkCommonPermissions(roleName: string, loggedInRole: string): Observable<boolean>{
+    return this.http.get<boolean>(`https://localhost:8443/permissions/check/${roleName}/${loggedInRole}`);
+  }
 }

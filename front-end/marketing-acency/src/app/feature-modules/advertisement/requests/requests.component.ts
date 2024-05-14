@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Advertisement, AdvertisementStatus } from '../model/advertisement.model';
 import { AdvertisementService } from '../advertisement.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { PermissionService } from '../../permission-page/permission.service';
 
 @Component({
   selector: 'app-requests',
@@ -9,11 +12,20 @@ import { AdvertisementService } from '../advertisement.service';
 })
 export class RequestsComponent {
   requests: Advertisement[] | undefined;
+  updateAdvertisment: boolean = false;
+  user: User | undefined;
 
-  constructor(private advertisementService: AdvertisementService) { }
+  constructor(private advertisementService: AdvertisementService, private authService: AuthService, private permission: PermissionService) { }
 
   ngOnInit(): void {
     this.getAdvertisement();
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.permission.hasPermission(this.user.mail, 'UPDATE_ADVERTISMENT').subscribe(hasPermission => {
+        this.updateAdvertisment = hasPermission;
+      });
+
+    });
   }
 
   getAdvertisement(): void {

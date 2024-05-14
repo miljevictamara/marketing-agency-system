@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Client } from '../model/client.model';
 import { ClientService } from '../client.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { PermissionService } from '../../permission-page/permission.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'app-client-profile',
@@ -12,8 +14,14 @@ export class ClientProfileComponent {
   client: Client | undefined;
   editClicked: boolean = false;
   addAdvertisementClicked: boolean = false;
+  user: User | undefined;
 
-  constructor(private clientService: ClientService, private authService: AuthService) { }
+  hasEmployeePermission: boolean = false;
+  getByUserId: boolean = false;
+  updateClient: boolean = false;
+  createAdvertisment: boolean = false;
+  advByClient: boolean = false;
+  constructor(private clientService: ClientService, private authService: AuthService, private permission: PermissionService) { }
 
   ngOnInit(): void {
     const userId = this.authService.getCurrentUserId();
@@ -25,6 +33,22 @@ export class ClientProfileComponent {
     } else {
       console.error('User ID is undefined.');
     }
+
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.permission.hasPermission(this.user.mail, 'GET__ADVERTISMENTS_BY_CLIENT').subscribe(hasPermission => {
+        this.advByClient = hasPermission;
+      });
+      this.permission.hasPermission(this.user.mail, 'GET_CLIENT_BYUSERID').subscribe(hasPermission => {
+        this.getByUserId = hasPermission;
+      });
+      this.permission.hasPermission(this.user.mail, 'CREATE_ADVERTISMENT').subscribe(hasPermission => {
+        this.createAdvertisment = hasPermission;
+      });
+      this.permission.hasPermission(this.user.mail, 'UPDATE_CLIENT').subscribe(hasPermission => {
+        this.updateClient = hasPermission;
+      });
+    });
   }
 
   onEditClicked(client: Client) {

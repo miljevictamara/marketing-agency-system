@@ -10,6 +10,7 @@ import { Package } from '../../client/model/package.model';
 import { Client } from 'src/app/feature-modules/user/model/client.model';
 import { RegistrationRequestStatus } from 'src/app/feature-modules/user/model/registrationRequestStatus.model';
 import { ClientType } from '../../user/model/clientType.model';
+import { PermissionService } from '../../permission-page/permission.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -37,12 +38,13 @@ export class EmployeeFormComponent {
   country!: string;
   isApproved!: RegistrationRequestStatus;
   userId!: number | undefined;
-
+  createEmployee: boolean = false;
   constructor(private formBuilder: FormBuilder, 
               private authService: AuthService, 
               private router: Router, 
               private userService: UserService,
-              private employeeService: EmployeeService){
+              private employeeService: EmployeeService,
+              private permission: PermissionService){
   }
 
   ngOnInit(): void {
@@ -60,6 +62,13 @@ export class EmployeeFormComponent {
       city: ['', Validators.required],
       country: ['', Validators.required],
       phoneNumber: ['', Validators.required]
+    });
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.permission.hasPermission(this.user.mail, 'CREATE_EMPLOYEE').subscribe(hasPermission => {
+        this.createEmployee = hasPermission;
+      });
+     
     });
   }
 

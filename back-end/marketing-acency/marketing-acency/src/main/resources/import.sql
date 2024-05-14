@@ -8,6 +8,7 @@ INSERT INTO permission(id, name) VALUES (2, 'GET_ALL_PERMISSIONS');
 INSERT INTO permission(id, name) VALUES (3, 'UPDATE_ROLE_PERMISSION');
 INSERT INTO permission(id, name) VALUES (4, 'GET_PERMISSIONS_FOR_ROLE');
 INSERT INTO permission(id, name) VALUES (5, 'GET_BYUSERID');
+
 INSERT INTO permission(id, name) VALUES (6, 'UPDATE_ADMIN');
 INSERT INTO permission(id, name) VALUES (7, 'CREATE_ADMIN');
 INSERT INTO permission(id, name) VALUES (8, 'GET_ALL_EMPLOYEES');
