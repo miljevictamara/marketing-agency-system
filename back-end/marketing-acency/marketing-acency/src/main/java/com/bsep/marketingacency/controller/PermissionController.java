@@ -23,30 +23,30 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @PreAuthorize("hasAuthority('GET_PERMISSIONS_FOR_ROLE')")
 
     @GetMapping("/roles/{roleName}/permissions")
+    @PreAuthorize("hasAuthority('GET_PERMISSIONS_FOR_ROLE')")
     public Set<Permission> getPermissionsForRole(@PathVariable String roleName) {
         Role role = roleService.findByName(roleName);
         return role.getPermissions();
     }
 
-    @PreAuthorize("hasAuthority('GET_ALL_PERMISSIONS')")
 
     @GetMapping("/permissions")
+    @PreAuthorize("hasAuthority('GET_ALL_PERMISSIONS')")
     public List<Permission> getPermissions() {
         return permissionService.getPermissions();
     }
 
-    @PreAuthorize("hasAuthority('GET_ALL_ROLES')")
 
     @GetMapping("/roles")
+    @PreAuthorize("hasAuthority('GET_ALL_ROLES')")
     public List<Role> getRoles() {
         return roleService.getRoles();
     }
-    @PreAuthorize("hasAuthority('UPDATE_ROLE_PERMISSION')")
 
     @PutMapping("/roles/{roleName}/permissions")
+    @PreAuthorize("hasAuthority('UPDATE_ROLE_PERMISSION')")
     public ResponseEntity<?> updateRolePermissions(@PathVariable String roleName, @RequestBody Set<Permission> updatedPermissions) {
         // Pronalazak uloge iz baze
         Role role = roleService.findByName(roleName);

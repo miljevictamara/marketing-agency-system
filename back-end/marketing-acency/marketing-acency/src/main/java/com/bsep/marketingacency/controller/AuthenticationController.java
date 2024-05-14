@@ -105,8 +105,12 @@ public class AuthenticationController {
         String refresh_jwt = tokenUtils.generateRefreshToken(user);
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
+        if (!user.getIsBlocked()) {
+            return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
 
     }
 

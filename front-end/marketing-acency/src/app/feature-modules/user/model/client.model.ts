@@ -11,7 +11,7 @@ export interface Client {
     lastName?: string | null;
     companyName?: string | null;
     pib?: number | null;
-    clientPackage:String ;
+    clientPackage:String;
     phoneNumber: string;
     address: string;
     city: string;

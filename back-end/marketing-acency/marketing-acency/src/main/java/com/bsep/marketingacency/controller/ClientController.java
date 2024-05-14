@@ -107,6 +107,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/approve-registration-request/{id}")
+    @PreAuthorize("hasAuthority('APROVE_REGISTRATION_REQUEST')")
     public ResponseEntity<String> register(@PathVariable  Long id){
         ClientActivationToken token = clientService.approveRegistrationRequest(id);
         Client client = clientService.findById(id);
@@ -120,6 +121,7 @@ public class ClientController {
     }
 
     @PutMapping(value = "/reject-registration-request/{id}")
+    @PreAuthorize("hasAuthority('REJECT_REGISTRATION_REQUEST')")
     public ResponseEntity<String> register(@PathVariable  Long id, @RequestParam String reason){
         clientService.rejectRegistrationRequest(id, reason);
         Client client = clientService.findById(id);

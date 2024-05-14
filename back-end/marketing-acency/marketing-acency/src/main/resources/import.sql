@@ -15,6 +15,8 @@ INSERT INTO permission(id, name) VALUES (9, 'CREATE_EMPLOYEE');
 INSERT INTO permission(id, name) VALUES (10, 'SAVE_EMPLOYEE_USER');
 INSERT INTO permission(id, name) VALUES (11, 'SAVE_ADMIN_USER');
 INSERT INTO permission(id, name) VALUES (12, 'GET_ALL_CLIENTS');
+INSERT INTO permission(id, name) VALUES (23, 'APROVE_REGISTRATION_REQUEST');
+INSERT INTO permission(id, name) VALUES (24, 'REJECT_REGISTRATION_REQUEST');
 
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 1);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 2);
@@ -28,6 +30,8 @@ INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 9);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 10);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 11);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 12);
+INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 23);
+INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 24);
 
 --permisije za klijenta i employee
 INSERT INTO permission(id, name) VALUES (13, 'GET_PENDING_ADVERTISMENTS');
