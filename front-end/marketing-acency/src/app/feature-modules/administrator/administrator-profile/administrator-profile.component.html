@@ -1,37 +1,40 @@
-<h2>Administrator profile:</h2>
-<button (click)="navigateTo('/administrator-form')">Add new Administrator</button>
-<table>
-    <tr *ngIf="administrator">
-        <td>First Name:</td>
-        <td>{{ administrator.firstName || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <td>Last Name:</td>
-        <td>{{ administrator.lastName || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <td>Address:</td>
-        <td>{{ administrator.address || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <td>City:</td>
-        <td>{{ administrator.city || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <td>Country:</td>
-        <td>{{ administrator.country || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <td>Phone Number:</td>
-        <td>{{ administrator.phoneNumber || '-' }}</td>
-    </tr>
-    <tr *ngIf="administrator">
-        <button (click)="onEditClicked(administrator)">Edit</button>
-    </tr>
-    
-</table>
+<h1>Administrator profile:</h1>
+<div class="employee-profile-container">
+    <div class="edit-button-container">
+        <button class="edit-button" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>First Name:</label>
+        <span>{{ administrator.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Last Name:</label>
+        <span>{{ administrator.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Address:</label>
+        <span>{{ administrator.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>City:</label>
+        <span>{{ administrator.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Country:</label>
+        <span>{{ administrator.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Phone Number:</label>
+        <span>{{ administrator.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="administrator">
+        <button class="edit-button" (click)="onEditClicked(administrator)">Edit</button>
+    </div>
+</div>
 
 <app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>
 <app-employees></app-employees>
-<button (click)="navigateTo('/employee-form')">Add new Employee</button>
+<div class="edit-button-container">
+    <button class="edit-button" (click)="navigateTo('/employee-form')">Add new Employee</button>
+</div>
 <app-clients></app-clients>

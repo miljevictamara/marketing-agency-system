@@ -29,7 +29,7 @@ export class AdministratorProfileComponent implements OnInit {
 
   onEditClicked(administrator: Administrator) {
     this.administrator = administrator;
-    this.editClicked = true;
+    this.editClicked = !this.editClicked;
   }
 
   navigateTo(path: string): void {
