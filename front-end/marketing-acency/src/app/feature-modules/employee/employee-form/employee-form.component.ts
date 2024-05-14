@@ -141,7 +141,7 @@ export class EmployeeFormComponent {
         this.userId = user.id;
   
         const employee: Employee = {
-          user: { id: this.userId },
+          user: user,
           firstName: this.formIndividual.value.firstname,
           lastName: this.formIndividual.value.lastname,
           phoneNumber: this.formIndividual.value.phoneNumber,

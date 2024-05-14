@@ -11,10 +11,7 @@ INSERT INTO permission(id, name) VALUES (3, 'UPDATE_ADMIN_PERMISSION');
 INSERT INTO permission(id, name) VALUES (4, 'UPDATE_EMPLOYEE');
 INSERT INTO permission(id, name) VALUES (5, 'GET_PERMISSIONS_FOR_ROLE_ADMIN_PERMISSION');
 
-INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 1);
-INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 2);
-INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 3);
-INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 5);
+
 
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 300.00, 10000);
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 100.00, 100);
