@@ -75,6 +75,9 @@ INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (tru
 INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'admin@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
 INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'client@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
 INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
+INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (false, false, 'miljevictamara+123@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
+INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('Futoska 2', 'Novi Sad', 'Company', 'Srbija', 'Sara', 0, 'Saric', '+381', 123, 'LEGAL_ENTITY', 1, 10);
+
 
 INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('Futoska 11', 'Novi Sad', null, 'Srbija', 'Marija', 1, 'Savic', '+381', null, 'INDIVIDUAL', 1, 1);
 INSERT INTO public.client(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('Jevrejska 1', 'Novi Sad', null, 'Srbija', 'Vanja', 1, 'Kostic', '+381', null, 'INDIVIDUAL', 1, 2);
@@ -88,6 +91,8 @@ INSERT INTO public."user_role"(user_id, role_id) VALUES (6, 3);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (7, 1);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (8, 3);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (9, 2);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (10, 3);
+
 
 INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('Bulevar', 'Novi Sad', null, 'Srbija', 'Marko', 1, 'Markovic', '+381', null, 'INDIVIDUAL', 1, 5);
 INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('Takovska', 'Beograd', null, 'Srbija', 'Nikola', 1, 'Djordjevic', '+381', null, 'INDIVIDUAL', 1, 6);
