@@ -144,7 +144,7 @@
   padding: 10px;
   margin: 0 auto;
   border-radius: 10px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .user-form input {
@@ -204,6 +204,7 @@
   margin: 0 auto;
   border-radius: 10px;
   margin-top: 10px;
+  margin-bottom: -20px;
 }
 
 .individual-form input {
@@ -249,4 +250,15 @@
 
 .selected {
   border: 2px solid rgb(128,0,32);
+} 
+
+.credentials {
+  color:white;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.info {
+  color:white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

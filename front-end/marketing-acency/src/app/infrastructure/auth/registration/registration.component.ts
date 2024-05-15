@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/feature-modules/user/user.service';
@@ -15,6 +15,7 @@ import { Client } from 'src/app/feature-modules/user/model/client.model';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit{
+  @ViewChild('pwnedPasswordInput') pwnedPasswordInput!: ElementRef;
   formUser!: FormGroup;
   formIndividual!: FormGroup;
   formLegalEntity!: FormGroup;
@@ -26,7 +27,7 @@ export class RegistrationComponent implements OnInit{
   shouldRenderThirdStepLegalEntity:boolean = false;
   shouldRenderLastStepIndividual:boolean = false;
   shouldRenderLastStepLegalEntity:boolean = false;
-  user!: User;
+  //user!: User;
   firstname?: string | null;
   lastname?: string | null;
   companyName?: string | null;
@@ -39,6 +40,17 @@ export class RegistrationComponent implements OnInit{
   isApproved!: RegistrationRequestStatus;
   userId!: number | undefined;
   selectedPackage: string = '';
+  password: string = '';
+  pwnedPasswordValue!: string;
+  passwordValue!: string;
+  user: User = {
+    mail: '',
+    password: '',
+    confirmationPassword: '',
+    roles: [],
+    isBlocked: false,
+    isActivated: false
+  };
 
 
   constructor(private formBuilder: FormBuilder, 
@@ -50,7 +62,7 @@ export class RegistrationComponent implements OnInit{
   ngOnInit(): void {
     this.formUser = this.formBuilder.group({
       mail: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])],
+      //password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])],
       confirmationPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])]
     });
 
@@ -72,6 +84,21 @@ export class RegistrationComponent implements OnInit{
       country: ['', Validators.required],
       phoneNumber: ['', Validators.required]
     });
+
+    
+
+   /* document.addEventListener('pwnedPasswordFound', (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail === 0) {
+        const passwordInput = this.pwnedPasswordInput.nativeElement;
+        this.pwnedPasswordValue = passwordInput.value;
+        console.log('Password hasn\'t been pwned - submit your form');
+        // Sada možete koristiti vrednost pwnedPasswordValue po potrebi
+      } else {
+        alert(`Password has been pwned ${customEvent.detail} times!`);
+      }
+    });*/
+    
   }
 
 
@@ -88,16 +115,39 @@ export class RegistrationComponent implements OnInit{
     this.shouldRenderLegalEntity = true;   
   }
 
-  thirdStepIndividual()  {    
+  thirdStepIndividual()  {  
+    var pwnedPasswordElement = document.getElementById('pwnedPasswordInput');
 
-    //if (this.formUser.valid) {
-      if (this.formUser.value.password !== this.formUser.value.confirmationPassword) {
-        alert("Password and confirmation password do not match");
-      }
-   
+    // Provera da li je element pronađen
+    if (pwnedPasswordElement !== null) {
+        // Pronalaženje input elementa unutar pwnedPasswordElementa
+        var inputElement = pwnedPasswordElement.querySelector('input');
+
+        // Provera da li je pronađen input element
+        if (inputElement !== null) {
+            // Dobijanje vrednosti iz input elementa
+            this.passwordValue = inputElement.value;
+
+            // Korišćenje dobijene vrednosti
+            console.log(this.passwordValue);
+        } else {
+            console.log("Input element unutar 'pwnedPasswordInput' nije pronađen.");
+        }
+    } else {
+        console.log("Element 'pwnedPasswordInput' nije pronađen.");
+    }
+
+    
+    
+      // Koristi ovu vrednost po potrebi
+      const email = this.formUser.get('mail')?.value;
+      this.user.mail = email;
+      this.user.confirmationPassword = this.formUser.get('confirmationPassword')?.value;;
+      this.user.password = this.passwordValue
 
       this.authService.saveUser(
-        this.user = this.formUser.value
+        this.user
+        //this.user = this.formUser.value
       )
       .subscribe(
         (response) => {
@@ -115,7 +165,8 @@ export class RegistrationComponent implements OnInit{
           }
           else if (error.status === 422) {
             alert('Invalid email format or email is already in use.'); 
-          } if (error.status === 201) {
+          }
+          if (error.status === 201) {
             console.log('User saved!');
             if (this.shouldRenderIndividual)
             {
