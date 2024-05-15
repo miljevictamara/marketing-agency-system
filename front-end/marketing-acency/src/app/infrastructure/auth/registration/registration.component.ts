@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/feature-modules/user/user.service';
@@ -73,6 +73,11 @@ export class RegistrationComponent implements OnInit{
       phoneNumber: ['', Validators.required]
     });
   }
+
+
+
+
+
 
   registerIndividual()  {  
     this.shouldRenderIndividual = true;
@@ -292,3 +297,24 @@ export class RegistrationComponent implements OnInit{
   
 
 }
+
+document.addEventListener('pwnedPasswordFound', (e: Event) => {
+  const customEvent = e as CustomEvent;
+  if (customEvent.detail === 0) {
+    const passwordInput = (e.target as HTMLElement).querySelector('input') as HTMLInputElement | null;
+    if (passwordInput) {
+      const password = passwordInput.value;
+      console.log('Password hasn\'t been pwned - submit your form');
+    }
+  } else {
+    alert(`Password has been pwned ${customEvent.detail} times!`);
+  }
+});
+
+
+
+
+
+
+
+

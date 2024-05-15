@@ -156,6 +156,30 @@
   box-sizing: border-box;
 }
 
+.pwned-password {
+  display: flex; 
+  align-items: center; 
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-left: 35px;
+  background-color: white;
+}
+
+
+
+.pwned-password input::placeholder {
+  color: #ccc; /* Postavite boju mjesta za tekst */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Dodatni stilovi po potrebi */
+
+
+
 .thirdStepButton {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: rgb(128,0,32);

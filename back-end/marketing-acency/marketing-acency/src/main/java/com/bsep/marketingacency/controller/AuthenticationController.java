@@ -1,11 +1,14 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.TokenRefreshException;
+import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
 import com.bsep.marketingacency.dto.NewAccessToken;
 import com.bsep.marketingacency.dto.UserTokenState;
 import com.bsep.marketingacency.model.TokenRefreshRequest;
 import com.bsep.marketingacency.model.TokenRefreshResponse;
+import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.EmailService;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import com.bsep.marketingacency.model.RefreshToken;
@@ -150,4 +155,36 @@ public class AuthenticationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping(value = "/findByUserId/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User user = userService.findUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "/allIndividuals")
+    public ResponseEntity<List<Client>> getAllIndividuals() {
+        List<Client> individualClients = userService.getAllIndividuals();
+
+        List<Client> filteredClients = individualClients.stream()
+                .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filteredClients);
+    }
+
+    @GetMapping(value = "/allLegalEntities")
+    public ResponseEntity<List<Client>> getAllLegalEntities() {
+        List<Client> legalEntityClients = userService.getAllLegalEntities();
+
+        List<Client> filteredClients = legalEntityClients.stream()
+                .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(filteredClients);
+    }
+
 }

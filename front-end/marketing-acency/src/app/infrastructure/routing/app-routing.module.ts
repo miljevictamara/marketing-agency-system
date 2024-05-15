@@ -17,6 +17,7 @@ import { AuthGuard } from '../authorization/auth.guard';
 import { PermissionPageComponent } from 'src/app/feature-modules/permission-page/permission-page.component';
 import { ClientProfileComponent } from 'src/app/feature-modules/client/client-profile/client-profile.component';
 import { AdvertisementFormComponent } from 'src/app/feature-modules/advertisement/advertisement-form/advertisement-form.component';
+import { RegistrationRequestComponent } from 'src/app/feature-modules/administrator/registration-request/registration-request.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,8 @@ const routes: Routes = [
   { path: 'client-profile', component: ClientProfileComponent},
   { path: 'advertisement-form', component: AdvertisementFormComponent},
   
+  { path: 'employee-profile', component: EmployeeProfileComponent},
+  { path: 'registration-requests', component: RegistrationRequestComponent}
 ];
 
 @NgModule({

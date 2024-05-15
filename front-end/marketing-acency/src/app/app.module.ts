@@ -19,10 +19,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EmployeeModule } from './feature-modules/employee/employee.module';
 import { AdministratorModule } from './feature-modules/administrator/administrator.module';
 import { PermissionPageModule } from './feature-modules/permission-page/permission-page.module';
+import { RegistrationRequestComponent } from './feature-modules/administrator/registration-request/registration-request.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegistrationRequestComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,10 @@ import { PermissionPageModule } from './feature-modules/permission-page/permissi
     EmployeeModule,
     AdministratorModule,
     EmployeeModule,
-    PermissionPageModule
+    PermissionPageModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule 
   ],
   providers: [ 
     {
