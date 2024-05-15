@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RejectionNoteService {
@@ -28,10 +29,11 @@ public class RejectionNoteService {
 
         for (RejectionNote rejection : rejections) {
             if (rejection.getEmail().equals(email)) {
-                if (currentTime.after(rejection.getRejectionDate())) {
+              if (currentTime.after(new Date(rejection.getRejectionDate().getTime() + TimeUnit.MINUTES.toMillis(60)))) {
                     System.out.println("The user " + email + " has been rejected, and the rejection period has expired.");
                     return true;
-                } else {
+                }
+                else {
                     System.out.println("The user " + email + " has been rejected, but the rejection period has not expired yet.");
                     return false;
                 }
