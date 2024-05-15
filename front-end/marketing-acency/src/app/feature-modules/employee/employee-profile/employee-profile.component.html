@@ -1,3 +1,4 @@
+<!-- Moje staro, Nina dodala -->
 <h2 *ngIf="getById || updateEmployee || getAcceptedRequests || getPendingRequests">Employee profile:</h2>
 
 <table *ngIf="getById && updateEmployee">
@@ -31,6 +32,40 @@
     
 </table>
 
+<!-- Moje novo -->
+<h1>Employee profile</h1>
+
+<div class="employee-profile-container">
+    <div class="employee-info" *ngIf="employee">
+        <label>First Name:</label>
+        <span>{{ employee.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Last Name:</label>
+        <span>{{ employee.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Address:</label>
+        <span>{{ employee.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>City:</label>
+        <span>{{ employee.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Country:</label>
+        <span>{{ employee.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="employee">
+        <label>Phone Number:</label>
+        <span>{{ employee.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="employee">
+        <button class="edit-button" (click)="onEditClicked(employee)">Edit</button>
+    </div>
+</div>
+
+<!-- zajednicko-->
 <app-edit-employee-profile *ngIf="editClicked" [employee]="employee"></app-edit-employee-profile>
 <app-advertisements *ngIf="getAcceptedRequests"></app-advertisements>
 <app-requests *ngIf="getPendingRequests"></app-requests>

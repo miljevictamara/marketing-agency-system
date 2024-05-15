@@ -4,6 +4,7 @@ import { ClientService } from '../client.service';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { PermissionService } from '../../permission-page/permission.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-profile',
@@ -21,7 +22,8 @@ export class ClientProfileComponent {
   updateClient: boolean = false;
   createAdvertisment: boolean = false;
   advByClient: boolean = false;
-  constructor(private clientService: ClientService, private authService: AuthService, private permission: PermissionService) { }
+  
+  constructor(private router: Router, private clientService: ClientService, private authService: AuthService, private permission: PermissionService) { }
 
   ngOnInit(): void {
     const userId = this.authService.getCurrentUserId();
@@ -53,10 +55,10 @@ export class ClientProfileComponent {
 
   onEditClicked(client: Client) {
     this.client = client;
-    this.editClicked = true;
+    this.editClicked = !this.editClicked;
   }
 
-  onAddAdvertisementClicked() {
-    this.addAdvertisementClicked = true;
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
   }
 }

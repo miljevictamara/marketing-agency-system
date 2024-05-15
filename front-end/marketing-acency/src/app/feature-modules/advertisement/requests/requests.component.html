@@ -1,10 +1,11 @@
-<H2>Requests:</H2>
+<H2>Requests for Advertisements:</H2>
 <table>
     <tr>
         <th>Deadline</th>
         <th>Active from:</th>
         <th>Active to:</th>
         <th>Request description:</th>
+        <th>Accept</th>
     </tr>
     <tr *ngFor="let request of requests">
         <td>{{ request.deadline | date:'dd.MM.yyyy.' }}</td>

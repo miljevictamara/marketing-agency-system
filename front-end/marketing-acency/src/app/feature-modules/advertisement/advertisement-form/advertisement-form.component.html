@@ -1,34 +1,22 @@
-<H2>Make a request for an Advertisement:</H2>
-<form [formGroup] = "advertisementForm">
-    <div>
-        <label>Slogan:</label>
-        <input type="text" formControlName="slogan">
-    </div>
-    <div>
-        <label>Duration (in seconds):</label>
-        <input type="number" formControlName="duration">
-    </div>
-    <div>
-        <label>Description:</label>
-        <input type="text" formControlName="description">
-    </div>
-    <div>
-        <label>Deadline:</label>
-        <input type="date" formControlName="deadline">
-    </div>
-    <div>
-        <label>Active from:</label>
-        <input type="date" formControlName="activeFrom">
-    </div>
-    <div>
-        <label>Active to:</label>
-        <input type="date" formControlName="activeTo">
-    </div>
-    <div>
-        <label>Request Description:</label>
-        <input type="text" formControlName="requestDescription">
-    </div>
-    <div>
-        <button type="submit" (click)="addAdvertisement()">Send a Request</button>
-    </div>
-</form>
+<div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
+    <form #individualForm="ngForm" [formGroup]="advertisementForm" class="individual-form">  
+        <h2>Request for an advertisement:</h2>
+        <div class="inputDiv">
+
+            <input type="text" formControlName="slogan" matInput placeholder="Slogan" required>
+            <input type="number" formControlName="duration" matInput placeholder="Duration" required>
+            <input type="text" formControlName="description" matInput placeholder="Description" required><br/>
+            <label>Deadline</label><br/>
+            <input type="date" formControlName="deadline" matInput required><br/>
+            <label>Active from</label><br/>
+            <input type="date" formControlName="activeFrom" matInput required><br/>
+            <label>Active to</label><br/>
+            <input type="date" formControlName="activeTo" matInput required>
+            <input type="text" formControlName="requestDescription" matInput placeholder="Request description" required>
+        </div>        
+    </form>
+
+    <button class="thirdStepButton" (click)="addAdvertisement()">
+        Send a request
+    </button>
+</div>

@@ -16,6 +16,7 @@ import { AdministratorFormComponent } from 'src/app/feature-modules/administrato
 import { AuthGuard } from '../authorization/auth.guard';
 import { PermissionPageComponent } from 'src/app/feature-modules/permission-page/permission-page.component';
 import { ClientProfileComponent } from 'src/app/feature-modules/client/client-profile/client-profile.component';
+import { AdvertisementFormComponent } from 'src/app/feature-modules/advertisement/advertisement-form/advertisement-form.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,14 @@ const routes: Routes = [
   { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
   { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: 'client-profile', component: ClientProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
+  { path: 'employee-profile', component: EmployeeProfileComponent},
+  { path: 'administrator-profile', component: AdministratorProfileComponent},
+  { path: 'employee-form', component: EmployeeFormComponent},
+  { path: 'administrator-form', component: AdministratorFormComponent},
+  { path: 'employee-profile', component: EmployeeProfileComponent/*, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}*/},
+  { path: 'permission-page', component: PermissionPageComponent/*, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}*/},
+  { path: 'client-profile', component: ClientProfileComponent},
+  { path: 'advertisement-form', component: AdvertisementFormComponent},
   
 ];
 

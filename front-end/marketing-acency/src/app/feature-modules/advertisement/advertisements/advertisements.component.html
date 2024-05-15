@@ -1,12 +1,13 @@
 <H2>Advertisements:</H2>
 <table>
     <tr>
-        <th>Slogan</th>
-        <th>Duration</th>
-        <th>Description</th>
+        <th>Client:</th>
+        <th>Slogan:</th>
+        <th>Duration (in seconds):</th>
+        <th>Description:</th>
     </tr>
     <tr *ngFor="let advertisement of advertisements">
-        <!--<td>{{ advertisement.clientId }}</td>-->
+        <td>{{ advertisement.client.firstName }} {{ advertisement.client.lastName }}</td>
         <td>{{ advertisement.slogan }}</td>
         <td>{{ advertisement.duration }}</td>
         <td>{{ advertisement.description }}</td>

@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/administrator")
@@ -71,10 +74,11 @@ public class AdministratorController {
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('CREATE_ADMIN')")
-    public ResponseEntity<String> createAdministrator(@RequestBody AdministratorDto administratorDto) {
-
+    public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
         Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
-
-        return new ResponseEntity<>("Administrator created.",HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Administrator created.");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 }

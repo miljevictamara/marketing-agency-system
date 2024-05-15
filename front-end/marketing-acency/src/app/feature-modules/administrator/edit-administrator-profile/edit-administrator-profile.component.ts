@@ -35,6 +35,7 @@ export class EditAdministratorProfileComponent implements OnChanges {
       this.administratorService.updateAdministrator(updatedAdministrator).subscribe(
         (updated: Administrator) => {
           console.log('Administrator updated successfully:', updated);
+          alert('Administrator profile updated successfully!');
         },
         (error) => {
           console.error('Failed to update administrator:', error);

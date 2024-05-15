@@ -34,6 +34,7 @@ export class EditClientProfileComponent {
       this.clientService.updateClient(updatedClient).subscribe(
         (updated: Client) => {
           console.log('Client updated successfully:', updated);
+          alert('Client profile updated successfully!');
         },
         (error) => {
           console.error('Failed to update employee:', error);

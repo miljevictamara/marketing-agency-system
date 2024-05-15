@@ -161,13 +161,14 @@ export class AdministratorFormComponent {
         };
       
         this.administratorService.createAdministrator(administrator).subscribe(
-          (response) => {
-            console.log('Administrator uspešno registrovan!');
+          (response: any) => {
+            console.log(response.message);
           },
-          (error) => {
-            console.error('Greška prilikom registracije administratora:', error);
+          (error: any) => {
+            console.error('Error while creating admin:', error);
           }
         );
+        
         this.router.navigate(['/administrator-profile']);
       },
       (error) => {

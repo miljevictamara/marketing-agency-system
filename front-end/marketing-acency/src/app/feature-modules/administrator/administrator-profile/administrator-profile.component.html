@@ -1,3 +1,4 @@
+<!-- Moje staro, Nina dodala permisije-->
 <h2 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h2>
 <button *ngIf="createAdmin" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
 <table *ngIf="getByUserId && updateAdmin">
@@ -36,3 +37,46 @@
 <button *ngIf="createEmployee" (click)="navigateTo('/employee-form')">Add new Employee</button>
 <app-clients *ngIf="getAllCLients"></app-clients>
 <button *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>
+
+
+<!-- Moje novo -->
+<h1>Administrator profile:</h1>
+<div class="employee-profile-container">
+    <div class="edit-button-container">
+        <button class="edit-button" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>First Name:</label>
+        <span>{{ administrator.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Last Name:</label>
+        <span>{{ administrator.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Address:</label>
+        <span>{{ administrator.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>City:</label>
+        <span>{{ administrator.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Country:</label>
+        <span>{{ administrator.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="administrator">
+        <label>Phone Number:</label>
+        <span>{{ administrator.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="administrator">
+        <button class="edit-button" (click)="onEditClicked(administrator)">Edit</button>
+    </div>
+</div>
+
+<app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>
+<app-employees></app-employees>
+<div class="edit-button-container">
+    <button class="edit-button" (click)="navigateTo('/employee-form')">Add new Employee</button>
+</div>
+<app-clients></app-clients>

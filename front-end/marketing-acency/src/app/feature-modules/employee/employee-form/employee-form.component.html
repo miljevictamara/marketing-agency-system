@@ -1,11 +1,12 @@
 <div *ngIf="createEmployee">
 <div *ngIf="shouldRenderIndividual" class="registration-div">
         <!--Second step as individual - create user -->
+        <h2>Employee credentials:</h2>
         <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
             <div class="inputDiv">
-                <input formControlName="mail" matInput placeholder="email" required>
-                <input formControlName="password" matInput placeholder="password" required type="password">
-                <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
+                <input formControlName="mail" matInput placeholder="Email" required>
+                <input formControlName="password" matInput placeholder="Password" required type="password">
+                <input formControlName="confirmationPassword" matInput placeholder="Confirm password" required type="password">
             </div>        
         </form>
 
@@ -17,13 +18,14 @@
     <div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
         <!-- Third step as individual-->
         <form #individualForm="ngForm" [formGroup]="formIndividual" class="individual-form">  
+            <h2>Employee info:</h2>
             <div class="inputDiv">
-                <input formControlName="firstname" matInput placeholder="firstname" required>
-                <input formControlName="lastname" matInput placeholder="lastname" required>
-                <input formControlName="address" matInput placeholder="address" required>
-                <input formControlName="city" matInput placeholder="city" required>
-                <input formControlName="country" matInput placeholder="country" required>
-                <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+                <input formControlName="firstname" matInput placeholder="First name" required>
+                <input formControlName="lastname" matInput placeholder="Last name" required>
+                <input formControlName="address" matInput placeholder="Address" required>
+                <input formControlName="city" matInput placeholder="City" required>
+                <input formControlName="country" matInput placeholder="Country" required>
+                <input formControlName="phoneNumber" matInput placeholder="Phone number" required>
             </div>        
         </form>
 

@@ -161,13 +161,14 @@ export class EmployeeFormComponent {
         };
       
         this.employeeService.createEmployee(employee).subscribe(
-          (response) => {
-            console.log('Zaposleni uspešno registrovan!');
+          (response: any) => {
+            console.log(response.message);
           },
-          (error) => {
-            console.error('Greška prilikom registracije zaposlenog:', error);
+          (error: any) => {
+            console.error('Error while creating employee:', error);
           }
         );
+        
         this.router.navigate(['/administrator-profile']);
       },
       (error) => {

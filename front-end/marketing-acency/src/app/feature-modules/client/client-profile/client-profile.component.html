@@ -1,3 +1,4 @@
+<!-- Moje staro, Nina dodala -->
 <h2 *ngIf="createAdvertisment || updateClient || getByUserId || advByClient  || createAdvertisment">Client profile:</h2>
 
 <table *ngIf="getByUserId && updateClient">
@@ -35,3 +36,42 @@
 <app-advertisements-for-user *ngIf="advByClient"></app-advertisements-for-user>
 <button *ngIf="createAdvertisment" (click)="onAddAdvertisementClicked()">Make a Request</button>
 <app-advertisement-form *ngIf="addAdvertisementClicked"></app-advertisement-form>
+
+<!-- Moje novo -->
+<h1>Client profile</h1>
+
+<div class="employee-profile-container">
+    <div class="employee-info" *ngIf="client">
+        <label>First Name:</label>
+        <span>{{ client.firstName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Last Name:</label>
+        <span>{{ client.lastName || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Address:</label>
+        <span>{{ client.address || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>City:</label>
+        <span>{{ client.city || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Country:</label>
+        <span>{{ client.country || '-' }}</span>
+    </div>
+    <div class="employee-info" *ngIf="client">
+        <label>Phone Number:</label>
+        <span>{{ client.phoneNumber || '-' }}</span>
+    </div>
+    <div class="edit-button-container" *ngIf="client">
+        <button class="edit-button" (click)="onEditClicked(client)">Edit</button>
+    </div>
+</div>
+
+<app-edit-client-profile *ngIf="editClicked" [client]="client"></app-edit-client-profile>
+<app-advertisements-for-user></app-advertisements-for-user>
+<div class="edit-button-container">
+    <button class="edit-button" (click)="navigateTo('/advertisement-form')">Make a request</button>
+</div>
