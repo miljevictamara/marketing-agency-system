@@ -1,7 +1,7 @@
-<div *ngIf="createEmployee">
+<div  class="heightC" *ngIf="createEmployee">
 <div *ngIf="shouldRenderIndividual" class="registration-div">
         <!--Second step as individual - create user -->
-        <h2>Employee credentials:</h2>
+        <h2>Employee credentials</h2>
         <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
             <div class="inputDiv">
                 <input formControlName="mail" matInput placeholder="Email" required>
@@ -18,7 +18,7 @@
     <div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
         <!-- Third step as individual-->
         <form #individualForm="ngForm" [formGroup]="formIndividual" class="individual-form">  
-            <h2>Employee info:</h2>
+            <h2>Employee info</h2>
             <div class="inputDiv">
                 <input formControlName="firstname" matInput placeholder="First name" required>
                 <input formControlName="lastname" matInput placeholder="Last name" required>

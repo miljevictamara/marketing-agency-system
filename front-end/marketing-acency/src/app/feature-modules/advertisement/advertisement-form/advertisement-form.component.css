@@ -8,6 +8,7 @@
     padding: 20px; 
     width: auto;
     margin-top: -160px;
+    
   }
   
 .registration-div {
@@ -52,6 +53,7 @@
   
 .invalid-field {
     border: 2px solid #ff0000; 
+    
   }
   
 .registration-title {

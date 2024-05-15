@@ -36,17 +36,8 @@ const routes: Routes = [
   { path: 'employee-profile', component: EmployeeProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}},
   { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: 'client-profile', component: ClientProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
-  { path: 'employee-profile', component: EmployeeProfileComponent},
-  { path: 'administrator-profile', component: AdministratorProfileComponent},
-  { path: 'employee-form', component: EmployeeFormComponent},
-  { path: 'administrator-form', component: AdministratorFormComponent},
-  { path: 'employee-profile', component: EmployeeProfileComponent/*, canActivate:[AuthGuard], data:{role:['ROLE_EMPLOYEE']}*/},
-  { path: 'permission-page', component: PermissionPageComponent/*, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}*/},
-  { path: 'client-profile', component: ClientProfileComponent},
-  { path: 'advertisement-form', component: AdvertisementFormComponent},
-  
-  { path: 'employee-profile', component: EmployeeProfileComponent},
-  { path: 'registration-requests', component: RegistrationRequestComponent}
+  { path: 'advertisement-form', component: AdvertisementFormComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
+  { path: 'registration-requests', component: RegistrationRequestComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}}
 ];
 
 @NgModule({

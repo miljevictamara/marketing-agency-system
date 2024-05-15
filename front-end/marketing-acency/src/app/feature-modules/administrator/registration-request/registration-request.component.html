@@ -1,6 +1,6 @@
 <div class="table-container">
     <p class="title">Manage Registration Requests</p>
-    <table class="table">
+    <table *ngIf="registrationRequests" class="table">
         <thead>
             <tr>
                 <th>Firstname</th>
@@ -14,12 +14,12 @@
                 <td>{{ individual.firstName }}</td>
                 <td>{{ individual.lastName }}</td>
                 <td>
-                  <button class="approveButton" (click)="onApproveClicked(individual)">
+                  <button *ngIf="approve" class="approveButton" (click)="onApproveClicked(individual)">
                       Approve
                   </button>
                 </td>
                 <td>
-                    <button class="rejectButton" (click)="onRejectForm(individual)" >
+                    <button *ngIf="reject" class="rejectButton" (click)="onRejectForm(individual)" >
                         Reject
                     </button>
                   </td>
@@ -27,7 +27,7 @@
         </tbody>
     </table>
 
-    <table class="table-legalEntity">
+    <table *ngIf="registrationLegalRequests" class="table-legalEntity">
         <thead>
             <tr>
                 <th>Company name</th>
@@ -41,12 +41,12 @@
                 <td>{{ legalEntity.companyName }}</td>
                 <td>{{ legalEntity.pib }}</td>
                 <td>
-                  <button class="approveButton" (click)="onApproveClicked(legalEntity)">
+                  <button *ngIf="approve" class="approveButton" (click)="onApproveClicked(legalEntity)">
                       Approve
                   </button>
                 </td>
                 <td>
-                    <button class="rejectButton" (click)="onRejectForm(legalEntity)" >
+                    <button  *ngIf="reject" class="rejectButton" (click)="onRejectForm(legalEntity)" >
                         Reject
                     </button>
                   </td>

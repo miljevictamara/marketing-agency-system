@@ -39,6 +39,7 @@
 -->
 
 <!-- Moje novo -->
+<div class="heightC">
 <h1 *ngIf="createAdvertisment || updateClient || getByUserId || advByClient  || createAdvertisment">Client profile</h1>
 
 <div class="employee-profile-container" *ngIf="getByUserId && updateClient">
@@ -75,4 +76,5 @@
 <app-advertisements-for-user *ngIf="advByClient"></app-advertisements-for-user>
 <div class="edit-button-container">
     <button class="edit-button" *ngIf="createAdvertisment" (click)="navigateTo('/advertisement-form')">Make a request</button>
+</div>
 </div>

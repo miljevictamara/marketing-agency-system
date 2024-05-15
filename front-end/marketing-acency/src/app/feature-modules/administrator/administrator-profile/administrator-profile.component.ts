@@ -21,7 +21,8 @@ export class AdministratorProfileComponent implements OnInit {
   managePermissions: boolean = false;
   createAdmin: boolean = false;
   updateAdmin: boolean = false;
-
+  registrationRequests: boolean = false;
+  registrationLegalRequests: boolean = false;
   user: User | undefined;
   constructor(private router: Router, private administratorService: AdministratorService, private authService: AuthService, private permission: PermissionService) { }
 
@@ -49,6 +50,12 @@ export class AdministratorProfileComponent implements OnInit {
       });
       this.permission.hasPermission(this.user.mail, 'UPDATE_ADMIN').subscribe(hasPermission => {
         this.updateAdmin = hasPermission;
+      });
+      this.permission.hasPermission(this.user.mail, 'VIEW_ALL_INDIVIDUALS').subscribe(hasPermission => {
+        this.registrationRequests = hasPermission;
+      });
+      this.permission.hasPermission(this.user.mail, 'VIEW_ALL_LEGAL_ENTITIES').subscribe(hasPermission => {
+        this.registrationLegalRequests = hasPermission;
       });
     });
     if (userId !== undefined) {

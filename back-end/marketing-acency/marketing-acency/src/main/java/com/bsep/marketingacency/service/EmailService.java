@@ -84,7 +84,7 @@ public class EmailService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
         mail.setFrom(env.getProperty("spring.mail.username"));
-        mail.setSubject("Account activation");
+        mail.setSubject("Rejected registration");
 
         String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
         String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +

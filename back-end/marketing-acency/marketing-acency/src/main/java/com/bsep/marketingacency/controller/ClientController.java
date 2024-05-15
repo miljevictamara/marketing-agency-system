@@ -120,9 +120,9 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/reject-registration-request/{id}")
+    @PutMapping(value = "/reject-registration-request/{id}/{reason}")
     @PreAuthorize("hasAuthority('REJECT_REGISTRATION_REQUEST')")
-    public ResponseEntity<String> register(@PathVariable  Long id, @RequestParam String reason){
+    public ResponseEntity<String> register(@PathVariable  Long id, @PathVariable String reason){
         clientService.rejectRegistrationRequest(id, reason);
         Client client = clientService.findById(id);
         User user = client.getUser();

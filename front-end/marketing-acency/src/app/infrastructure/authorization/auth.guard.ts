@@ -38,6 +38,8 @@ export class AuthGuard implements CanActivate {
                 route.routeConfig?.path === 'permission-page' ||
                 route.routeConfig?.path === 'employee-profile' ||
                 route.routeConfig?.path === 'employee-form' ||
+                route.routeConfig?.path === 'advertisement-form'||
+                route.routeConfig?.path === 'registration-requests' ||
                 route.routeConfig?.path === 'administrator-form') &&
                 move
               ) {

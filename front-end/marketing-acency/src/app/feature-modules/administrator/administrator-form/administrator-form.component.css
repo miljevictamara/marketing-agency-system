@@ -9,7 +9,10 @@
     width: auto;
     margin-top: -160px;
   }
-  
+  .heightC{
+    min-height: 100vh;
+}
+
 .registration-div {
     border: 2px solid rgb(35, 35, 53); /* Dodato: okvir */
     width: 380px;
@@ -20,6 +23,7 @@
     text-align: center;
     height: 450px;
     margin: 0 auto;
+    margin-top: 60px;
   }
   
 .registration-form input {
