@@ -3,11 +3,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 130vh;
     background-color: #f4f4f4; 
     padding: 20px; 
     width: auto;
     margin-top: -160px;
+  }
+  .heightC{
+    min-height: 100vh;
   }
   
 .registration-div {
@@ -20,6 +22,8 @@
     text-align: center;
     height: 450px;
     margin: 0 auto;
+    margin-top: 60px;
+
   }
   
 .registration-form input {

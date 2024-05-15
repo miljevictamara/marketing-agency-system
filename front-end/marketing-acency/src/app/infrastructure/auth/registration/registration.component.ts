@@ -179,9 +179,7 @@ export class RegistrationComponent implements OnInit{
             }
             
           }
-           else {
-            alert('An unexpected error occurred.'); // or display an error message on the UI
-          }
+          
         }
       );
 

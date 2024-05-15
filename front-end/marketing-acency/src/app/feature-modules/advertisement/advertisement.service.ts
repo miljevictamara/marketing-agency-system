@@ -30,7 +30,7 @@ export class AdvertisementService {
     return this.http.post<Advertisement>('https://localhost:8443/advertisement/create', advertisement)
   }
 
-  getClientIdByAdvertismentId(requestId: number){
+  getClientIdByAdvertismentId(requestId: number): Observable<number> {
     return this.http.get<number>('https://localhost:8443/advertisement/getClientIdByAdvertismentId/' + requestId);
   }
 }

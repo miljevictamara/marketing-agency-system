@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -166,6 +167,7 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/allIndividuals")
+    @PreAuthorize("hasAuthority('VIEW_ALL_INDIVIDUALS')")
     public ResponseEntity<List<Client>> getAllIndividuals() {
         List<Client> individualClients = userService.getAllIndividuals();
 
@@ -177,6 +179,7 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/allLegalEntities")
+    @PreAuthorize("hasAuthority('VIEW_ALL_LEGAL_ENTITIES')")
     public ResponseEntity<List<Client>> getAllLegalEntities() {
         List<Client> legalEntityClients = userService.getAllLegalEntities();
 

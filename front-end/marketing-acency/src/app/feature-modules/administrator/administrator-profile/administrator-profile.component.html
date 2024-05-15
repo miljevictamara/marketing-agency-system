@@ -41,7 +41,8 @@
 
 
 <!-- Moje novo -->
-<h1 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h1>
+<div class="heightC">
+<h1 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile</h1>
 <div class="employee-profile-container" *ngIf="getByUserId && updateAdmin">
     <div class="edit-button-container">
         <button *ngIf="createAdmin" class="edit-button" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
@@ -81,4 +82,12 @@
     <button *ngIf="createEmployee" class="edit-button" (click)="navigateTo('/employee-form')">Add new Employee</button>
 </div>
 <app-clients *ngIf="getAllCLients"></app-clients>
-<button *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>
+<div class="edit-button-container">
+<button  class="edit-button" *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>
+</div>
+<br>
+<div class="edit-button-container">
+    <button  class="edit-button" *ngIf="registrationRequests || registrationLegalRequests" (click)="navigateTo('/registration-requests')">Registration requests</button>
+    </div>
+    <br>
+</div>

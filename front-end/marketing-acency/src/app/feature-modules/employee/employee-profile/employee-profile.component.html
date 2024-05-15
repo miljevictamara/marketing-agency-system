@@ -34,6 +34,7 @@
 -->
 
 <!-- Moje novo -->
+<div class="heightC">
 <h1 *ngIf="getById || updateEmployee || getAcceptedRequests || getPendingRequests">Employee profile</h1>
 
 <div class="employee-profile-container" *ngIf="getById && updateEmployee">
@@ -70,3 +71,4 @@
 <app-edit-employee-profile *ngIf="editClicked" [employee]="employee"></app-edit-employee-profile>
 <app-advertisements *ngIf="getAcceptedRequests"></app-advertisements>
 <app-requests *ngIf="getPendingRequests"></app-requests>
+</div>

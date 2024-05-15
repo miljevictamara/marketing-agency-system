@@ -40,11 +40,11 @@ export class PasswordlessLoginComponent implements OnInit {
                     this.router.navigate(['/check-your-email']);
                   },
                   error: (error) => {
-                    this.showNotification('You do not have the appropriate package.');
+                    this.showNotification('You do not have permission for this.');
                   }
                 });
               } else {
-                this.showNotification('You do not have the appropriate package.');
+                this.showNotification('You do not have permission for this.');
               }
             },
             error: (error) => {
