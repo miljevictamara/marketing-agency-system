@@ -50,7 +50,7 @@ export class RequestsComponent {
       // Call the update method from the service
       this.advertisementService.updateAdvertisement(newAdvertisement)
         .subscribe(updatedRequest => {
-          // Do something with the updatedRequest if needed
+          alert("Request for an advertisement accepted!")
         });
     });
   }

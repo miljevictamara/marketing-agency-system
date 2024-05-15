@@ -1,5 +1,5 @@
 <!-- Moje staro, Nina dodala permisije-->
-<h2 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h2>
+<!-- <h2 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h2>
 <button *ngIf="createAdmin" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
 <table *ngIf="getByUserId && updateAdmin">
     <tr *ngIf="administrator">
@@ -37,13 +37,14 @@
 <button *ngIf="createEmployee" (click)="navigateTo('/employee-form')">Add new Employee</button>
 <app-clients *ngIf="getAllCLients"></app-clients>
 <button *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>
+-->
 
 
 <!-- Moje novo -->
-<h1>Administrator profile:</h1>
-<div class="employee-profile-container">
+<h1 *ngIf="createAdmin || updateAdmin || getByUserId || hasEmployeePermission || createEmployee || getAllCLients || managePermissions">Administrator profile:</h1>
+<div class="employee-profile-container" *ngIf="getByUserId && updateAdmin">
     <div class="edit-button-container">
-        <button class="edit-button" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
+        <button *ngIf="createAdmin" class="edit-button" (click)="navigateTo('/administrator-form')">Add new Administrator</button>
     </div>
     <div class="employee-info" *ngIf="administrator">
         <label>First Name:</label>
@@ -75,8 +76,9 @@
 </div>
 
 <app-edit-administrator-profile *ngIf="editClicked" [administrator]="administrator"></app-edit-administrator-profile>
-<app-employees></app-employees>
+<app-employees *ngIf="hasEmployeePermission"></app-employees>
 <div class="edit-button-container">
-    <button class="edit-button" (click)="navigateTo('/employee-form')">Add new Employee</button>
+    <button *ngIf="createEmployee" class="edit-button" (click)="navigateTo('/employee-form')">Add new Employee</button>
 </div>
-<app-clients></app-clients>
+<app-clients *ngIf="getAllCLients"></app-clients>
+<button *ngIf="managePermissions" (click)="navigateTo('/permission-page')">Manage permissions</button>

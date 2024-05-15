@@ -61,4 +61,8 @@ export class ClientProfileComponent {
   navigateTo(path: string): void {
     this.router.navigate([path]);
   }
+
+  onAddAdvertisementClicked() {
+    this.addAdvertisementClicked = true;
+  }
 }
