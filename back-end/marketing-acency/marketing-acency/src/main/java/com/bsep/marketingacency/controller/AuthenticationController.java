@@ -1,10 +1,7 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.TokenRefreshException;
-import com.bsep.marketingacency.dto.ClientDto;
-import com.bsep.marketingacency.dto.JwtAuthenticationRequest;
-import com.bsep.marketingacency.dto.NewAccessToken;
-import com.bsep.marketingacency.dto.UserTokenState;
+import com.bsep.marketingacency.dto.*;
 import com.bsep.marketingacency.model.TokenRefreshRequest;
 import com.bsep.marketingacency.model.TokenRefreshResponse;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
@@ -59,7 +56,7 @@ public class AuthenticationController {
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping(value = "/login")
-    public ResponseEntity<UserTokenState> createAuthenticationToken(
+    public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
@@ -73,6 +70,13 @@ public class AuthenticationController {
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
 
+        if (user.getIsBlocked() || !user.getIsActivated()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (user.isMfa()) {
+            return ResponseEntity.ok().body("");
+        }
+
         String jwt = tokenUtils.generateToken(user);
         int expiresIn = tokenUtils.getExpiredIn();
 
@@ -80,14 +84,31 @@ public class AuthenticationController {
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
-        if(!user.getIsBlocked() && user.getIsActivated()){
-            return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn);
+        return ResponseEntity.ok(tokenState);
 
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyCode(@RequestBody VerifyTOTP verifyTOTP) {
+        Boolean isValid = userService.verify(verifyTOTP.getMail(), verifyTOTP.getCode());
+
+        if (isValid) {
+            User user = userService.findByMail(verifyTOTP.getMail());
+
+            String jwt = tokenUtils.generateToken(user);
+            int expiresIn = tokenUtils.getExpiredIn();
+
+            String refreshJwt = tokenUtils.generateRefreshToken(user);
+            int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+            UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+            return ResponseEntity.ok(tokenState);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid verification code.");
+        }
+    }
+
 
     @PostMapping(value = "/passwordless-login")
     public ResponseEntity<String> sendLoginToken(

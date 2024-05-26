@@ -29,6 +29,9 @@ public class UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private TOTPManager totpManager;
     public User findByMail(String mail) {
         return userRepository.findByMail(mail);
     }
@@ -100,4 +103,16 @@ public class UserService {
         List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
         return legalEntityClients;
     }
+
+    public Boolean verify(String mail, String code) {
+        User user = userRepository.findByMail(mail);
+
+        if (user == null || !totpManager.verifyCode(code, user.getSecret())) {
+            return false;
+        }
+        return true;
+    }
+
+
+
 }

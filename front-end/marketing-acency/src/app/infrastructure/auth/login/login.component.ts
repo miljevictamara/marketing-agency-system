@@ -41,6 +41,27 @@ export class LoginComponent implements OnInit {
 
   }
 
+  // onSubmit() {
+  //   this.submitted = true;
+  
+  //   this.authService.login(this.form.value)
+  //     .subscribe({
+  //       next: (data: any) => {
+  //         console.log(data);
+  //         if (data && data.accessToken) {
+  //           this.router.navigate(['/']); 
+  //         } else {
+  //           this.router.navigate(['/verify', this.form.value.mail]); 
+  //         }
+  //       },
+  //       error: (error: any) => {
+  //         console.log(error);
+  //         this.submitted = false;
+  //       }
+  //     });
+  // }
+  
+  
   onPasswordlesLoginClick(){
     this.router.navigate(['passwordless-login']);
   }

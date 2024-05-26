@@ -1,12 +1,13 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError, map, tap } from 'rxjs';
 import { User } from './model/user.model';
 import { UserService } from 'src/app/feature-modules/user/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApiService } from './service/api.service';
 import { Client } from 'src/app/feature-modules/user/model/client.model';
+import { VerifyCode } from './model/verifyCode.model';
 
 
 @Injectable({
@@ -67,6 +68,14 @@ export class AuthService {
     return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
         console.log('Login success',res);
+        //ovde
+        if (!res || !res.body || !res.body.accessToken) {
+          // Ako nema povratnih podataka ili ako accessToken nije prisutan u odgovoru
+          // prosledi na stranicu za proveru
+          this.router.navigate(['/verify', user.mail] );
+
+
+        }
         this.access_token = res.body.accessToken;
         this.refresh_token = res.body.refreshToken;
         localStorage.setItem("access_token", res.body.accessToken)
@@ -82,6 +91,46 @@ export class AuthService {
     ));
   }
 
+  // login(user: User) {
+  //   if (user.isBlocked) {
+  //       console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
+  //       return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
+  //   }
+  
+  //   const loginHeaders = new HttpHeaders({
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/json'
+  //   });
+  
+  //   const body = {
+  //     'mail': user.mail,
+  //     'password': user.password
+  //   };  
+    
+  //   return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders)
+  //     .pipe(
+  //       map((res: any) => {
+  //         console.log('Login success', res);
+  //         if (res && res.accessToken) {
+  //           this.access_token = res.accessToken;
+  //           this.refresh_token = res.refreshToken;
+  //           localStorage.setItem("access_token", res.accessToken)
+  //           localStorage.setItem("refresh_token", res.refreshToken)
+  //           this.autoLogout(res.refreshExpiresIn);
+  //           this.AccessTokenExpired(res.accessExpiresIn);
+  //           this.setUser();
+  //           return res;
+  //         } else {
+  //           return res;
+         
+  //      }}),
+  //       catchError((error: any) => {
+  //         console.error('Greška prilikom logovanja:', error);
+  //         return throwError('Došlo je do greške prilikom logovanja.');
+  //       })
+  //     );
+  // }
+  
 
   AccessTokenExpired(expirationDate: number) {
     this.clearTimeout = setTimeout(() => {
@@ -107,9 +156,34 @@ export class AuthService {
     });
 }
 
+verifyCode(verifyCode: VerifyCode): Observable<any> {
+  return this.verify(verifyCode).pipe(
+    tap((res: any) => {
+      console.log('Response:', res); 
+      this.access_token = res.accessToken;
+      this.refresh_token = res.refreshToken;
+      localStorage.setItem("access_token", res.accessToken);
+      localStorage.setItem("refresh_token", res.refreshToken);
+      this.autoLogout(res.accessExpiresIn);
+      this.AccessTokenExpired(res.accessExpiresIn)
+      this.setUser();
+    }),
+    catchError((error: any) => {
+      console.error('Error:', error); 
+      return throwError(error);
+    })
+  );
+}
+
+
 getTokens(mail: string) {
     return this.http.post<any>(`https://localhost:8443/auth/login-tokens`,mail);
 }
+
+verify(verifyCode: VerifyCode): Observable<any> {
+  return this.http.post<any>('https://localhost:8443/auth/verify', verifyCode);
+}
+
 
   
 

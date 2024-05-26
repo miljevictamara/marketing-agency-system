@@ -19,6 +19,7 @@ import { ClientProfileComponent } from 'src/app/feature-modules/client/client-pr
 import { AdvertisementFormComponent } from 'src/app/feature-modules/advertisement/advertisement-form/advertisement-form.component';
 import { RegistrationRequestComponent } from 'src/app/feature-modules/administrator/registration-request/registration-request.component';
 import { QrcodeComponent } from '../auth/qrcode/qrcode.component';
+import { TwoFAVerificationComponent } from '../auth/two-fa-verification/two-fa-verification.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,8 @@ const routes: Routes = [
   { path: 'advertisement-form', component: AdvertisementFormComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
   { path: 'registration-requests', component: RegistrationRequestComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: 'qrcode', component: QrcodeComponent},
+  { path: 'verify/:mail', component: TwoFAVerificationComponent }
+
 ];
 
 @NgModule({
