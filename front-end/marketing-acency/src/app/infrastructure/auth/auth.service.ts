@@ -138,6 +138,7 @@ getTokens(mail: string) {
       roles: decodedToken.roles || '',     
       isBlocked: decodedToken.isBlocked || '',
       isActivated: decodedToken.isActivated || ''
+      
     };
   
     this.user$.next(user);
@@ -214,7 +215,7 @@ getTokens(mail: string) {
 
     this.access_token = null;
     this.router.navigate(['/login']);
-    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false })
+    this.user$.next({id: 0, mail: "", password: "", confirmationPassword: "", roles: [{ id: 0, name: '', permissions: [] }], isBlocked: false, isActivated:false})
   }
 
   tokenIsPresent() {

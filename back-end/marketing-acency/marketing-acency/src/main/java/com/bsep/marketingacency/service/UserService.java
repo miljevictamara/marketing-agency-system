@@ -45,6 +45,8 @@ public class UserService {
         user.setRoles(roles);
         user.setIsActivated(false);
         user.setIsBlocked(false);
+        user.setMfa(userDto.getMfa());
+        user.setSecret(userDto.getSecret());
 
         return this.userRepository.save(user);
     }

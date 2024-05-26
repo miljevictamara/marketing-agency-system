@@ -12,7 +12,8 @@ import { CheckYourEmailComponent } from './check-your-email/check-your-email.com
 import { ForbiddenPasswordlessLoginComponent } from './forbidden-passwordless-login/forbidden-passwordless-login.component';
 import { SuccessfulPasswordlessLoginComponent } from './successful-passwordless-login/successful-passwordless-login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { QrcodeComponent } from './qrcode/qrcode.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PasswordlessLoginComponent,
     CheckYourEmailComponent,
     ForbiddenPasswordlessLoginComponent,
-    SuccessfulPasswordlessLoginComponent
+    SuccessfulPasswordlessLoginComponent,
+    QrcodeComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatCheckboxModule
   ],
   exports: [
     LoginComponent,
@@ -41,7 +44,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PasswordlessLoginComponent,
     CheckYourEmailComponent,
     ForbiddenPasswordlessLoginComponent,
-    SuccessfulPasswordlessLoginComponent
+    SuccessfulPasswordlessLoginComponent,
+    QrcodeComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

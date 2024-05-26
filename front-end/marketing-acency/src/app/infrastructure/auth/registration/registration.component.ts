@@ -49,7 +49,8 @@ export class RegistrationComponent implements OnInit{
     confirmationPassword: '',
     roles: [],
     isBlocked: false,
-    isActivated: false
+    isActivated: false,
+    mfa: false,
   };
 
 
@@ -63,7 +64,8 @@ export class RegistrationComponent implements OnInit{
     this.formUser = this.formBuilder.group({
       mail: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
       //password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])],
-      confirmationPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])]
+      confirmationPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$')])],
+      enableTwoFactorAuth: [false]
     });
 
 
@@ -142,8 +144,9 @@ export class RegistrationComponent implements OnInit{
       // Koristi ovu vrednost po potrebi
       const email = this.formUser.get('mail')?.value;
       this.user.mail = email;
-      this.user.confirmationPassword = this.formUser.get('confirmationPassword')?.value;;
+      this.user.confirmationPassword = this.formUser.get('confirmationPassword')?.value;
       this.user.password = this.passwordValue
+      this.user.mfa = this.formUser.get('enableTwoFactorAuth')?.value;
 
       this.authService.saveUser(
         this.user
@@ -287,7 +290,13 @@ export class RegistrationComponent implements OnInit{
           (response) => {
             console.log('Klijent uspešno registrovan!');
             alert("Successfully sent a registration request!");
+            //this.router.navigate(['/']);
+            if (response.mfa) {
+              //setQrImageUrl(response.secretImageUri);
+              this.router.navigate(['/qrcode'], { queryParams: { secretImageUri: response.secretImageUri } });
+           } else {
             this.router.navigate(['/']);
+           }
           },
           (error) => {
             console.error('Greška prilikom registracije klijenta:', error);

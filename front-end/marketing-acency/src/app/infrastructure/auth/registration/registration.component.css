@@ -262,3 +262,18 @@
   color:white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Style for the checkbox when it is not checked */
+.checkbox {
+  color: white !important; /* Red border when unchecked */
+  background-color: white;
+  border-radius: 5px;
+}
+
+
+
+
+
+
+
+

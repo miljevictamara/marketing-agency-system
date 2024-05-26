@@ -1,0 +1,10 @@
+<div class="container-big">
+    <div *ngIf="secretImageUri">
+        <p>Scan the QR code with your authenticator app</p>
+        <img [src]="secretImageUri" alt="QR Code for Two-Factor Authentication">
+      </div>
+      <div *ngIf="!secretImageUri">
+        <p>No QR code available.</p>
+      </div>
+</div>
+  

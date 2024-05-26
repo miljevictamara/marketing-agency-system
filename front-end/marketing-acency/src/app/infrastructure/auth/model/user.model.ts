@@ -8,5 +8,6 @@ export interface User {
   roles: Role[];
   isBlocked: boolean;
   isActivated: boolean;
+  mfa?: boolean;
 }
 

@@ -102,6 +102,11 @@
 			<version>1.15</version> <!-- Verzija može biti drugačija, proverite poslednju verziju -->
 		</dependency>
 
+		<dependency>
+			<groupId>dev.samstevens.totp</groupId>
+			<artifactId>totp</artifactId>
+			<version>1.7.1</version>
+		</dependency>
 
 	</dependencies>
 

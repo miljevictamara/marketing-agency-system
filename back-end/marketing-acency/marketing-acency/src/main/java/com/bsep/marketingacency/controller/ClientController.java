@@ -1,24 +1,18 @@
 package com.bsep.marketingacency.controller;
 
-import com.bsep.marketingacency.dto.ClientDto;
-import com.bsep.marketingacency.dto.EmployeeDto;
-import com.bsep.marketingacency.dto.RejectionNoteDto;
-import com.bsep.marketingacency.dto.UserDto;
+import com.bsep.marketingacency.dto.*;
 import com.bsep.marketingacency.model.*;
-import com.bsep.marketingacency.service.ClientService;
-import com.bsep.marketingacency.service.EmailService;
+import com.bsep.marketingacency.service.*;
 import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientService;
-import com.bsep.marketingacency.service.PackageService;
-import com.bsep.marketingacency.service.RejectionNoteService;
-import com.bsep.marketingacency.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,6 +45,9 @@ public class ClientController {
 
     @Autowired
     private PackageService packageService;
+
+    @Autowired
+    private TOTPManager totpManager;
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
         
@@ -74,13 +71,26 @@ public class ClientController {
         if (!userDto.getPassword().equals(userDto.getConfirmationPassword())) {
             return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.CONFLICT);
         }
-
-
+        //dodato za dvofaktorku, kao i dva nova polja u user i userDto - mfa, secret
+        if(userDto.getMfa()) {
+            userDto.setSecret(totpManager.generateSecret());
+        }
 
         User savedUser = userService.save(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
 
     }
+
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClientRegistrationResponse> register(@RequestBody ClientDto clientDto) {
+        Client savedClient = clientService.save(clientDto);
+        boolean isMfaEnabled = savedClient.getUser().isMfa();
+        String secretImageUri = isMfaEnabled ? totpManager.getUriForImage(savedClient.getUser().getSecret()) : null;
+        ClientRegistrationResponse response = new ClientRegistrationResponse(isMfaEnabled, secretImageUri);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
 
     // pristup: Administrator
     @PostMapping(value = "/save-employee-user")
@@ -96,14 +106,6 @@ public class ClientController {
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         User savedUser = userService.saveAdminUser(userDto);
         return new ResponseEntity<>("User saved.",HttpStatus.CREATED);
-    }
-
-    @PostMapping(value = "/register")
-    public ResponseEntity<String> register(@RequestBody ClientDto clientDto) {
-
-        Client savedClient = clientService.save(clientDto);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/approve-registration-request/{id}")

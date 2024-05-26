@@ -2,6 +2,7 @@ package com.bsep.marketingacency.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,7 +39,11 @@ public class User implements UserDetails {
     @Column(name = "is_blocked")
     private Boolean isBlocked;
 
+    @Column(name = "mfa")
+    private boolean mfa;
 
+    @Column(name = "secret")
+    private String secret;
 
     public String getRoleName() {
         return roles.get(0).getName();
@@ -62,16 +67,16 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String mail, String password, List<Role> roles, Boolean isActivated, Boolean isBlocked) {
+    public User(Long id, String mail, String password, List<Role> roles, Boolean isActivated, Boolean isBlocked, boolean mfa, String secret) {
         this.id = id;
         this.mail = mail;
         this.password = password;
         this.roles = roles;
         this.isActivated = isActivated;
         this.isBlocked = isBlocked;
+        this.mfa = mfa;
+        this.secret = secret;
     }
-
-
 
     @Override
     public String getUsername() {
@@ -97,4 +102,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

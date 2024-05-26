@@ -18,6 +18,7 @@ import { PermissionPageComponent } from 'src/app/feature-modules/permission-page
 import { ClientProfileComponent } from 'src/app/feature-modules/client/client-profile/client-profile.component';
 import { AdvertisementFormComponent } from 'src/app/feature-modules/advertisement/advertisement-form/advertisement-form.component';
 import { RegistrationRequestComponent } from 'src/app/feature-modules/administrator/registration-request/registration-request.component';
+import { QrcodeComponent } from '../auth/qrcode/qrcode.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'permission-page', component: PermissionPageComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: 'client-profile', component: ClientProfileComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
   { path: 'advertisement-form', component: AdvertisementFormComponent, canActivate:[AuthGuard], data:{role:['ROLE_CLIENT']}},
-  { path: 'registration-requests', component: RegistrationRequestComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}}
+  { path: 'registration-requests', component: RegistrationRequestComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
+  { path: 'qrcode', component: QrcodeComponent},
 ];
 
 @NgModule({

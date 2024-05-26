@@ -22,6 +22,7 @@ import { PermissionPageModule } from './feature-modules/permission-page/permissi
 import { RegistrationRequestComponent } from './feature-modules/administrator/registration-request/registration-request.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatInputModule } from '@angular/material/input';
     PermissionPageModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule 
+    MatInputModule,
+    MatCheckboxModule
   ],
   providers: [ 
     {

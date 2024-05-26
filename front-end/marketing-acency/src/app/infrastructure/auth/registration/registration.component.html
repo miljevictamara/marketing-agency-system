@@ -43,7 +43,10 @@
                 <pwned-password id="pwnedPasswordInput" #pwnedPasswordInput class="pwned-password" name="password" placeholder="password"></pwned-password>
                 <!--<input formControlName="password" matInput placeholder="password" class="password-input" required type="password">-->
                 <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
-            </div>        
+            </div> 
+            <div >
+                <mat-checkbox color="primary" class="checkbox" formControlName="enableTwoFactorAuth">Enable two-factor authentication  </mat-checkbox>
+            </div>       
         </form>
 
         <button class="thirdStepButton" (click)="thirdStepIndividual()">
