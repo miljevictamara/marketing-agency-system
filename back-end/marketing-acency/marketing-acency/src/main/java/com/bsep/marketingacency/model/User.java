@@ -39,9 +39,11 @@ public class User implements UserDetails {
     @Column(name = "is_blocked")
     private Boolean isBlocked;
 
+    @Nullable
     @Column(name = "mfa")
     private boolean mfa;
 
+    @Nullable
     @Column(name = "secret")
     private String secret;
 
@@ -67,7 +69,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String mail, String password, List<Role> roles, Boolean isActivated, Boolean isBlocked, boolean mfa, String secret) {
+    public User(Long id, String mail, String password, List<Role> roles, Boolean isActivated, Boolean isBlocked, @Nullable boolean mfa, @Nullable String secret) {
         this.id = id;
         this.mail = mail;
         this.password = password;

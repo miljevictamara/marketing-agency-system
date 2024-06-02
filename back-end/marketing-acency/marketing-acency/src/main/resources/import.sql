@@ -66,16 +66,16 @@ INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 100.00, 100);
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC', 50.00, 10);
 
-INSERT INTO public."users" (is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'admin.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'admin.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'client.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'client.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'admin@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'client@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (true, false, 'employee@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
-INSERT INTO public."users"(is_activated, is_blocked, mail, password) VALUES (false, false, 'miljevictamara+123@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.');
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'employee.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'employee.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'admin.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'admin.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'client.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'client.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'admin@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'client@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'employee@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (false, false, 'miljevictamara+123@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.', false);
 
 
 

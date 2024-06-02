@@ -78,7 +78,6 @@ public class UserService {
         user.setRoles(roles);
         user.setIsActivated(true);
         user.setIsBlocked(false);
-
         return this.userRepository.save(user);
     }
 
