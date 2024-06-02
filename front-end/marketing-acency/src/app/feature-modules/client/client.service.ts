@@ -23,4 +23,8 @@ export class ClientService {
   updateClient(client: Client): Observable<Client> {
     return this.http.put<Client>('https://localhost:8443/client/update', client);
   }
+
+  deleteUser(userId: number, password: string): Observable<any>{
+    return this.http.delete<any>(`https://localhost:8443/user/${userId}/${password}`, {});
+  }
 }

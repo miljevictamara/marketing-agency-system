@@ -7,6 +7,7 @@ import com.bsep.marketingacency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +31,9 @@ public class UserController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PutMapping(value = "/activation/{id}")
     public ResponseEntity<String> updateIsActivated(@PathVariable Long id){
@@ -64,12 +68,17 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+    @DeleteMapping(value = "/{userId}/{password}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) {
         User user = userService.findUserById(userId);
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return new ResponseEntity<>("Incorrect password!", HttpStatus.CONFLICT);
+        }
+
 
         clientService.deleteClient(userId);
         loginTokenService.delete(userId);
@@ -78,7 +87,7 @@ public class UserController {
         rejectionNoteService.delete(userId);
         userService.deleteUser(userId);
 
-        return new ResponseEntity<>("User data deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -69,6 +69,7 @@
     </div>
     <div class="edit-button-container" *ngIf="client">
         <button class="edit-button" (click)="onEditClicked(client)">Edit</button>
+        <button *ngIf="isGoldClient" class="delete-button" (click)="onDeleteFormClicked()">Delete profile</button>
     </div>
 </div>
 
@@ -77,4 +78,22 @@
 <div class="edit-button-container">
     <button class="edit-button" *ngIf="createAdvertisment" (click)="navigateTo('/advertisement-form')">Make a request</button>
 </div>
+
+<div *ngIf="shouldRenderDeleteForm" class="message-form-wrapper">
+    <div>
+        <p class="title"><b>Delete profile?</b></p>
+        <p class="subtitle">Deleting your profile will remove all personal data.</p>
+    </div>
+    <form [formGroup]="addPasswordForm" class="center-class">
+        <input matInput type="password" placeholder="Enter your password..." formControlName="password">                
+        <button class="deleteButton" (click)="onDeleteClicked()">
+            Delete profile
+        </button>
+        <button class="cancelButton" (click)="onCancelClicked()">
+            Cancel
+        </button>
+    </form>  
+    
+</div>
+
 </div>
