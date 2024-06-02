@@ -5,6 +5,7 @@ import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.RejectionNoteRepository;
+import com.bsep.marketingacency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ import java.util.concurrent.TimeUnit;
 public class RejectionNoteService {
     @Autowired
     private RejectionNoteRepository rejectionNoteRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<RejectionNote> findAll() {
         return rejectionNoteRepository.findAll();
@@ -50,5 +54,10 @@ public class RejectionNoteService {
         rejectionNote.setEmail(note.getEmail());
 
         return this.rejectionNoteRepository.save(rejectionNote);
+    }
+
+    public void delete(Long userId) {
+        User user = userRepository.findUserById(userId);
+        rejectionNoteRepository.deleteAllByEmail(user.getMail());
     }
 }

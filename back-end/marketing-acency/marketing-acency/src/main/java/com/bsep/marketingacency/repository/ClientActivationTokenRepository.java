@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface ClientActivationTokenRepository extends JpaRepository<ClientActivationToken, UUID> {
+    void deleteAllByUserId(Long userId);
 }

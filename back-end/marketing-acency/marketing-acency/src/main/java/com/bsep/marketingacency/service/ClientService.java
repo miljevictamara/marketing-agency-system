@@ -8,6 +8,7 @@ import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.model.*;
+import com.bsep.marketingacency.repository.AdvertisementRepository;
 import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
 
     @Autowired
     private UserService userService;
@@ -134,6 +138,19 @@ public class ClientService {
             return clientRepository.save(existingClient);
         } else {
             return null;
+        }
+    }
+
+    public void deleteClient(Long userId) {
+        Client client = clientRepository.findByUserId(userId);
+
+        List<Advertisement> clientAdvertisements = advertisementRepository.findByClient(client);
+        if (clientAdvertisements != null){
+            advertisementRepository.deleteAll(clientAdvertisements);
+        }
+
+        if (client != null) {
+            clientRepository.delete(client);
         }
     }
 }
