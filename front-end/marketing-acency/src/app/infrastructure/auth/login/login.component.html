@@ -1,21 +1,22 @@
 <div class="login-container">   
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!submitted" [formGroup]="form" class="login-form"> 
-        <div class="imageTitle">
-            <img src="assets/login.png" alt="Login Image" class="login-image">
-            <p class="loginTitle">Login</p>
-        </div>    
-
-        <div class="inputDiv">
-            <input formControlName="mail" matInput placeholder="mail" required>
-            <input formControlName="password" matInput placeholder="password" required type="password">
-        </div>
-        
-        <button  color="primary"
-            type="submit" class="login" >Log in</button>
-
+      <div class="imageTitle">
+        <img src="assets/login.png" alt="Login Image" class="login-image">
+        <p class="loginTitle">Login</p>
+      </div>    
+  
+      <div class="inputDiv">
+        <input formControlName="mail" matInput placeholder="mail" required>
+        <input formControlName="password" matInput placeholder="password" required type="password">
+      </div>
+      
+      <div #recaptchaContainer style="display: none;"></div>
+  
+      <button color="primary" type="button" (click)="onLoginClick()" class="login">Log in</button>
     </form>
-    <button class="passwordless-button"  (click)="onPasswordlesLoginClick()">
-        <img src="assets/passwordless.png" alt="Passwordless" class="passwordless-image">
-        Passwordless Login
+    <button class="passwordless-button" (click)="onPasswordlesLoginClick()">
+      <img src="assets/passwordless.png" alt="Passwordless" class="passwordless-image">
+      Passwordless Login
     </button>
-</div>
+  </div>
+  

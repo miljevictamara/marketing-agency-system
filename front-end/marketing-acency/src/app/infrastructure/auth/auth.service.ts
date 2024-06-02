@@ -48,7 +48,7 @@ export class AuthService {
   
 
   
-  login(user: User) {
+  login(user: User, captchaResponse: string) {
 
     if (user.isBlocked) {
         console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
@@ -62,10 +62,14 @@ export class AuthService {
     // const body = `username=${user.username}&password=${user.password}`;
     const body = {
       'mail': user.mail,
-      'password': user.password
+      'password': user.password,
+      'captchaResponse': captchaResponse // Dodajte reCAPTCHA odgovor u telo zahteva
     };  
+    console.log('Mail:', user.mail);
+    console.log('Password:', user.password);
+    console.log('Recaptcha Response:', captchaResponse);
     
-    return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders)
+    return this.apiService.post(`https://localhost:8443/auth/login`, JSON.stringify(body), loginHeaders,)
       .pipe(map((res) => {
         console.log('Login success',res);
         //ovde

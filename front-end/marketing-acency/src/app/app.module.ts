@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './feature-modules/layout/navbar/navbar.component';
@@ -23,6 +24,9 @@ import { RegistrationRequestComponent } from './feature-modules/administrator/re
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RecaptchaModule, RecaptchaFormsModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from "ng-recaptcha";
+import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    FormsModule,
+    NgxCaptchaModule
   ],
   providers: [ 
     {
@@ -52,6 +60,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
       useClass: TokenInterceptor,
       multi: true,     
     },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },    
+
     
   ],
   bootstrap: [AppComponent]

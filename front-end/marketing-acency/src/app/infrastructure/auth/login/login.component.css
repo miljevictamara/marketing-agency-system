@@ -9,7 +9,10 @@
     width: auto;
     margin-top: -160px;
   }
-  
+  re-captcha.is-invalid > div {
+    border: 1px solid #dc3545 !important;
+    border-radius: 0.2rem;
+  }
   .login-form {
     border: 2px solid rgb(35, 35, 53); /* Dodato: okvir */
     width: 300px;

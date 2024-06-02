@@ -2,39 +2,50 @@ package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.TokenRefreshException;
 import com.bsep.marketingacency.dto.*;
-import com.bsep.marketingacency.model.TokenRefreshRequest;
-import com.bsep.marketingacency.model.TokenRefreshResponse;
+import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
-import com.bsep.marketingacency.model.Client;
-import com.bsep.marketingacency.model.User;
-import com.bsep.marketingacency.service.ClientService;
-import com.bsep.marketingacency.service.EmailService;
-import com.bsep.marketingacency.service.LoginTokenService;
-import com.bsep.marketingacency.service.RefreshTokenService;
-import com.bsep.marketingacency.service.UserService;
+import com.bsep.marketingacency.service.*;
 import com.bsep.marketingacency.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-import com.bsep.marketingacency.model.RefreshToken;
+
+import org.springframework.web.client.RestTemplate;
+
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "https://localhost:4200")
 public class AuthenticationController {
+    @Value("6LcDAe8pAAAAALU_7vCCHftQh0wgcjYOOPKLifoI")
+    private String recaptchaSecret;
+
+    @Value("https://www.google.com/recaptcha/api/siteverify")
+    private String recaptchaServerUrl;
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @Autowired
+    private RestTemplate restTemplate;
     @Autowired
     private TokenUtils tokenUtils;
 
@@ -53,13 +64,24 @@ public class AuthenticationController {
     @Autowired
     private LoginTokenService loginTokenService;
 
+    @Autowired
+    private RecaptchaService recaptchaService;
+
+
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
+
+
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+            @RequestBody JwtAuthenticationRequest authenticationRequest,
+            HttpServletResponse response
+    ) {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
+        String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
+        verifyRecaptcha(gRecaptchaResposnse);
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getMail(), authenticationRequest.getPassword()));
 
@@ -86,6 +108,29 @@ public class AuthenticationController {
 
         UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn);
         return ResponseEntity.ok(tokenState);
+
+    }
+    private void verifyRecaptcha(String gRecaptchaResposnse){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("secret", recaptchaSecret);
+        map.add("response", gRecaptchaResposnse);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+        RecaptchaResponse response = restTemplate.postForObject(recaptchaServerUrl,request, RecaptchaResponse.class);
+
+        System.out.println("Success: " + response.isSuccess());
+        System.out.println("Hostname: " + response.getHostname());
+        System.out.println("Challenge Timestamp: " + response.getChallenge_ts());
+
+        if(response.getErrorCodes() != null){
+            for(String error : response.getErrorCodes()){
+                System.out.println("\t" + error);
+            }
+        }
+
 
     }
 
