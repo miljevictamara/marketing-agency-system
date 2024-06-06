@@ -71,46 +71,6 @@ public class AuthenticationController {
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
 
-/*
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest,
-            HttpServletResponse response
-    ) {
-        // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
-        // AuthenticationException
-        String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
-        verifyRecaptcha(gRecaptchaResposnse);
-
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getMail(), authenticationRequest.getPassword()));
-
-        // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
-        // kontekst
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Kreiraj token za tog korisnika
-        User user = (User) authentication.getPrincipal();
-
-        if (user.getIsBlocked() || !user.getIsActivated()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (user.isMfa()) {
-            return ResponseEntity.ok().body("");
-        }
-
-        String jwt = tokenUtils.generateToken(user);
-        int expiresIn = tokenUtils.getExpiredIn();
-
-        String refresh_jwt = tokenUtils.generateRefreshToken(user);
-        int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
-
-
-        UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn);
-        return ResponseEntity.ok(tokenState);
-
-    }*/
-
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest,
