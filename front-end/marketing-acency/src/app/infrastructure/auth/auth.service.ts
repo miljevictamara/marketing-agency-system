@@ -46,6 +46,9 @@ export class AuthService {
     return this.http.post<Client>(`https://localhost:8443/client/register`, client);
   }
   
+  checkUserRole(mail: string): Observable<string> {
+    return this.http.get<string>(`https://localhost:8443/user/check-role/${mail}`);
+  }
 
   
   login(user: User, captchaResponse: string) {

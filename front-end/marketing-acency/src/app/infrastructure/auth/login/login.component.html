@@ -10,7 +10,6 @@
         <input formControlName="password" matInput placeholder="password" required type="password">
       </div>
       
-      <div #recaptchaContainer style="display: none;"></div>
   
       <button color="primary" type="button" (click)="onLoginClick()" class="login">Log in</button>
     </form>
@@ -18,5 +17,6 @@
       <img src="assets/passwordless.png" alt="Passwordless" class="passwordless-image">
       Passwordless Login
     </button>
+    <div #recaptchaContainer style="display: none;"></div>
   </div>
   

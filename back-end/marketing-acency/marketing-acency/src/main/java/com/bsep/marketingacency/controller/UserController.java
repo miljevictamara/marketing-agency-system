@@ -13,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/user")
@@ -51,6 +54,18 @@ public class UserController {
         User user = userService.findByMail(mail);
         if (user != null) {
             return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/check-role/{mail}")
+    public ResponseEntity<Map<String, String>> checkUserRole(@PathVariable String mail) {
+        User user = userService.findByMail(mail);
+        if (user != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("role", user.getRole().getName());
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();
         }

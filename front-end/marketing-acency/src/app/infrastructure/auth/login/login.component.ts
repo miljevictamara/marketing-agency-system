@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { UserService } from 'src/app/feature-modules/user/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginError = '';
   captchaResponse: string | null = null;
   siteKey: string = "6LcDAe8pAAAAAGZ3_jJjhzu8JXnYvjOMg6folgso";
+  role!: String;
   @ViewChild('recaptchaContainer') recaptchaContainer: ElementRef | undefined;
 
   constructor(
@@ -59,6 +61,25 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   onLoginClick() {
+    const mail = this.form.get('mail')?.value;
+    this.authService.checkUserRole(mail).subscribe({
+      next: (response: any) => {
+        const role = response.role;
+        if (role === 'ROLE_EMPLOYEE') {
+          this.showRecaptcha();
+        } else {
+          this.onSubmit(); 
+        }
+      },
+      error: (error) => {
+        console.error('Error checking user role:', error);
+        this.loginError = 'Error checking user role';
+      }
+    });
+  }
+
+
+  private showRecaptcha() {
     if (this.recaptchaContainer) {
       this.recaptchaContainer.nativeElement.style.display = 'block';
       grecaptcha.render(this.recaptchaContainer.nativeElement, {
@@ -85,14 +106,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (!this.captchaResponse) {
+    if (this.form.invalid) {
+      return;
+    }
+
+    if (!this.captchaResponse && this.form.value.mail.toLowerCase().includes('ROLE_EMPLOYEE')) {
       this.loginError = 'Please complete the reCAPTCHA';
       return;
     }
 
     const user = this.form.value;
     this.submitted = true;
-    this.authService.login(user, this.captchaResponse).subscribe({
+    const captcha = this.captchaResponse || '';
+    this.authService.login(user, captcha).subscribe({
       next: data => {
         console.log(data);
         this.router.navigate(['/']);

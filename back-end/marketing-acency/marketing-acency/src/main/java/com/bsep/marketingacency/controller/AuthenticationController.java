@@ -71,7 +71,7 @@ public class AuthenticationController {
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
 
-
+/*
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -109,6 +109,45 @@ public class AuthenticationController {
         UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn);
         return ResponseEntity.ok(tokenState);
 
+    }*/
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> createAuthenticationToken(
+            @RequestBody JwtAuthenticationRequest authenticationRequest,
+            HttpServletResponse response
+    ) {
+        User user = userService.findByMail(authenticationRequest.getMail());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
+            String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
+            verifyRecaptcha(gRecaptchaResposnse);
+        }
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getMail(), authenticationRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User authenticatedUser = (User) authentication.getPrincipal();
+
+        if (authenticatedUser.getIsBlocked() || !authenticatedUser.getIsActivated()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (authenticatedUser.isMfa()) {
+            return ResponseEntity.ok().body("");
+        }
+
+        String jwt = tokenUtils.generateToken(authenticatedUser);
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
+        int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+        UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+        return ResponseEntity.ok(tokenState);
     }
     private void verifyRecaptcha(String gRecaptchaResposnse){
         HttpHeaders headers = new HttpHeaders();
