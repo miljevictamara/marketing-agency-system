@@ -1,5 +1,6 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.controller.UserController;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.ClientType;
@@ -8,6 +9,8 @@ import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,9 +35,16 @@ public class UserService {
 
     @Autowired
     private TOTPManager totpManager;
-    public User findByMail(String mail) {
-        return userRepository.findByMail(mail);
+
+    private final static Logger logger = LogManager.getLogger(UserService.class);
+    public User findByMail(String email) {
+        User user = userRepository.findByMail(email);
+        if (user == null) {
+            logger.warn("User with email {} does not exist.", email);
+        }
+        return user;
     }
+
 
     public User findUserById(Long id) { return userRepository.findUserById(id); }
 
