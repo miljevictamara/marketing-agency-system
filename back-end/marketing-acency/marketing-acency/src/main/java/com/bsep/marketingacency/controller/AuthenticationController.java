@@ -6,6 +6,8 @@ import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
 import com.bsep.marketingacency.service.*;
 import com.bsep.marketingacency.util.TokenUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -67,6 +69,8 @@ public class AuthenticationController {
     @Autowired
     private RecaptchaService recaptchaService;
 
+    private final static Logger logger = LogManager.getLogger(UserController.class);
+
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -78,6 +82,7 @@ public class AuthenticationController {
     ) {
         User user = userService.findByMail(authenticationRequest.getMail());
         if (user == null) {
+            logger.warn("User with email {} does not exist.", authenticationRequest.getMail());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
@@ -93,10 +98,16 @@ public class AuthenticationController {
 
         User authenticatedUser = (User) authentication.getPrincipal();
 
-        if (authenticatedUser.getIsBlocked() || !authenticatedUser.getIsActivated()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (authenticatedUser.getIsBlocked()) {
+            logger.warn("User with email {} is blocked.", authenticatedUser.getMail());
+            return new ResponseEntity<>("User is blocked.", HttpStatus.NOT_FOUND);
+        } else if (!authenticatedUser.getIsActivated()) {
+            logger.warn("User with email {} is not activated.", authenticatedUser.getMail());
+            return new ResponseEntity<>("User is not activated.", HttpStatus.NOT_FOUND);
         }
+
         if (authenticatedUser.isMfa()) {
+            logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
             return ResponseEntity.ok().body("");
         }
 
@@ -107,6 +118,7 @@ public class AuthenticationController {
         int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
         UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+        logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
         return ResponseEntity.ok(tokenState);
     }
     private void verifyRecaptcha(String gRecaptchaResposnse){
