@@ -9,4 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface LoginTokenRepository extends JpaRepository<LoginToken, UUID> {
+    void deleteAllByUserId(Long userId);
 }

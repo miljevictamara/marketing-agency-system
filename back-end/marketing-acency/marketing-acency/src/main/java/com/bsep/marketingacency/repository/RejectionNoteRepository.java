@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RejectionNoteRepository extends JpaRepository<RejectionNote, Long> {
     List<RejectionNote> findAll();
+    void deleteAllByEmail(String email);
 }
