@@ -24,26 +24,54 @@ public class AdministratorController {
     private AdministratorService administratorService;
 
     // pristup: Administrator
+//    @GetMapping("/byUserId/{userId}")
+//    @PreAuthorize("hasAuthority('GET_BYUSERID')")
+//    public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
+//        Administrator administrator = administratorService.getAdministratorByUserId(userId);
+//        if (administrator != null) {
+//            AdministratorDto administratorDto = new AdministratorDto(
+//                    administrator.getId(),
+//                    administrator.getFirstName(),
+//                    administrator.getLastName(),
+//                    administrator.getAddress(),
+//                    administrator.getCity(),
+//                    administrator.getCountry(),
+//                    administrator.getPhoneNumber(),
+//                    administrator.getUser()
+//            );
+//            return new ResponseEntity<>(administratorDto, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
     @GetMapping("/byUserId/{userId}")
     @PreAuthorize("hasAuthority('GET_BYUSERID')")
     public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
-        Administrator administrator = administratorService.getAdministratorByUserId(userId);
-        if (administrator != null) {
-            AdministratorDto administratorDto = new AdministratorDto(
-                    administrator.getId(),
-                    administrator.getFirstName(),
-                    administrator.getLastName(),
-                    administrator.getAddress(),
-                    administrator.getCity(),
-                    administrator.getCountry(),
-                    administrator.getPhoneNumber(),
-                    administrator.getUser()
-            );
-            return new ResponseEntity<>(administratorDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Administrator administrator = administratorService.getAdministratorByUserId(userId);
+            if (administrator != null) {
+                AdministratorDto administratorDto = new AdministratorDto(
+                        administrator.getId(),
+                        administrator.getFirstName(),
+                        administrator.getLastName(),
+                        administrator.getAddress(),
+                        administrator.getCity(),
+                        administrator.getCountry(),
+                        administrator.getPhoneNumber(),
+                        administrator.getUser()
+                );
+                return new ResponseEntity<>(administratorDto, HttpStatus.OK);
+            } else {
+                logger.warn("Administrator with user ID {} not found.", userId);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error("Error while fetching administrator by user ID {}: {}", userId, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     // pristup: Administrator
 

@@ -132,14 +132,12 @@ public class UserService {
 
     public List<Client> getAllIndividuals() {
         List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
-        logger.info("Retrieved all individual clients successfully.");
         return individualClients;
     }
 
 
     public List<Client> getAllLegalEntities() {
         List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
-        logger.info("Retrieved all legal entity clients successfully.");
         return legalEntityClients;
     }
 

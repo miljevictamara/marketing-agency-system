@@ -41,12 +41,43 @@ public class ClientService {
 
     private final static Logger logger = LogManager.getLogger(ClientService.class);
 
+//    public Client save(ClientDto clientDto) {
+//        String mail = clientDto.getUser();
+//        User user = userService.findByMail(mail);
+//
+//        String packageName = clientDto.getClientPackage();
+//        Package pack = packageService.findByName(packageName);
+//
+//        Client client = new Client();
+//        client.setUser(user);
+//        client.setType(clientDto.getType());
+//        client.setFirstName(clientDto.getFirstName());
+//        client.setLastName(clientDto.getLastName());
+//        client.setCompanyName(clientDto.getCompanyName());
+//        client.setPib(clientDto.getPib());
+//        client.setClientPackage(pack);
+//        client.setPhoneNumber(clientDto.getPhoneNumber());
+//        client.setAddress(clientDto.getAddress());
+//        client.setCity(clientDto.getCity());
+//        client.setCountry(clientDto.getCountry());
+//        client.setIsApproved(RegistrationRequestStatus.PENDING);
+//
+//        return this.clientRepository.save(client);
+//    }
+
     public Client save(ClientDto clientDto) {
         String mail = clientDto.getUser();
         User user = userService.findByMail(mail);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
 
         String packageName = clientDto.getClientPackage();
         Package pack = packageService.findByName(packageName);
+        if (pack == null) {
+            logger.warn("Package with name {} not found.", packageName);
+            throw new IllegalArgumentException("Package not found.");
+        }
 
         Client client = new Client();
         client.setUser(user);
@@ -62,17 +93,36 @@ public class ClientService {
         client.setCountry(clientDto.getCountry());
         client.setIsApproved(RegistrationRequestStatus.PENDING);
 
-        return this.clientRepository.save(client);
+        Client savedClient = this.clientRepository.save(client);
+
+        return savedClient;
     }
+
 
     public void delete(Client client){
         this.clientRepository.delete(client);
     }
 
-    public ClientActivationToken approveRegistrationRequest(Long id){
+//    public ClientActivationToken approveRegistrationRequest(Long id){
+//        Client client = clientRepository.getById(id);
+//        client.setIsApproved(RegistrationRequestStatus.APPROVED);
+//        this.clientRepository.save(client);
+//        ClientActivationToken token = new ClientActivationToken();
+//        token.setDuration(10);
+//        token.setUser(client.getUser());
+//        token.setCreationDate(new Date());
+//        token.setIsUsed(false);
+//        clientActivationTokenService.save(token);
+//
+//        return token;
+//    }
+
+    public ClientActivationToken approveRegistrationRequest(Long id) {
         Client client = clientRepository.getById(id);
         client.setIsApproved(RegistrationRequestStatus.APPROVED);
         this.clientRepository.save(client);
+        logger.info("Client with ID {} has been approved.", HashUtil.hash(id.toString()));
+
         ClientActivationToken token = new ClientActivationToken();
         token.setDuration(10);
         token.setUser(client.getUser());
@@ -80,10 +130,13 @@ public class ClientService {
         token.setIsUsed(false);
         clientActivationTokenService.save(token);
 
+        logger.info("Activation token generated for client with ID {}. Token ID: {}", HashUtil.hash(id.toString()), HashUtil.hash(String.valueOf(token.getId())));
+
         return token;
     }
 
-    public void rejectRegistrationRequest(Long id, String reason){
+
+    public void rejectRegistrationRequest(Long id, String reason) {
         Client client = clientRepository.getById(id);
         client.setIsApproved(RegistrationRequestStatus.REJECTED);
         RejectionNote rejectionNote = new RejectionNote();
@@ -91,11 +144,19 @@ public class ClientService {
         rejectionNote.setRejectionDate(new Date());
         rejectionNote.setReason(reason);
         this.rejectionNoteService.save(rejectionNote);
+
+        logger.info("Registration request rejected for client {}.", client.getUser().getMail());
     }
 
-    public Client findById(Long id){
-        return this.clientRepository.findById(id).orElse(null);
+
+    public Client findById(Long id) {
+        Client client = this.clientRepository.findById(id).orElse(null);
+        if (client == null) {
+            logger.warn("Client with ID {} not found.", HashUtil.hash(String.valueOf(id)));
+        }
+        return client;
     }
+
 
 //    public Client findByUserId(Long id){
 //        return this.clientRepository.findByUserId(id);
@@ -177,7 +238,16 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client getClientByUserId(Long userId) { return clientRepository.findByUserId(userId); }
+//    public Client getClientByUserId(Long userId) { return clientRepository.findByUserId(userId); }
+
+    public Client getClientByUserId(Long userId) {
+        Client client = clientRepository.findByUserId(userId);
+        if (client == null) {
+            logger.warn("Client with user ID {} not found.", HashUtil.hash(userId.toString()));
+        }
+        return client;
+    }
+
 
     public Client updateClient(Client updatedClient) {
         Client existingClient = clientRepository.findById(updatedClient.getId())

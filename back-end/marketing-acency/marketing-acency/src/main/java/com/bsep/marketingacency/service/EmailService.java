@@ -47,9 +47,9 @@ public class EmailService {
 
     @Async
     public void sendRegistrationApprovalAsync(Client client, ClientActivationToken token) throws MailException, InterruptedException {
-        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+        logger.info("Async method is being executed in a different thread. Thread id: {}", Thread.currentThread().getId());
         Thread.sleep(10000);
-        System.out.println("Slanje emaila...");
+        logger.info("Preparing to send email for client with ID {}", HashUtil.hash(String.valueOf(client.getId())));
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
@@ -63,28 +63,51 @@ public class EmailService {
         //String activationLinkWithHmac = activationLink + "?hmac=" + hmac;
         String activationLinkWithHmac = activationLink + "/" + hmac;
 
-
-
         String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
         String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
                 "To activate your account, please click the following link:\n\n " + activationLinkWithHmac +
                 "\n\nBest regards,\nThe MarketingSupport Team";
 
-
-
-        mail.setText(message );
+        mail.setText(message);
 
         javaMailSender.send(mail);
-
-        System.out.println("Email sent!");
-
+        logger.info("Activation email sent successfully to client {}", HashUtil.hash(client.getUser().getMail()));
     }
+
+
+//    @Async
+//    public void sendRegistrationRejectionAsync(Client client, String reason) throws MailException, InterruptedException {
+//        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+//        Thread.sleep(10000);
+//        System.out.println("Slanje emaila...");
+//
+//        SimpleMailMessage mail = new SimpleMailMessage();
+//        mail.setTo(client.getUser().getMail());
+//        mail.setFrom(env.getProperty("spring.mail.username"));
+//        mail.setSubject("Rejected registration");
+//
+//        String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
+//        String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+//                "Your registration request has been rejected for the following reason: \n\n" +
+//                "\""+ reason +"\""+
+//                "\n\nBest regards,\nThe MarketingSupport Team";
+//
+//
+//        mail.setText(message);
+//
+//        javaMailSender.send(mail);
+//
+//        System.out.println("Email sent!");
+//        //javaMailSender.send(mail);
+//
+//        //System.out.println("Email sent!");
+//    }
 
     @Async
     public void sendRegistrationRejectionAsync(Client client, String reason) throws MailException, InterruptedException {
-        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+        logger.info("Async method is being executed in a different thread. Thread id: {}", Thread.currentThread().getId());
         Thread.sleep(10000);
-        System.out.println("Slanje emaila...");
+        logger.info("Preparing to send email for client with ID {}", HashUtil.hash(String.valueOf(client.getId())));
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
@@ -94,19 +117,21 @@ public class EmailService {
         String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
         String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
                 "Your registration request has been rejected for the following reason: \n\n" +
-                "\""+ reason +"\""+
+                "\"" + reason + "\"" +
                 "\n\nBest regards,\nThe MarketingSupport Team";
 
 
         mail.setText(message);
 
-        javaMailSender.send(mail);
-
-        System.out.println("Email sent!");
-        //javaMailSender.send(mail);
-
-        //System.out.println("Email sent!");
+        try {
+            javaMailSender.send(mail);
+            logger.info("Rejection email sent successfully to client {}", HashUtil.hash(client.getUser().getMail()));
+        } catch (MailException e) {
+            logger.error("Error sending rejection email to client {}: {}", HashUtil.hash(client.getUser().getMail()), e.getMessage());
+            throw e;
+        }
     }
+
 
 
     public String generateHmac(String data, String secretKey) {
@@ -137,16 +162,27 @@ public class EmailService {
     }
 
 
+//    public Boolean verifyHmac(String data, String hmac) {
+//        try {
+//            String recalculatedHmac = generateHmac(data, hmacSecret);
+//
+//            return hmac.equals(recalculatedHmac);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
     public Boolean verifyHmac(String data, String hmac) {
         try {
             String recalculatedHmac = generateHmac(data, hmacSecret);
-
             return hmac.equals(recalculatedHmac);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error verifying HMAC: {}", e.getMessage());
             return false;
         }
     }
+
 
 //    @Async
 //    public void sendLoginToken(String mail) throws MailException, InterruptedException {
