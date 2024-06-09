@@ -1,5 +1,6 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.controller.UserController;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
@@ -10,6 +11,10 @@ import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
+import com.bsep.marketingacency.util.HashUtil;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +38,8 @@ public class ClientService {
 
     @Autowired
     private PackageService packageService;
+
+    private final static Logger logger = LogManager.getLogger(ClientService.class);
 
     public Client save(ClientDto clientDto) {
         String mail = clientDto.getUser();
@@ -90,30 +97,82 @@ public class ClientService {
         return this.clientRepository.findById(id).orElse(null);
     }
 
-    public Client findByUserId(Long id){
-        return this.clientRepository.findByUserId(id);
+//    public Client findByUserId(Long id){
+//        return this.clientRepository.findByUserId(id);
+//    }
+
+    public Client findByUserId(Long userId) {
+        Client client = clientRepository.findByUserId(userId);
+        if (client == null) {
+            logger.warn("Client with user ID {} does not exist.", HashUtil.hash(String.valueOf(userId)));
+            return null;
+        }
+        return client;
     }
 
-    public Boolean checkIfClientCanLoginWithoutPassword(String mail){
-        User user = userService.findByMail(mail);
-        Client client = clientRepository.findByUserId(user.getId());
-        if (user == null || client == null || !user.getIsActivated()) {
+//    public Boolean checkIfClientCanLoginWithoutPassword(String mail){
+//        User user = userService.findByMail(mail);
+//        Client client = clientRepository.findByUserId(user.getId());
+//        if (user == null || client == null || !user.getIsActivated()) {
+//            return false;
+//        }
+//
+//        Package clientPackage = client.getClientPackage();
+//
+//        if (clientPackage != null) {
+//            String packageName = clientPackage.getName();
+//
+//            if ("GOLD".equals(packageName) || "STANDARD".equals(packageName)) {
+//
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    public Boolean checkIfClientCanLoginWithoutPassword(String mail) {
+        logger.info("Checking if client with email {} can log in without password.", mail);
+
+        try {
+            User user = userService.findByMail(mail);
+            if (user == null) {
+                return false;
+            }
+
+            Client client = clientRepository.findByUserId(user.getId());
+            if (client == null) {
+                String hashedUserId = HashUtil.hashUserId(String.valueOf(user.getId()));
+                logger.warn("Client with user ID {} does not exist.", hashedUserId);
+                return false;
+            }
+
+            if (!user.getIsActivated()) {
+                logger.warn("User with email {} is not activated.", mail);
+                return false;
+            }
+
+            Package clientPackage = client.getClientPackage();
+            if (clientPackage != null) {
+                String packageName = clientPackage.getName();
+
+                if ("GOLD".equals(packageName) || "STANDARD".equals(packageName)) {
+                    logger.info("Client with email {} can log in without password.", mail);
+                    return true;
+                }
+            } else {
+                logger.warn("Client with email {} does not have a package assigned.", mail);
+            }
+
+            logger.info("Client with email {} cannot log in without password.", mail);
+            return false;
+
+        } catch (Exception ex) {
+            logger.error("Error while checking if client with email {} can log in without password.", mail, ex);
             return false;
         }
-
-        Package clientPackage = client.getClientPackage();
-
-        if (clientPackage != null) {
-            String packageName = clientPackage.getName();
-
-            if ("GOLD".equals(packageName) || "STANDARD".equals(packageName)) {
-
-                return true;
-            }
-        }
-        return false;
     }
-  
+
+
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
@@ -136,4 +195,5 @@ public class ClientService {
             return null;
         }
     }
+
 }

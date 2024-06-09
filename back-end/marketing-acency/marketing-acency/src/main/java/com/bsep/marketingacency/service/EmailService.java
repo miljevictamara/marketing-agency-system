@@ -4,6 +4,9 @@ import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.ClientActivationToken;
 import com.bsep.marketingacency.model.LoginToken;
 import com.bsep.marketingacency.model.User;
+import com.bsep.marketingacency.util.HashUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,8 @@ public class EmailService {
 
     @Value("${hmac.secret}")
     private String hmacSecret;
+
+    private final static Logger logger = LogManager.getLogger(EmailService.class);
 
     @Async
     public void sendRegistrationApprovalAsync(Client client, ClientActivationToken token) throws MailException, InterruptedException {
@@ -143,47 +148,100 @@ public class EmailService {
         }
     }
 
+//    @Async
+//    public void sendLoginToken(String mail) throws MailException, InterruptedException {
+//        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+//        Thread.sleep(10000);
+//        System.out.println("Slanje emaila...");
+//
+//        User user = userService.findByMail(mail);
+//        Client client = clientService.findByUserId(user.getId());
+//
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(client.getUser().getMail());
+//        message.setFrom(env.getProperty("spring.mail.username"));
+//        message.setSubject("Passwordless Login");
+//
+//        LoginToken loginToken = new LoginToken();
+//        loginToken.setUser(user);
+//        loginToken.setCreationDate(new Date());
+//        loginToken.setDuration(10);
+//        loginToken.setIsUsed(false);
+//        loginTokenService.save(loginToken);
+//
+//        String hashedToken = HashUtil.hash(String.valueOf(loginToken.getId()));
+//        logger.info("Generated login token for user with email {}. Hashed token: {}", mail, hashedToken);
+//
+//        String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
+//        //String hmac = generateHmac(loginLink, hmacSecret);
+//        //String loginLinkWithHmac = loginLink + "?hmac=" + hmac;
+//
+//
+//
+//        String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
+//        String text = "Hello " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+//                "To login without password, please click the following link:\n\n " + loginLink +
+//                "\n\nBest regards,\nThe MarketingSupport Team";
+//
+//
+//
+//        message.setText(text);
+//
+//        javaMailSender.send(message);
+//
+//        System.out.println("Email sent!");
+//
+//    }
+
     @Async
     public void sendLoginToken(String mail) throws MailException, InterruptedException {
-        System.out.println("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: " + Thread.currentThread().getId());
+        //logger.info("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: {}", Thread.currentThread().getId());
+
         Thread.sleep(10000);
-        System.out.println("Slanje emaila...");
+        logger.info("Preparing to send passwordless login email...");
 
-        User user = userService.findByMail(mail);
-        Client client = clientService.findByUserId(user.getId());
+        try {
+            User user = userService.findByMail(mail);
+            Client client = clientService.findByUserId(user.getId());
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(client.getUser().getMail());
-        message.setFrom(env.getProperty("spring.mail.username"));
-        message.setSubject("Passwordless Login");
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(client.getUser().getMail());
+            message.setFrom(env.getProperty("spring.mail.username"));
+            message.setSubject("Passwordless Login");
 
-        LoginToken loginToken = new LoginToken();
-        loginToken.setUser(user);
-        loginToken.setCreationDate(new Date());
-        loginToken.setDuration(10);
-        loginToken.setIsUsed(false);
-        loginTokenService.save(loginToken);
+            LoginToken loginToken = new LoginToken();
+            loginToken.setUser(user);
+            loginToken.setCreationDate(new Date());
+            loginToken.setDuration(10);
+            loginToken.setIsUsed(false);
+            loginTokenService.save(loginToken);
 
-        String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
-        //String hmac = generateHmac(loginLink, hmacSecret);
-        //String loginLinkWithHmac = loginLink + "?hmac=" + hmac;
+            String hashedToken = HashUtil.hash(String.valueOf(loginToken.getId()));
+            logger.info("Generated passwordless login token for user with email {}. Token: {}", mail, hashedToken);
 
+            String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
+            //String hmac = generateHmac(loginLink, hmacSecret);
+            //String loginLinkWithHmac = loginLink + "?hmac=" + hmac;
 
+            String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
+            String text = "Hello " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+                    "To login without password, please click the following link:\n\n " + loginLink +
+                    "\n\nBest regards,\nThe MarketingSupport Team";
 
-        String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
-        String text = "Hello " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
-                "To login without password, please click the following link:\n\n " + loginLink +
-                "\n\nBest regards,\nThe MarketingSupport Team";
+            message.setText(text);
 
+            javaMailSender.send(message);
+            logger.info("Email for passwordless login sent to {}.", client.getUser().getMail());
 
-
-        message.setText(text);
-
-        javaMailSender.send(message);
-
-        System.out.println("Email sent!");
-
+        } catch (MailException ex) {
+            logger.error("Failed to send passwordless login email to {} due to a MailException.", mail, ex);
+            throw ex;
+        } catch (Exception ex) {
+            logger.error("An unexpected error occurred while sending passwordless login email to {}.", mail, ex);
+            throw ex;
+        }
     }
+
 
 
 }

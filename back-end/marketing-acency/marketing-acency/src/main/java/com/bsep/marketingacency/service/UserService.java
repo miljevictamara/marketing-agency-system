@@ -9,6 +9,7 @@ import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.UserRepository;
+import com.bsep.marketingacency.util.HashUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,16 @@ public class UserService {
     }
 
 
-    public User findUserById(Long id) { return userRepository.findUserById(id); }
+    public User findUserById(Long id) {
+        User user = userRepository.findUserById(id);
+        if (user != null) {
+            logger.info("User found for ID: {}.", HashUtil.hash(id.toString()));
+        } else {
+            logger.warn("User not found for ID: {}.", HashUtil.hash(id.toString()));
+        }
+        return user;
+    }
+
 
     public User save(UserDto userDto) {
         User user = new User();
@@ -105,13 +115,17 @@ public class UserService {
 
     public List<Client> getAllIndividuals() {
         List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
+        logger.info("Retrieved all individual clients successfully.");
         return individualClients;
     }
 
+
     public List<Client> getAllLegalEntities() {
         List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
+        logger.info("All legal entity clients successfully fetched.");
         return legalEntityClients;
     }
+
 
     public Boolean verify(String mail, String code) {
         User user = userRepository.findByMail(mail);
