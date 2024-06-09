@@ -18,7 +18,7 @@ import java.util.Map;
 @CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/administrator")
 public class AdministratorController {
-    private Logger logger =  LoggerFactory.getLogger(ClientController.class);
+    private Logger logger =  LoggerFactory.getLogger(AdministratorController.class);
 
     @Autowired
     private AdministratorService administratorService;
@@ -75,38 +75,85 @@ public class AdministratorController {
 
     // pristup: Administrator
 
+//    @PutMapping("/update")
+//    @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
+//    public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
+//        Administrator updatedAdministrator = new Administrator(
+//                administratorDto.getId(),
+//                administratorDto.getFirstName(),
+//                administratorDto.getLastName(),
+//                administratorDto.getAddress(),
+//                administratorDto.getCity(),
+//                administratorDto.getCountry(),
+//                administratorDto.getPhoneNumber(),
+//                administratorDto.getUser()
+//        );
+//
+//        Administrator updated = administratorService.updateAdministrator(updatedAdministrator);
+//
+//        if (updated != null) {
+//            return new ResponseEntity<>(administratorDto, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
     public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
-        Administrator updatedAdministrator = new Administrator(
-                administratorDto.getId(),
-                administratorDto.getFirstName(),
-                administratorDto.getLastName(),
-                administratorDto.getAddress(),
-                administratorDto.getCity(),
-                administratorDto.getCountry(),
-                administratorDto.getPhoneNumber(),
-                administratorDto.getUser()
-        );
+        try {
+            Administrator updatedAdministrator = new Administrator(
+                    administratorDto.getId(),
+                    administratorDto.getFirstName(),
+                    administratorDto.getLastName(),
+                    administratorDto.getAddress(),
+                    administratorDto.getCity(),
+                    administratorDto.getCountry(),
+                    administratorDto.getPhoneNumber(),
+                    administratorDto.getUser()
+            );
 
-        Administrator updated = administratorService.updateAdministrator(updatedAdministrator);
+            Administrator updated = administratorService.updateAdministrator(updatedAdministrator);
 
-        if (updated != null) {
-            return new ResponseEntity<>(administratorDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (updated != null) {
+                logger.info("Administrator {} successfully updated.", administratorDto.getUser().getMail());
+                return new ResponseEntity<>(administratorDto, HttpStatus.OK);
+            } else {
+                logger.warn("Administrator {} not found for updating.", administratorDto.getUser().getMail());
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error("Error while updating administrator {}: {}", administratorDto.getUser().getMail(), e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+
     // pristup: Administrator
+
+//    @PostMapping(value = "/create")
+//    @PreAuthorize("hasAuthority('CREATE_ADMIN')")
+//    public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
+//        Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
+//        Map<String, String> response = new HashMap<>();
+//        response.put("message", "Administrator created.");
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
+//    }
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
-        Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Administrator created.");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        try {
+            Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Administrator created.");
+            logger.info("Administrator {} successfully created.", savedAdministrator.getUser().getMail());
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error while creating administrator {}: {}", administratorDto.getUser().getMail(), e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
 }
