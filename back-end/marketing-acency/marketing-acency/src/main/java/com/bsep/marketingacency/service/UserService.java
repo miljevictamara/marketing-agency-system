@@ -105,13 +105,30 @@ public class UserService {
         userRepository.delete(user);
     }
 
+//    public User updateIsActivated(Long id) {
+//        User existingUser = userRepository.findById(id).orElseGet(null);
+//
+//        existingUser.setIsActivated(true);
+//
+//        return userRepository.save(existingUser);
+//    }
+
     public User updateIsActivated(Long id) {
-        User existingUser = userRepository.findById(id).orElseGet(null);
+        User existingUser = userRepository.findById(id).orElse(null);
+
+        if (existingUser == null) {
+            logger.warn("User with ID {} not found.", HashUtil.hash(id.toString()));
+            return null;
+        }
 
         existingUser.setIsActivated(true);
+        User updatedUser = userRepository.save(existingUser);
 
-        return userRepository.save(existingUser);
+        logger.info("User with ID {} successfully activated.", HashUtil.hash(id.toString()));
+
+        return updatedUser;
     }
+
 
     public List<Client> getAllIndividuals() {
         List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
@@ -122,7 +139,7 @@ public class UserService {
 
     public List<Client> getAllLegalEntities() {
         List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
-        logger.info("All legal entity clients successfully fetched.");
+        logger.info("Retrieved all legal entity clients successfully.");
         return legalEntityClients;
     }
 
