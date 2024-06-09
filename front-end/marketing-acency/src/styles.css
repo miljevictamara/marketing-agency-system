@@ -28,3 +28,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-color: white !important; /* Set the border color to white when checked */
     background-color: white !important; /* Set the background color to white when checked */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
