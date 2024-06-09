@@ -114,9 +114,9 @@ public class PermissionController {
         try {
             role.setPermissions(updatedPermissions);
             roleService.save(role);
-            String updatedPermissionsInfo = "Updated permissions for role '" + roleName + "': " + updatedPermissions.toString();
+            String updatedPermissionsInfo = "Updated permissions for role '" + roleName + ".";
             logger.info(updatedPermissionsInfo);
-            return ResponseEntity.ok().body(updatedPermissionsInfo);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             logger.error("Error updating permissions for role '{}': {}", roleName, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating permissions for role.");

@@ -12,12 +12,16 @@
 .footer-content {
     text-align: left; /* Poravnaj na levoj strani */
     float: left; /* Pomakni na levo */
+    font-weight: 320;
+    font-size: 0.9vw;
 }
 
 .footer-copyright {
     text-align: right; /* Poravnaj na desnoj strani */
     float: right; /* Pomakni na desno */
     margin-right: 17px;
+    font-weight: 320;
+    font-size: 0.9vw;
 }
 
 .footer-content p,

@@ -7,6 +7,8 @@ import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.RejectionNoteRepository;
 import com.bsep.marketingacency.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,11 @@ public class RejectionNoteService {
     @Autowired
     private RejectionNoteRepository rejectionNoteRepository;
 
-    private Logger logger =  LoggerFactory.getLogger(RejectionNoteService.class);
+
     @Autowired
     private UserRepository userRepository;
+
+    private Logger logger =  LoggerFactory.getLogger(RejectionNoteService.class);
 
     public List<RejectionNote> findAll() {
         return rejectionNoteRepository.findAll();
