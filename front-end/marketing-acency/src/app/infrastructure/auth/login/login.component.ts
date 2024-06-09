@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error checking user role:', error);
         this.loginError = 'Error checking user role';
+        alert("Error occured, try again.")
       }
     });
   }

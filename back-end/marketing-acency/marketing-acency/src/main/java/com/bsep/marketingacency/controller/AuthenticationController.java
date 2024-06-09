@@ -75,65 +75,122 @@ public class AuthenticationController {
 
 
 
+//    @PostMapping(value = "/login")
+//    public ResponseEntity<?> createAuthenticationToken(
+//            @RequestBody JwtAuthenticationRequest authenticationRequest,
+//            HttpServletResponse response
+//    ) {
+//        User user = userService.findByMail(authenticationRequest.getMail());
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//        }
+//
+//        if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
+//            String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
+//            try {
+//                verifyRecaptcha(gRecaptchaResposnse);
+//            } catch (Exception ex) {
+//                logger.error("Error verifying ReCaptcha for user with email {}.", authenticationRequest.getMail(), ex);
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha");
+//            }
+//
+//        }
+//
+//        try {
+//            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+//                    authenticationRequest.getMail(), authenticationRequest.getPassword()));
+//
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//            User authenticatedUser = (User) authentication.getPrincipal();
+//
+//
+//            if (authenticatedUser.isMfa()) {
+//                logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
+//                return ResponseEntity.ok().body("");
+//            }
+//
+//            String jwt = tokenUtils.generateToken(authenticatedUser);
+//            int expiresIn = tokenUtils.getExpiredIn();
+//
+//            String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
+//            int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+//
+//            UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+//            logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
+//            return ResponseEntity.ok(tokenState);
+//        } catch (BadCredentialsException ex) {
+//            logger.warn("Invalid credentials for user with email {}.", authenticationRequest.getMail());
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+//        } catch (AuthenticationException ex) {
+//        logger.error("Authentication failed for user with email {}.", authenticationRequest.getMail(), ex);
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
+//    }
+//    }
+
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest,
             HttpServletResponse response
     ) {
-        User user = userService.findByMail(authenticationRequest.getMail());
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-
-        if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
-            String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
-            try {
-                verifyRecaptcha(gRecaptchaResposnse);
-            } catch (Exception ex) {
-                logger.error("Error verifying ReCaptcha for user with email {}.", authenticationRequest.getMail(), ex);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha");
-            }
-
-        }
-
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getMail(), authenticationRequest.getPassword()));
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            User authenticatedUser = (User) authentication.getPrincipal();
-
-            if (authenticatedUser.getIsBlocked()) {
-                logger.warn("User with email {} is blocked.", authenticatedUser.getMail());
-                return new ResponseEntity<>("User is blocked.", HttpStatus.NOT_FOUND);
-            } else if (!authenticatedUser.getIsActivated()) {
-                logger.warn("User with email {} is not activated.", authenticatedUser.getMail());
-                return new ResponseEntity<>("User is not activated.", HttpStatus.NOT_FOUND);
+            User user = userService.findByMail(authenticationRequest.getMail());
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
 
-            if (authenticatedUser.isMfa()) {
-                logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
-                return ResponseEntity.ok().body("");
+            if (user.getIsBlocked()) {
+                logger.warn("User with email {} is blocked.", user.getMail());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is blocked.");
+            }
+            if (!user.getIsActivated()) {
+                logger.warn("User with email {} is not activated.", user.getMail());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is not activated.");
             }
 
-            String jwt = tokenUtils.generateToken(authenticatedUser);
-            int expiresIn = tokenUtils.getExpiredIn();
+            if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
+                String gRecaptchaResponse = authenticationRequest.getCaptchaResponse();
+                try {
+                    verifyRecaptcha(gRecaptchaResponse);
+                } catch (Exception ex) {
+                    logger.error("Error verifying ReCaptcha for user with email {}.", authenticationRequest.getMail(), ex);
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha");
+                }
+            }
 
-            String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
-            int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+            try {
+                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        authenticationRequest.getMail(), authenticationRequest.getPassword()));
 
-            UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
-            logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
-            return ResponseEntity.ok(tokenState);
-        } catch (BadCredentialsException ex) {
-            logger.warn("Invalid credentials for user with email {}.", authenticationRequest.getMail());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                User authenticatedUser = (User) authentication.getPrincipal();
+
+                if (authenticatedUser.isMfa()) {
+                    logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
+                    return ResponseEntity.ok().body("");
+                }
+
+                String jwt = tokenUtils.generateToken(authenticatedUser);
+                int expiresIn = tokenUtils.getExpiredIn();
+
+                String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
+                int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+                UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+                logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
+                return ResponseEntity.ok(tokenState);
+            } catch (BadCredentialsException ex) {
+                logger.warn("Invalid credentials for user with email {}.", authenticationRequest.getMail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            }
+
         } catch (AuthenticationException ex) {
-        logger.error("Authentication failed for user with email {}.", authenticationRequest.getMail(), ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
+            logger.error("Authentication failed for user with email {}.", authenticationRequest.getMail(), ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
+        }
     }
-    }
+
 
     private void verifyRecaptcha(String gRecaptchaResposnse){
         HttpHeaders headers = new HttpHeaders();
@@ -161,23 +218,31 @@ public class AuthenticationController {
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyCode(@RequestBody VerifyTOTP verifyTOTP) {
-        Boolean isValid = userService.verify(verifyTOTP.getMail(), verifyTOTP.getCode());
+        try {
+            Boolean isValid = userService.verify(verifyTOTP.getMail(), verifyTOTP.getCode());
 
-        if (isValid) {
-            User user = userService.findByMail(verifyTOTP.getMail());
+            if (isValid) {
+                User user = userService.findByMail(verifyTOTP.getMail());
 
-            String jwt = tokenUtils.generateToken(user);
-            int expiresIn = tokenUtils.getExpiredIn();
+                String jwt = tokenUtils.generateToken(user);
+                int expiresIn = tokenUtils.getExpiredIn();
 
-            String refreshJwt = tokenUtils.generateRefreshToken(user);
-            int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+                String refreshJwt = tokenUtils.generateRefreshToken(user);
+                int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
-            UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
-            return ResponseEntity.ok(tokenState);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid verification code.");
+                UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+                logger.info("User with email {} successfully passed 2fA and logged in.", verifyTOTP.getMail());
+                return ResponseEntity.ok(tokenState);
+            } else {
+                logger.warn("Invalid 2fA code for user with email {}.", verifyTOTP.getMail());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid verification code.");
+            }
+        } catch (Exception ex) {
+            logger.error("Error during 2FA verification for user with email {}.", verifyTOTP.getMail(), ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during 2FA verification.");
         }
     }
+
 
 
     @PostMapping(value = "/passwordless-login")

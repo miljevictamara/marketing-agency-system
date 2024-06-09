@@ -116,11 +116,17 @@ public class UserService {
     public Boolean verify(String mail, String code) {
         User user = userRepository.findByMail(mail);
 
-        if (user == null || !totpManager.verifyCode(code, user.getSecret())) {
+        if (user == null) {
             return false;
         }
+
+        if (!totpManager.verifyCode(code, user.getSecret())) {
+            return false;
+        }
+
         return true;
     }
+
 
 
 
