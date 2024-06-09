@@ -18,6 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -73,6 +74,29 @@ public class EmailService {
 
         System.out.println("Email sent!");
 
+    }
+
+    @Async
+    public void sendLogMessageToAdmins(String line) throws MailException {
+        System.out.println("Sending log message to admins...");
+
+        List<User> adminUsers = userService.findAllByRolesName("ROLE_ADMIN");
+
+        for (User adminUser : adminUsers) {
+            try {
+                SimpleMailMessage mail = new SimpleMailMessage();
+                mail.setTo(adminUser.getMail());
+                mail.setFrom("noreply@example.com");
+                mail.setSubject("Log Message");
+                mail.setText(line);
+
+                javaMailSender.send(mail);
+                System.out.println("Email sent to admin: " + adminUser.getMail());
+            } catch (Exception e) {
+                System.err.println("Error sending email to admin: " + adminUser.getMail());
+                e.printStackTrace();
+            }
+        }
     }
 
     @Async

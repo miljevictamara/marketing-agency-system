@@ -27,11 +27,16 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RecaptchaModule, RecaptchaFormsModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from "ng-recaptcha";
 import { RECAPTCHA_SETTINGS,RecaptchaSettings } from 'ng-recaptcha';
 import { NgxCaptchaModule } from 'ngx-captcha';
-
+import { WebSocketService } from './infrastructure/auth/service/socket.service';
+import { LogMessagesComponent } from './infrastructure/monitoring/log-messages/log-messages.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationRequestComponent,
+    LogMessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,10 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     RecaptchaModule,
     RecaptchaFormsModule,
     FormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    MatListModule,
+    MatIconModule,
+    MatCardModule,
   ],
   providers: [ 
     {
@@ -66,7 +74,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
         siteKey: environment.recaptcha.siteKey,
       } as RecaptchaSettings,
     },    
-
+    WebSocketService
     
   ],
   bootstrap: [AppComponent]

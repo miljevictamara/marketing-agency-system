@@ -8,6 +8,7 @@
           <button mat-menu-item color="primary"  *ngIf="user && user.mail !== '' && hasEmployeeRole()" (click)="navigateTo('/employee-profile')">Employee Profile</button>
           <button mat-menu-item color="primary"  *ngIf="user && user.mail !== '' && hasAdminRole()" (click)="navigateTo('/administrator-profile')">Admin Profile</button>
           <button mat-menu-item color="primary"  *ngIf="user && user.mail === ''" (click)="navigateTo('/registration')">Register</button>
+          <button mat-menu-item color="primary"  *ngIf="user && user.mail !== '' && hasAdminRole()" (click)="navigateTo('/log')">Monitor logs</button>
         </mat-menu>
       </div>
       <div class="logo-wrapper">

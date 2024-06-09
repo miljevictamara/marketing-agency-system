@@ -6,6 +6,8 @@ import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
 import com.bsep.marketingacency.service.*;
 import com.bsep.marketingacency.util.TokenUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -13,8 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -67,9 +71,9 @@ public class AuthenticationController {
     @Autowired
     private RecaptchaService recaptchaService;
 
+    private final static Logger logger = LogManager.getLogger(UserController.class);
 
-    // Prvi endpoint koji pogadja korisnik kada se loguje.
-    // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
+
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
@@ -83,32 +87,54 @@ public class AuthenticationController {
 
         if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
             String gRecaptchaResposnse = authenticationRequest.getCaptchaResponse();
-            verifyRecaptcha(gRecaptchaResposnse);
+            try {
+                verifyRecaptcha(gRecaptchaResposnse);
+            } catch (Exception ex) {
+                logger.error("Error verifying ReCaptcha for user with email {}.", authenticationRequest.getMail(), ex);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha");
+            }
+
         }
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getMail(), authenticationRequest.getPassword()));
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getMail(), authenticationRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User authenticatedUser = (User) authentication.getPrincipal();
+            User authenticatedUser = (User) authentication.getPrincipal();
 
-        if (authenticatedUser.getIsBlocked() || !authenticatedUser.getIsActivated()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (authenticatedUser.isMfa()) {
-            return ResponseEntity.ok().body("");
-        }
+            if (authenticatedUser.getIsBlocked()) {
+                logger.warn("User with email {} is blocked.", authenticatedUser.getMail());
+                return new ResponseEntity<>("User is blocked.", HttpStatus.NOT_FOUND);
+            } else if (!authenticatedUser.getIsActivated()) {
+                logger.warn("User with email {} is not activated.", authenticatedUser.getMail());
+                return new ResponseEntity<>("User is not activated.", HttpStatus.NOT_FOUND);
+            }
 
-        String jwt = tokenUtils.generateToken(authenticatedUser);
-        int expiresIn = tokenUtils.getExpiredIn();
+            if (authenticatedUser.isMfa()) {
+                logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
+                return ResponseEntity.ok().body("");
+            }
 
-        String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
-        int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+            String jwt = tokenUtils.generateToken(authenticatedUser);
+            int expiresIn = tokenUtils.getExpiredIn();
 
-        UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
-        return ResponseEntity.ok(tokenState);
+            String refreshJwt = tokenUtils.generateRefreshToken(authenticatedUser);
+            int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
+
+            UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
+            logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
+            return ResponseEntity.ok(tokenState);
+        } catch (BadCredentialsException ex) {
+            logger.warn("Invalid credentials for user with email {}.", authenticationRequest.getMail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        } catch (AuthenticationException ex) {
+        logger.error("Authentication failed for user with email {}.", authenticationRequest.getMail(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
     }
+    }
+
     private void verifyRecaptcha(String gRecaptchaResposnse){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
