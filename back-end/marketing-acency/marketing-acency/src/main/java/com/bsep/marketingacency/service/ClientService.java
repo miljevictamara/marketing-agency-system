@@ -150,11 +150,7 @@ public class ClientService {
 
 
     public Client findById(Long id) {
-        Client client = this.clientRepository.findById(id).orElse(null);
-        if (client == null) {
-            logger.warn("Client with ID {} not found.", HashUtil.hash(String.valueOf(id)));
-        }
-        return client;
+        return this.clientRepository.findById(id).orElse(null);
     }
 
 

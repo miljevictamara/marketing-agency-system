@@ -30,44 +30,44 @@ public class ClientActivationTokenService {
         return clientActivationTokenRepository.save(token);
     }
 
-//    public User findUser(UUID tokenId){
-//        ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElseGet(null);
-//        Client client = clientService.findById(token.getUser().getId());
-//        if(isExpired(token)){
-//            //userService.delete(token.getUser());
-//            //clientService.delete(client);
-//            return  null;
-//        }
-//        User user = token.getUser();
-//        return user;
-//    }
-
     public User findUser(UUID tokenId){
-        try {
-            ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElse(null);
-            if (token == null) {
-                logger.error("Client activation token with ID {} not found.", HashUtil.hash(tokenId.toString()));
-                return null;
-            }
-
-            if (isExpired(token)) {
-                logger.warn("Client activation token with ID {} has expired.", HashUtil.hash(tokenId.toString()));
-                return null;
-            }
-
-            Client client = clientService.findById(token.getUser().getId());
-            if (client == null) {
-                logger.error("Client not found for token with ID {}.", HashUtil.hash(tokenId.toString()));
-                return null;
-            }
-
-            User user = token.getUser();
-            return user;
-        } catch (Exception e) {
-            logger.error("Error finding user with token ID {}: {}", HashUtil.hash(tokenId.toString()), e.getMessage());
-            return null;
+        ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElseGet(null);
+        Client client = clientService.findById(token.getUser().getId());
+        if(isExpired(token)){
+            //userService.delete(token.getUser());
+            //clientService.delete(client);
+            return  null;
         }
+        User user = token.getUser();
+        return user;
     }
+
+//    public User findUser(UUID tokenId){
+//        try {
+//            ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElse(null);
+//            if (token == null) {
+//                logger.error("Client activation token with ID {} not found.", HashUtil.hash(tokenId.toString()));
+//                return null;
+//            }
+//
+//            if (isExpired(token)) {
+//                logger.warn("Client activation token with ID {} has expired.", HashUtil.hash(tokenId.toString()));
+//                return null;
+//            }
+//
+//            Client client = clientService.findById(token.getUser().getId());
+//            if (client == null) {
+//                logger.error("Client not found for token with ID {}.", HashUtil.hash(tokenId.toString()));
+//                return null;
+//            }
+//
+//            User user = token.getUser();
+//            return user;
+//        } catch (Exception e) {
+//            logger.error("Error finding user with token ID {}: {}", HashUtil.hash(tokenId.toString()), e.getMessage());
+//            return null;
+//        }
+//    }
 
 
 //    public Boolean checkIfUsed(UUID tokenId){
