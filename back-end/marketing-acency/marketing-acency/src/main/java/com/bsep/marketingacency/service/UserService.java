@@ -156,7 +156,13 @@ public class UserService {
         return true;
     }
 
-
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+    
+    public List<User> findAllByRolesName(String roleName) {
+        return userRepository.findAllByRolesName(roleName);
+    }
 
 
 }

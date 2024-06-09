@@ -107,4 +107,8 @@ public class ClientActivationTokenService {
         Date expirationTime = new Date(token.getCreationDate().getTime() + token.getDuration() * 60 * 1000);
         return currentTime.after(expirationTime);
     }
+
+    public void delete(Long userId) {
+        clientActivationTokenRepository.deleteAllByUserId(userId);
+    }
 }

@@ -76,4 +76,8 @@ public class LoginTokenService {
         return true;
     }
 
+    public void delete(Long userId) {
+        loginTokenRepository.deleteAllByUserId(userId);
+    }
+
 }

@@ -6,8 +6,7 @@ import com.bsep.marketingacency.model.RejectionNote;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.RejectionNoteRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bsep.marketingacency.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,8 @@ public class RejectionNoteService {
     private RejectionNoteRepository rejectionNoteRepository;
 
     private Logger logger =  LoggerFactory.getLogger(RejectionNoteService.class);
+    @Autowired
+    private UserRepository userRepository;
 
     public List<RejectionNote> findAll() {
         return rejectionNoteRepository.findAll();
@@ -73,5 +74,10 @@ public class RejectionNoteService {
         rejectionNote.setEmail(note.getEmail());
 
         return this.rejectionNoteRepository.save(rejectionNote);
+    }
+
+    public void delete(Long userId) {
+        User user = userRepository.findUserById(userId);
+        rejectionNoteRepository.deleteAllByEmail(user.getMail());
     }
 }

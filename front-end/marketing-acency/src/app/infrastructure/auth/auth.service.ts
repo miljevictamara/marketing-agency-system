@@ -289,6 +289,7 @@ verify(verifyCode: VerifyCode): Observable<any> {
     this.userService.currentUser = null;
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("_grecaptcha")
 
     if (this.clearTimeout){
       clearTimeout (this.clearTimeout);
@@ -306,7 +307,9 @@ verify(verifyCode: VerifyCode): Observable<any> {
   getToken() {
     return this.access_token;
   }
-
+  getJwtToken(): string | null {
+    return this.access_token;
+  }
   getCurrentUserId(): number | undefined {
     const accessToken = this.getToken();
     if (!accessToken) return undefined;

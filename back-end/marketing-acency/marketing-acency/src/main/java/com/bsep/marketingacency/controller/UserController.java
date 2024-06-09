@@ -11,9 +11,12 @@ import com.bsep.marketingacency.service.UserService;
 import com.bsep.marketingacency.util.HashUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.bsep.marketingacency.model.*;
+import com.bsep.marketingacency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,9 +30,23 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private LoginTokenService loginTokenService;
+
+    @Autowired
+    private ClientActivationTokenService clientActivationTokenService;
+
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+
+    @Autowired
+    private RejectionNoteService rejectionNoteService;
+
+    @Autowired
     private ClientService clientService;
 
     private final static Logger logger = LogManager.getLogger(UserController.class);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PutMapping(value = "/activation/{id}")
     public ResponseEntity<String> updateIsActivated(@PathVariable Long id) {
@@ -136,6 +153,28 @@ public class UserController {
             logger.error("Error while checking user role for email: {}", mail, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    @DeleteMapping(value = "/{userId}/{password}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return new ResponseEntity<>("Incorrect password!", HttpStatus.CONFLICT);
+        }
+
+
+        clientService.deleteClient(userId);
+        loginTokenService.delete(userId);
+        clientActivationTokenService.delete(userId);
+        refreshTokenService.deleteByUserId(userId);
+        rejectionNoteService.delete(userId);
+        userService.deleteUser(userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
