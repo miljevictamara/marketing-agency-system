@@ -4,10 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationRequestComponent } from '../administrator/registration-request/registration-request.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { VpnComponent } from './vpn/vpn.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    VpnComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

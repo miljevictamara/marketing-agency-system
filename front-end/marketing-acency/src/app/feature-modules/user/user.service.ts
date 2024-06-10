@@ -67,6 +67,10 @@ export class UserService {
     return this.http.put<any>(`https://localhost:8443/client/reject-registration-request/${userId}/${reason}`, {});
 }
 
+  testVpn() {
+    return this.http.get('https://localhost:8443/vpn/call');
+  }
+
   
 
 }

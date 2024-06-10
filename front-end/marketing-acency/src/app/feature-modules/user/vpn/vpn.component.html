@@ -1,0 +1,8 @@
+<div class="vpn">
+    <img  src="../assets/vpn.gif" alt="vpn" class="main-image">
+    <div class="vpn-right">
+        <p class="description">VPN</p>
+        <button class="vpn-button" (click)="testVpn()">Test here</button>
+        <p *ngIf="vpnResponse">{{ vpnResponse }}</p>
+    </div>
+</div>

@@ -21,6 +21,7 @@ import { RegistrationRequestComponent } from 'src/app/feature-modules/administra
 import { QrcodeComponent } from '../auth/qrcode/qrcode.component';
 import { TwoFAVerificationComponent } from '../auth/two-fa-verification/two-fa-verification.component';
 import { LogMessagesComponent } from '../monitoring/log-messages/log-messages.component';
+import { VpnComponent } from 'src/app/feature-modules/user/vpn/vpn.component';
 
 
 const routes: Routes = [
@@ -43,7 +44,8 @@ const routes: Routes = [
   { path: 'registration-requests', component: RegistrationRequestComponent, canActivate:[AuthGuard], data:{role:['ROLE_ADMIN']}},
   { path: 'qrcode', component: QrcodeComponent},
   { path: 'verify/:mail', component: TwoFAVerificationComponent },
-  { path: 'log', component: LogMessagesComponent }
+  { path: 'log', component: LogMessagesComponent },
+  { path: 'vpn', component: VpnComponent }
 
 ];
 
