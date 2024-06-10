@@ -266,16 +266,46 @@ public class ClientService {
         }
     }
 
+//    public void deleteClient(Long userId) {
+//        Client client = clientRepository.findByUserId(userId);
+//
+//        List<Advertisement> clientAdvertisements = advertisementRepository.findByClient(client);
+//        if (clientAdvertisements != null){
+//            advertisementRepository.deleteAll(clientAdvertisements);
+//        }
+//
+//        if (client != null) {
+//            clientRepository.delete(client);
+//        }
+//    }
+
     public void deleteClient(Long userId) {
-        Client client = clientRepository.findByUserId(userId);
+        try {
+            Client client = clientRepository.findByUserId(userId);
+            if (client == null) {
+                logger.warn("Client with userId {} not found", HashUtil.hash(userId.toString()));
+                return;
+            }
 
-        List<Advertisement> clientAdvertisements = advertisementRepository.findByClient(client);
-        if (clientAdvertisements != null){
-            advertisementRepository.deleteAll(clientAdvertisements);
-        }
+            try {
+                List<Advertisement> clientAdvertisements = advertisementRepository.findByClient(client);
+                if (clientAdvertisements != null && !clientAdvertisements.isEmpty()) {
+                    advertisementRepository.deleteAll(clientAdvertisements);
+                    logger.info("Deleted {} advertisements for client with userId {}", clientAdvertisements.size(), HashUtil.hash(userId.toString()));
+                }
+            } catch (Exception e) {
+                logger.error("Error while deleting advertisements for client with userId {}", HashUtil.hash(userId.toString()), e);
+            }
 
-        if (client != null) {
-            clientRepository.delete(client);
+            try {
+                clientRepository.delete(client);
+                logger.info("Deleted client with userId {}", HashUtil.hash(userId.toString()));
+            } catch (Exception e) {
+                logger.error("Error while deleting client with userId {}", HashUtil.hash(userId.toString()), e);
+            }
+
+        } catch (Exception e) {
+            logger.error("Error while retrieving client with userId {}", HashUtil.hash(userId.toString()), e);
         }
     }
 }

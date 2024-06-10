@@ -163,6 +163,7 @@ public class UserController {
         }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
+            logger.warn("Incorrect password for user {}", user.getMail());
             return new ResponseEntity<>("Incorrect password!", HttpStatus.CONFLICT);
         }
 

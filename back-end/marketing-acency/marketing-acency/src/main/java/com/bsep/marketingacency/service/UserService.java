@@ -13,6 +13,7 @@ import com.bsep.marketingacency.util.HashUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -156,8 +157,21 @@ public class UserService {
         return true;
     }
 
+//    public void deleteUser(Long userId) {
+//        userRepository.deleteById(userId);
+//    }
+
     public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+        try {
+            userRepository.deleteById(userId);
+            logger.info("Deleted user with userId {}", HashUtil.hash(userId.toString()));
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn("User not found with id: {}", HashUtil.hash(userId.toString()));
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error while deleting user with userId {}", HashUtil.hash(userId.toString()), e);
+            throw new RuntimeException("Failed to delete user", e);
+        }
     }
     
     public List<User> findAllByRolesName(String roleName) {

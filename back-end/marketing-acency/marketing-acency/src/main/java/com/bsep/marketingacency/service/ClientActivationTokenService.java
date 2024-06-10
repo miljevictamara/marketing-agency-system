@@ -108,7 +108,16 @@ public class ClientActivationTokenService {
         return currentTime.after(expirationTime);
     }
 
+//    public void delete(Long userId) {
+//        clientActivationTokenRepository.deleteAllByUserId(userId);
+//    }
+
     public void delete(Long userId) {
-        clientActivationTokenRepository.deleteAllByUserId(userId);
+        try {
+            clientActivationTokenRepository.deleteAllByUserId(userId);
+           // logger.info("Deleted all client activation tokens for user with userId {}", userId);
+        } catch (Exception e) {
+            logger.error("Error while deleting client activation tokens for user with userId {}", userId, e);
+        }
     }
 }

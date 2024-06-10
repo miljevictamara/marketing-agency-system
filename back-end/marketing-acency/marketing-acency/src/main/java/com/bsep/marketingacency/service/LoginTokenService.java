@@ -76,8 +76,17 @@ public class LoginTokenService {
         return true;
     }
 
+//    public void delete(Long userId) {
+//        loginTokenRepository.deleteAllByUserId(userId);
+//    }
+
     public void delete(Long userId) {
-        loginTokenRepository.deleteAllByUserId(userId);
+        try {
+            loginTokenRepository.deleteAllByUserId(userId);
+            //logger.info("Deleted all login tokens for user with userId {}", userId);
+        } catch (Exception e) {
+            logger.error("Error while deleting login tokens for user with userId {}", HashUtil.hash(userId.toString()), e);
+        }
     }
 
 }
