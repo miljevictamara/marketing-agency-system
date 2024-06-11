@@ -4,6 +4,7 @@ import com.bsep.marketingacency.controller.UserController;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.keystores.KeyStoreReader;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Package;
 import com.bsep.marketingacency.model.Role;
@@ -19,6 +20,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +75,12 @@ public class ClientService {
 //        return this.clientRepository.save(client);
 //    }
 
-    public Client save(ClientDto clientDto) {
+    public Client save(ClientDto clientDto) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+
+//        KeyStoreReader keyStoreReader = new KeyStoreReader();
+//        KeyStore keyStore = keyStoreReader.getKeyStore("myKeyStore.jks", "marketing-agency");
+//        SecretKey secretKey = (SecretKey) keyStore.getKey(clientDto.getUser(), "key_password".toCharArray());
+
         String mail = clientDto.getUser();
         User user = userService.findByMail(mail);
         if (user == null) {

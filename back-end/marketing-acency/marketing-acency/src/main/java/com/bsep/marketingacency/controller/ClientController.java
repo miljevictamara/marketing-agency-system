@@ -1,6 +1,7 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.*;
+import com.bsep.marketingacency.keystores.KeyStoreWriter;
 import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.service.*;
 import com.bsep.marketingacency.model.Package;
@@ -23,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.security.KeyStore;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -135,6 +140,13 @@ public class ClientController {
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientRegistrationResponse> register(@RequestBody ClientDto clientDto) {
         try {
+
+            SecretKey secretKey = KeyStoreWriter.generateSecretKey("AES", 256);
+            KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+            keyStoreWriter.loadKeyStore(null, "marketing-agency".toCharArray());
+            keyStoreWriter.writeSecretKey(clientDto.getUser(), secretKey, "marketing-agency".toCharArray());
+            keyStoreWriter.saveKeyStore(clientDto.getUser() + ".jks", "marketing-agency".toCharArray());
+
             Client savedClient = clientService.save(clientDto);
             boolean isMfaEnabled = savedClient.getUser().isMfa();
             String secretImageUri = isMfaEnabled ? totpManager.getUriForImage(savedClient.getUser().getSecret()) : null;
