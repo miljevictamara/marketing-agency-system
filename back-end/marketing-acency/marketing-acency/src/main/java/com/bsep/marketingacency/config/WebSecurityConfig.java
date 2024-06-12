@@ -21,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -78,41 +80,35 @@ public class WebSecurityConfig {
         // komunikacija izmedju klijenta i servera je stateless posto je u pitanju REST aplikacija
         // ovo znaci da server ne pamti nikakvo stanje, tokeni se ne cuvaju na serveru
         // ovo nije slucaj kao sa sesijama koje se cuvaju na serverskoj strani - STATEFULL aplikacija
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // sve neautentifikovane zahteve obradi uniformno i posalji 401 gresku
-        http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-        http.authorizeRequests().antMatchers("/auth/**").permitAll();
-        http.authorizeRequests().antMatchers("/permissions/**").permitAll();
-        http.authorizeRequests().antMatchers("/auth/login").permitAll();
-        http.authorizeRequests().antMatchers("/users/**").permitAll();
-        http.authorizeRequests().antMatchers("/client/**").permitAll();
-        http.authorizeRequests().antMatchers("/employee/**").permitAll();
-        http.authorizeRequests().antMatchers("/advertisement/**").permitAll();
-        http.authorizeRequests().antMatchers("/administrator/**").permitAll();
-        http.authorizeRequests().antMatchers("/user/**").permitAll();
-        http.authorizeRequests().antMatchers("/activation/**").permitAll();
-        http.authorizeRequests().antMatchers("/package/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/notifications/**").permitAll();
-        http.authorizeRequests().antMatchers("/ws/**").permitAll() // Allow unauthenticated access to WebSocket endpoint
+        http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(restAuthenticationEntryPoint));
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/permissions/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/client/**").permitAll()
+                        .requestMatchers("/employee/**").permitAll()
+                        .requestMatchers("/advertisement/**").permitAll()
+                        .requestMatchers("/administrator/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/activation/**").permitAll()
+                        .requestMatchers("/package/**").permitAll()
+                        .requestMatchers("/api/notifications/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll() // Allow unauthenticated access to WebSocket endpoint
 
-                // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici
-                // koji tip korisnika moze da pristupi odgovarajucoj ruti. Npr. ukoliko zelimo da definisemo da ruti 'admin' moze da pristupi
-                // samo korisnik koji ima rolu 'ADMIN', navodimo na sledeci nacin:
-                // .antMatchers("/admin").hasRole("ADMIN") ili .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
-
-                // za svaki drugi zahtev korisnik mora biti autentifikovan
-                .anyRequest().authenticated().and()
+                        // za svaki drugi zahtev korisnik mora biti autentifikovan
+                        .anyRequest().authenticated())
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
-                .cors().and()
+                .cors(withDefaults())
 
                 // umetni custom filter TokenAuthenticationFilter kako bi se vrsila provera JWT tokena umesto cistih korisnickog imena i lozinke (koje radi BasicAuthenticationFilter)
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userDetailsService()), BasicAuthenticationFilter.class);
 
-
         // zbog jednostavnosti primera ne koristimo Anti-CSRF token (https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
-        http.csrf().disable();
-
+        http.csrf(csrf -> csrf.disable());
 
         // ulancavanje autentifikacije
         http.authenticationProvider(authenticationProvider());
@@ -120,7 +116,19 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+
     // metoda u kojoj se definisu putanje za igorisanje autentifikacije
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // Autentifikacija ce biti ignorisana ispod navedenih putanja (kako bismo ubrzali pristup resursima)
+        // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
+        // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
+        return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/auth/login")
+                // Ovim smo dozvolili pristup statickim resursima aplikacije
+                .requestMatchers(HttpMethod.GET, "/", "/swagger-ui/", "/v3/api-docs/", "/webjars/", "/.html", "favicon.ico",
+                        "//.html", "//.css", "//.js");
+    }
+/*
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // Autentifikacija ce biti ignorisana ispod navedenih putanja (kako bismo ubrzali pristup resursima)
@@ -133,6 +141,6 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/", "/swagger-ui/","/v3/api-docs/", "/webjars/", "/.html", "favicon.ico",
                         "//.html", "//.css", "//.js");
 
-    }
+    }*/
 
 }

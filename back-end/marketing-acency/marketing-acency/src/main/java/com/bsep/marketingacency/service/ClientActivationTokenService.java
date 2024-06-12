@@ -20,16 +20,21 @@ import java.util.UUID;
 public class ClientActivationTokenService {
     @Autowired
     private ClientActivationTokenRepository clientActivationTokenRepository;
+
     @Autowired
     private UserService userService;
-    @Autowired
-    private  ClientService clientService;
+
+  //  @Autowired
+ //   private  ClientService clientService;
     private Logger logger =  LoggerFactory.getLogger(ClientActivationTokenService.class);
 
     public ClientActivationToken save(ClientActivationToken token){
         return clientActivationTokenRepository.save(token);
     }
-
+    public ClientActivationToken findById(UUID tokenId) {
+        return clientActivationTokenRepository.findById(tokenId).orElse(null);
+    }
+/*
     public User findUser(UUID tokenId){
         ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElseGet(null);
         Client client = clientService.findById(token.getUser().getId());
@@ -41,7 +46,7 @@ public class ClientActivationTokenService {
         User user = token.getUser();
         return user;
     }
-
+*/
 //    public User findUser(UUID tokenId){
 //        try {
 //            ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElse(null);

@@ -11,11 +11,11 @@ export class AdvertisementService {
   constructor(private http: HttpClient) { }
 
   getAdvertisements(): Observable<Advertisement[]> {
-    return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/accepted/');
+    return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/accepted');
   }
 
   getRequests(): Observable<Advertisement[]> {
-    return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/pending/');
+    return this.http.get<Advertisement[]>('https://localhost:8443/advertisement/pending');
   }
 
   updateAdvertisement(advertisement: Advertisement): Observable<Advertisement> {

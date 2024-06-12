@@ -3,6 +3,7 @@ package com.bsep.marketingacency.controller;
 import com.bsep.marketingacency.model.ClientActivationToken;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.service.ClientActivationTokenService;
+import com.bsep.marketingacency.service.ClientService;
 import com.bsep.marketingacency.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,9 @@ import java.util.UUID;
 public class ClientActivationTokenController {
     @Autowired
     private ClientActivationTokenService clientActivationTokenService;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private EmailService emailService;
@@ -39,7 +43,7 @@ public class ClientActivationTokenController {
     @GetMapping("/{tokenId}/{hmac}")
     public ResponseEntity<User> findUser(@PathVariable UUID tokenId, @PathVariable String hmac) {
         try {
-            User user = clientActivationTokenService.findUser(tokenId);
+            User user = clientService.findUser(tokenId);
             Boolean isTokenUsed = clientActivationTokenService.checkIfUsed(tokenId);
             Boolean isHmacMatches = emailService.verifyHmac("https://localhost:4200/activation/" + tokenId, hmac);
             if (user != null && !isTokenUsed && isHmacMatches) {

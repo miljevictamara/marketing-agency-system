@@ -71,7 +71,7 @@ INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC',
 
 INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'employee.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
 INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'employee.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
-INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'batranovicnina@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf', false);
+INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'batranovicnina@gmail.com', '$2a$10$keprWSXdp5Qh0XYrpJyAaeocBVcfHQMzN18dtmPlSmRawjptCFaf.', false);
 INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'admin.3@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
 INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'client.1@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
 INSERT INTO public."users"(is_activated, is_blocked, mail, password, mfa) VALUES (true, false, 'client.2@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
@@ -89,10 +89,10 @@ INSERT INTO public.client(address, city, company_name, country, first_name, is_a
 INSERT INTO public."user_role"(user_id, role_id) VALUES (1, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (2, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (3, 1);
-INSERT INTO public."user_role"(user_id, role_id) VALUES (4, 1);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (4, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (5, 3);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (6, 3);
-INSERT INTO public."user_role"(user_id, role_id) VALUES (7, 1);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (7, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (8, 3);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (9, 2);
 INSERT INTO public."user_role"(user_id, role_id) VALUES (10, 3);

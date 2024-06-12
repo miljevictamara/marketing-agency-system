@@ -22,7 +22,7 @@ export class EmployeeService {
   }
 
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>('https://localhost:8443/employee/all/');
+    return this.http.get<Employee[]>(`https://localhost:8443/employee/all`);
   }
 
   createEmployeeUser(user: User): Observable<any> {
