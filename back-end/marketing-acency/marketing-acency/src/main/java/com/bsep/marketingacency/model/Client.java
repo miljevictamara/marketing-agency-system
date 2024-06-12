@@ -2,9 +2,13 @@ package com.bsep.marketingacency.model;
 
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.service.AESConverter;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import javax.persistence.*;
 import java.beans.ConstructorProperties;
 
@@ -108,8 +112,8 @@ public class Client {
         return clientPackage;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhoneNumber(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.phoneNumber);
     }
 
     public String getAddress() {
@@ -160,8 +164,8 @@ public class Client {
         this.clientPackage = clientPackage;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phoneNumber, SecretKey key) {
+        this.phoneNumber = AESConverter.encryptToString(key, phoneNumber);
     }
 
     public void setAddress(String address) {
@@ -179,4 +183,6 @@ public class Client {
     public void setIsApproved(RegistrationRequestStatus isApproved) {
         this.isApproved = isApproved;
     }
+
+
 }

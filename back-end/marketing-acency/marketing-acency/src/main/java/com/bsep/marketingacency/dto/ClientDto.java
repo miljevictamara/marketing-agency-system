@@ -2,9 +2,14 @@ package com.bsep.marketingacency.dto;
 
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.service.AESConverter;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 
 @Getter
 @Setter
@@ -82,8 +87,8 @@ public class ClientDto {
         return clientPackage;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhoneNumber(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.phoneNumber);
     }
 
     public String getAddress() {
@@ -134,8 +139,8 @@ public class ClientDto {
         this.clientPackage = clientPackage;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phoneNumber, SecretKey key) {
+        this.phoneNumber = AESConverter.encryptToString(key, phoneNumber);
     }
 
     public void setAddress(String address) {
@@ -152,5 +157,13 @@ public class ClientDto {
 
     public void setIsApproved(RegistrationRequestStatus isApproved) {
         this.isApproved = isApproved;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

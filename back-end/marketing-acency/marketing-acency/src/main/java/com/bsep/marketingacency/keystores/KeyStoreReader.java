@@ -35,11 +35,14 @@ public class KeyStoreReader {
                     (KeyStore.SecretKeyEntry) keyStore.getEntry(alias, entryPassword);
 
             return secretKeyEntry.getSecretKey();
+        } catch (FileNotFoundException e) {
+            System.err.println("Key store file not found: " + keyStoreFile);
         } catch (KeyStoreException |
                  NoSuchAlgorithmException | CertificateException |
                  IOException | UnrecoverableEntryException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
