@@ -54,7 +54,7 @@ export class AuthService {
   login(user: User, captchaResponse: string) {
 
     if (user.isBlocked) {
-        console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
+        alert('You are not allowed to log in!')
         return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
       }
 

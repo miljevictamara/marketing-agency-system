@@ -1,4 +1,4 @@
-2024-06-12T16:56:31.377+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:21:49.523+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -28,7 +28,10 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T16:56:31.377+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:21:56.696+02:00 | INFO | [UserController      ] | User with email admin.3@gmail.com has role: ROLE_ADMIN
+2024-06-12T20:21:56.781+02:00 | INFO | [AuthenticationController] | User with email admin.3@gmail.com successfully logged in.
+2024-06-12T20:22:00.845+02:00 | INFO | [UserService         ] | User with ID 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b successfully activated.
+2024-06-12T20:22:05.344+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -58,7 +61,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T16:56:31.377+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.344+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -88,115 +91,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T16:56:42.667+02:00 | INFO | [UserController      ] | User with email admin.3@gmail.com has role: ROLE_ADMIN
-2024-06-12T16:56:42.872+02:00 | INFO | [AuthenticationController] | User with email admin.3@gmail.com successfully logged in.
-2024-06-12T16:57:47.685+02:00 | INFO | [UserService         ] | User with ID 19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7 successfully activated.
-2024-06-12T16:58:13.774+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopping...
-2024-06-12T16:58:13.774+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@49afaf65]]
-2024-06-12T16:58:13.774+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopped.
-2024-06-12T16:58:13.791+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-06-12T16:58:13.792+02:00 | INFO | [SchemaDropperImpl$DelayedDropActionImpl] | HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
-2024-06-12T16:58:13.845+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown initiated...
-2024-06-12T16:58:13.848+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown completed.
-2024-06-12T17:11:01.283+02:00 | INFO | [Version             ] | HV000001: Hibernate Validator 6.1.0.Final
-2024-06-12T17:11:01.336+02:00 | INFO | [MarketingAcencyApplication] | Starting MarketingAcencyApplication using Java 21.0.2 on DESKTOP-K5JRU97 with PID 4564 (C:\Users\WIN 10\Desktop\bezbednost\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency\target\classes started by WIN 10 in C:\Users\WIN 10\Desktop\bezbednost\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency)
-2024-06-12T17:11:01.340+02:00 | INFO | [MarketingAcencyApplication] | No active profile set, falling back to default profiles: default
-2024-06-12T17:11:02.615+02:00 | INFO | [RepositoryConfigurationDelegate] | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-06-12T17:11:02.732+02:00 | INFO | [RepositoryConfigurationDelegate] | Finished Spring Data repository scanning in 108 ms. Found 12 JPA repository interfaces.
-2024-06-12T17:11:03.321+02:00 | INFO | [PostProcessorRegistrationDelegate$BeanPostProcessorChecker] | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@741741d0' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2024-06-12T17:11:03.343+02:00 | INFO | [PostProcessorRegistrationDelegate$BeanPostProcessorChecker] | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2024-06-12T17:11:03.948+02:00 | INFO | [TomcatWebServer     ] | Tomcat initialized with port(s): 8443 (https)
-2024-06-12T17:11:03.963+02:00 | INFO | [Http11NioProtocol   ] | Initializing ProtocolHandler ["https-jsse-nio-8443"]
-2024-06-12T17:11:03.964+02:00 | INFO | [StandardService     ] | Starting service [Tomcat]
-2024-06-12T17:11:03.965+02:00 | INFO | [StandardEngine      ] | Starting Servlet engine: [Apache Tomcat/9.0.56]
-2024-06-12T17:11:04.075+02:00 | INFO | [[/]                 ] | Initializing Spring embedded WebApplicationContext
-2024-06-12T17:11:04.076+02:00 | INFO | [ServletWebServerApplicationContext] | Root WebApplicationContext: initialization completed in 2680 ms
-2024-06-12T17:11:04.310+02:00 | INFO | [LogHelper           ] | HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-06-12T17:11:04.367+02:00 | INFO | [Version             ] | HHH000412: Hibernate ORM core version 5.4.33
-2024-06-12T17:11:04.540+02:00 | INFO | [Version             ] | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2024-06-12T17:11:04.674+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Starting...
-2024-06-12T17:11:04.868+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Start completed.
-2024-06-12T17:11:04.887+02:00 | INFO | [Dialect             ] | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
-2024-06-12T17:11:05.892+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.892+02:00 | WARN | [SqlExceptionHelper  ] | relation "administrator" does not exist, skipping
-2024-06-12T17:11:05.893+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.893+02:00 | WARN | [SqlExceptionHelper  ] | relation "advertisement" does not exist, skipping
-2024-06-12T17:11:05.894+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.894+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
-2024-06-12T17:11:05.894+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.895+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
-2024-06-12T17:11:05.895+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.895+02:00 | WARN | [SqlExceptionHelper  ] | relation "client_activation_token" does not exist, skipping
-2024-06-12T17:11:05.896+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.896+02:00 | WARN | [SqlExceptionHelper  ] | relation "employee" does not exist, skipping
-2024-06-12T17:11:05.897+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.897+02:00 | WARN | [SqlExceptionHelper  ] | relation "login_token" does not exist, skipping
-2024-06-12T17:11:05.897+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.898+02:00 | WARN | [SqlExceptionHelper  ] | relation "refreshtoken" does not exist, skipping
-2024-06-12T17:11:05.898+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.898+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
-2024-06-12T17:11:05.899+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.899+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
-2024-06-12T17:11:05.899+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.900+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
-2024-06-12T17:11:05.900+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.900+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
-2024-06-12T17:11:05.901+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.901+02:00 | WARN | [SqlExceptionHelper  ] | table "administrator" does not exist, skipping
-2024-06-12T17:11:05.901+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.902+02:00 | WARN | [SqlExceptionHelper  ] | table "advertisement" does not exist, skipping
-2024-06-12T17:11:05.902+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.902+02:00 | WARN | [SqlExceptionHelper  ] | table "client" does not exist, skipping
-2024-06-12T17:11:05.903+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.903+02:00 | WARN | [SqlExceptionHelper  ] | table "client_activation_token" does not exist, skipping
-2024-06-12T17:11:05.903+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.903+02:00 | WARN | [SqlExceptionHelper  ] | table "employee" does not exist, skipping
-2024-06-12T17:11:05.904+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.904+02:00 | WARN | [SqlExceptionHelper  ] | table "login_token" does not exist, skipping
-2024-06-12T17:11:05.904+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.905+02:00 | WARN | [SqlExceptionHelper  ] | table "package" does not exist, skipping
-2024-06-12T17:11:05.905+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.905+02:00 | WARN | [SqlExceptionHelper  ] | table "permission" does not exist, skipping
-2024-06-12T17:11:05.906+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.906+02:00 | WARN | [SqlExceptionHelper  ] | table "refreshtoken" does not exist, skipping
-2024-06-12T17:11:05.906+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.907+02:00 | WARN | [SqlExceptionHelper  ] | table "rejection_note" does not exist, skipping
-2024-06-12T17:11:05.907+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.907+02:00 | WARN | [SqlExceptionHelper  ] | table "role" does not exist, skipping
-2024-06-12T17:11:05.908+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.908+02:00 | WARN | [SqlExceptionHelper  ] | table "roles_perms" does not exist, skipping
-2024-06-12T17:11:05.909+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.909+02:00 | WARN | [SqlExceptionHelper  ] | table "user_role" does not exist, skipping
-2024-06-12T17:11:05.910+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.910+02:00 | WARN | [SqlExceptionHelper  ] | table "users" does not exist, skipping
-2024-06-12T17:11:05.910+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
-2024-06-12T17:11:05.910+02:00 | WARN | [SqlExceptionHelper  ] | sequence "hibernate_sequence" does not exist, skipping
-2024-06-12T17:11:06.003+02:00 | INFO | [SchemaCreatorImpl   ] | HHH000476: Executing import script 'file:/C:/Users/WIN%2010/Desktop/bezbednost/bsep-ra-2024-kt2-tim-15/back-end/marketing-acency/marketing-acency/target/classes/import.sql'
-2024-06-12T17:11:06.062+02:00 | INFO | [JtaPlatformInitiator] | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2024-06-12T17:11:06.071+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-06-12T17:11:08.114+02:00 | WARN | [JpaBaseConfiguration$JpaWebConfiguration] | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-06-12T17:11:08.891+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@745c25ed, org.springframework.security.web.context.SecurityContextPersistenceFilter@19544627, org.springframework.security.web.header.HeaderWriterFilter@50c20b15, org.springframework.web.filter.CorsFilter@4fb1bffd, org.springframework.security.web.authentication.logout.LogoutFilter@3a4e6da6, com.bsep.marketingacency.auth.TokenAuthenticationFilter@427c9a13, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e7ee3b7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5d87c8af, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b842e79, org.springframework.security.web.session.SessionManagementFilter@7a7fdc1a, org.springframework.security.web.access.ExceptionTranslationFilter@254a9f65, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3285c141]
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/auth/login', POST] with []
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/', GET] with []
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/swagger-ui/', GET] with []
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/v3/api-docs/', GET] with []
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/webjars/', GET] with []
-2024-06-12T17:11:08.924+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='/.html', GET] with []
-2024-06-12T17:11:08.925+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='favicon.ico', GET] with []
-2024-06-12T17:11:08.925+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='//.html', GET] with []
-2024-06-12T17:11:08.925+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='//.css', GET] with []
-2024-06-12T17:11:08.925+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure Ant [pattern='//.js', GET] with []
-2024-06-12T17:11:09.173+02:00 | INFO | [Http11NioProtocol   ] | Starting ProtocolHandler ["https-jsse-nio-8443"]
-2024-06-12T17:11:09.353+02:00 | INFO | [TomcatWebServer     ] | Tomcat started on port(s): 8443 (https) with context path ''
-2024-06-12T17:11:10.076+02:00 | INFO | [SimpleBrokerMessageHandler] | Starting...
-2024-06-12T17:11:10.076+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3831fb48]]
-2024-06-12T17:11:10.077+02:00 | INFO | [SimpleBrokerMessageHandler] | Started.
-2024-06-12T17:11:10.086+02:00 | INFO | [MarketingAcencyApplication] | Started MarketingAcencyApplication in 9.111 seconds (JVM running for 10.444)
-2024-06-12T17:11:15.287+02:00 | INFO | [[/]                 ] | Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-06-12T17:11:15.288+02:00 | INFO | [DispatcherServlet   ] | Initializing Servlet 'dispatcherServlet'
-2024-06-12T17:11:15.290+02:00 | INFO | [DispatcherServlet   ] | Completed initialization in 2 ms
-2024-06-12T17:12:08.963+02:00 | INFO | [WebSocketMessageBrokerStats] | WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 9, active threads = 1, queued tasks = 1, completed tasks = 7]
-2024-06-12T17:13:46.705+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.346+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -226,7 +121,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.712+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.352+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -256,7 +151,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.712+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.352+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -286,7 +181,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.712+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.352+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -316,7 +211,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.708+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.354+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -346,7 +241,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.708+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.356+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -376,7 +271,7 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.733+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+2024-06-12T20:22:05.359+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
 	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
 	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
@@ -406,74 +301,11 @@ org.springframework.security.web.firewall.RequestRejectedException: The request 
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
 	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.733+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
-org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
-	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:196) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:46.733+02:00 | ERROR | [[dispatcherServlet] ] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
-org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
-	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:456) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:429) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:196) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183) ~[spring-security-web-5.5.4.jar:5.5.4]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.15.jar:5.3.15]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.56.jar:9.0.56]
-	at java.lang.Thread.run(Thread.java:1583) [?:?]
-2024-06-12T17:13:58.998+02:00 | INFO | [UserController      ] | User with email admin.3@gmail.com has role: ROLE_ADMIN
-2024-06-12T17:13:59.195+02:00 | INFO | [AuthenticationController] | User with email admin.3@gmail.com successfully logged in.
-2024-06-12T17:14:22.019+02:00 | INFO | [UserService         ] | User with ID 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b successfully activated.
-2024-06-12T17:19:50.150+02:00 | INFO | [UserService         ] | User with ID 4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8 successfully activated.
-2024-06-12T17:20:14.536+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopping...
-2024-06-12T17:20:14.536+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3831fb48]]
-2024-06-12T17:20:14.536+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopped.
-2024-06-12T17:20:14.554+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-06-12T17:20:14.555+02:00 | INFO | [SchemaDropperImpl$DelayedDropActionImpl] | HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
-2024-06-12T17:20:14.611+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown initiated...
-2024-06-12T17:20:14.613+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown completed.
+2024-06-12T20:22:17.719+02:00 | INFO | [UserController      ] | User with email employee.1@gmail.com has role: ROLE_EMPLOYEE
+2024-06-12T20:22:34.488+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopping...
+2024-06-12T20:22:34.488+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@bf70ce5]]
+2024-06-12T20:22:34.488+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopped.
+2024-06-12T20:22:34.506+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T20:22:34.506+02:00 | INFO | [SchemaDropperImpl$DelayedDropActionImpl] | HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2024-06-12T20:22:34.578+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown initiated...
+2024-06-12T20:22:34.580+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown completed.
