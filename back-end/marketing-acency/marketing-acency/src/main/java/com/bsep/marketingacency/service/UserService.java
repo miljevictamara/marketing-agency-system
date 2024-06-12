@@ -179,4 +179,19 @@ public class UserService {
     }
 
 
+    public User updateIsBlocked(Long id) {
+        User existingUser = userRepository.findById(id).orElse(null);
+
+        if (existingUser == null) {
+            logger.warn("User with ID {} not found.", HashUtil.hash(id.toString()));
+            return null;
+        }
+
+        existingUser.setIsBlocked(true);
+        User updatedUser = userRepository.save(existingUser);
+
+        logger.info("User with ID {} successfully activated.", HashUtil.hash(id.toString()));
+
+        return updatedUser;
+    }
 }
