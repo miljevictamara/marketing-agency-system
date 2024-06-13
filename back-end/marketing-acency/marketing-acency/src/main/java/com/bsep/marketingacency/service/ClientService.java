@@ -103,10 +103,13 @@ public class ClientService {
         client.setFirstName(clientDto.getFirstName());
         client.setLastName(clientDto.getLastName());
         client.setCompanyName(clientDto.getCompanyName());
-        client.setPib(clientDto.getPib());
+        if (clientDto.getPib() != null)
+        {
+            client.setPib(clientDto.getPib(), key);
+        }
         client.setClientPackage(pack);
         client.setPhoneNumber(clientDto.getPhoneNumber(), key);
-        client.setAddress(clientDto.getAddress());
+        client.setAddress(clientDto.getAddress(), key);
         client.setCity(clientDto.getCity());
         client.setCountry(clientDto.getCountry());
         client.setIsApproved(RegistrationRequestStatus.PENDING);
@@ -265,7 +268,8 @@ public class ClientService {
 
             if (secretKey != null) {
                 client.setPhoneNumber(client.getPhoneNumber(secretKey));
-
+                client.setAddress(client.getAddress(secretKey));
+                client.setPib(Integer.valueOf(client.getPib(secretKey)));
             } else {
                 System.out.println("Secret key is null for client: " + client.getUser().getMail());
             }
@@ -292,7 +296,7 @@ public class ClientService {
         if(existingClient != null) {
             existingClient.setFirstName(updatedClient.getFirstName());
             existingClient.setLastName(updatedClient.getLastName());
-            existingClient.setAddress(updatedClient.getAddress());
+            existingClient.setAddress(updatedClient.getAddress(), secretKey);
             existingClient.setCity(updatedClient.getCity());
             existingClient.setCountry(updatedClient.getCountry());
             existingClient.setPhoneNumber(updatedClient.getPhoneNumber(), secretKey);

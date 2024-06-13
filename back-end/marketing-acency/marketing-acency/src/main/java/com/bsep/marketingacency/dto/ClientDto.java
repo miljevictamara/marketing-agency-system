@@ -87,6 +87,7 @@ public class ClientDto {
         return clientPackage;
     }
 
+
     public String getPhoneNumber(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
         return AESConverter.decryptFromString(key, this.phoneNumber);
     }
@@ -139,9 +140,6 @@ public class ClientDto {
         this.clientPackage = clientPackage;
     }
 
-    public void setPhoneNumber(String phoneNumber, SecretKey key) {
-        this.phoneNumber = AESConverter.encryptToString(key, phoneNumber);
-    }
 
     public void setAddress(String address) {
         this.address = address;

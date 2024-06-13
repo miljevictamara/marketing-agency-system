@@ -325,10 +325,10 @@ public class ClientController {
                     client.getFirstName(),
                     client.getLastName(),
                     client.getCompanyName(),
-                    client.getPib(),
+                    client.getPib(),   //er
                     client.getClientPackage().getName(),
                     client.getPhoneNumber(secretKey),
-                    client.getAddress(),
+                    client.getAddress(secretKey),
                     client.getCity(),
                     client.getCountry(),
                     client.getIsApproved()
