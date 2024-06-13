@@ -1,8 +1,12 @@
 package com.bsep.marketingacency.model;
 
+import com.bsep.marketingacency.service.AESConverter;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import javax.persistence.*;
 
 @Getter
@@ -112,4 +116,22 @@ public class Employee {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getPhoneNumber(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.phoneNumber);
+    }
+
+    public String getAddress(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.address);
+    }
+
+    public void setPhoneNumber(String phoneNumber, SecretKey key) {
+        this.phoneNumber = AESConverter.encryptToString(key, phoneNumber);
+    }
+
+    public void setAddress(String address, SecretKey key) {
+        this.address = AESConverter.encryptToString(key, address);
+    }
+
+
 }

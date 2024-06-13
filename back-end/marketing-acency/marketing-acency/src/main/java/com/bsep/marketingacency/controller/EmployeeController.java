@@ -2,6 +2,8 @@ package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
+import com.bsep.marketingacency.keystores.KeyStoreReader;
+import com.bsep.marketingacency.keystores.KeyStoreWriter;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.EmployeeService;
@@ -13,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,16 +58,22 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('GET_EMPLOYEE_BYUSERID')")
     public ResponseEntity<EmployeeDto> getEmployeeByUserId(@PathVariable Long userId) {
         try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
+
             Employee employee = employeeService.getEmployeeByUserId(userId);
+            String alias = employee.getUser().getMail();
+
+            SecretKey secretKey = keyStoreReader.readSecretKey(employee.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+
             if (employee != null) {
                 EmployeeDto employeeDto = new EmployeeDto(
                         employee.getId(),
                         employee.getFirstName(),
                         employee.getLastName(),
-                        employee.getAddress(),
+                        employee.getAddress(secretKey),
                         employee.getCity(),
                         employee.getCountry(),
-                        employee.getPhoneNumber(),
+                        employee.getPhoneNumber(secretKey),
                         employee.getUser()
                 );
                 return new ResponseEntity<>(employeeDto, HttpStatus.OK);
@@ -105,6 +116,10 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('UPDATE_EMPLOYEE')")
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
+            String alias = employeeDto.getUser().getMail();
+            SecretKey secretKey = keyStoreReader.readSecretKey(employeeDto.getUser().getMail() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+
             Employee updatedEmployee = new Employee(
                     employeeDto.getId(),
                     employeeDto.getFirstName(),
@@ -116,7 +131,7 @@ public class EmployeeController {
                     employeeDto.getUser()
             );
 
-            Employee updated = employeeService.updateEmployee(updatedEmployee);
+            Employee updated = employeeService.updateEmployee(updatedEmployee, secretKey);
 
             if (updated != null) {
                 logger.info("Employee {} successfully updated.", employeeDto.getUser().getMail());
@@ -141,7 +156,7 @@ public class EmployeeController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('GET_ALL_EMPLOYEES')")
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() throws IllegalBlockSizeException, BadPaddingException {
         try {
             return employeeService.getAllEmployees();
         } catch (Exception e) {
@@ -165,7 +180,13 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('CREATE_EMPLOYEE')")
     public ResponseEntity<Map<String, String>> createEmployee(@RequestBody EmployeeDto employeeDto) {
         try {
-            Employee savedEmployee = employeeService.saveEmployee(employeeDto);
+            SecretKey secretKey = KeyStoreWriter.generateSecretKey("AES", 256);
+            KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+            keyStoreWriter.loadKeyStore(null, "marketing-agency".toCharArray());
+            keyStoreWriter.writeSecretKey(employeeDto.getUser().getMail(), secretKey, "marketing-agency".toCharArray());
+            keyStoreWriter.saveKeyStore(employeeDto.getUser().getMail() + ".jks", "marketing-agency".toCharArray());
+
+            Employee savedEmployee = employeeService.saveEmployee(employeeDto, secretKey);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Employee created.");
             logger.info("Employee {} created.", savedEmployee.getUser().getMail());

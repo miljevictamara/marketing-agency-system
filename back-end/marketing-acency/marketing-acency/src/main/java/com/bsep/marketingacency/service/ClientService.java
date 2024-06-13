@@ -269,7 +269,9 @@ public class ClientService {
             if (secretKey != null) {
                 client.setPhoneNumber(client.getPhoneNumber(secretKey));
                 client.setAddress(client.getAddress(secretKey));
-                client.setPib(Integer.valueOf(client.getPib(secretKey)));
+                if (client.getPib() != null) {
+                    client.setPib(client.getPib(), secretKey);
+                }
             } else {
                 System.out.println("Secret key is null for client: " + client.getUser().getMail());
             }

@@ -310,32 +310,37 @@ public class ClientController {
     @GetMapping("/byUserId/{userId}")
     @PreAuthorize("hasAuthority('GET_CLIENT_BYUSERID')")
     public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) throws IllegalBlockSizeException, BadPaddingException {
-        KeyStoreReader keyStoreReader = new KeyStoreReader();
+        try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
 
-        Client client = clientService.getClientByUserId(userId);
-        String alias = client.getUser().getMail();
+            Client client = clientService.getClientByUserId(userId);
+            String alias = client.getUser().getMail();
 
-        SecretKey secretKey = keyStoreReader.readSecretKey(client.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+            SecretKey secretKey = keyStoreReader.readSecretKey(client.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
 
-        if (client != null && secretKey != null) {
-            ClientDto clientDto = new ClientDto(
-                    client.getId(),
-                    client.getUser().getMail(),
-                    client.getType(),
-                    client.getFirstName(),
-                    client.getLastName(),
-                    client.getCompanyName(),
-                    client.getPib(),   //er
-                    client.getClientPackage().getName(),
-                    client.getPhoneNumber(secretKey),
-                    client.getAddress(secretKey),
-                    client.getCity(),
-                    client.getCountry(),
-                    client.getIsApproved()
-            );
-            return new ResponseEntity<>(clientDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (client != null && secretKey != null) {
+                ClientDto clientDto = new ClientDto(
+                        client.getId(),
+                        client.getUser().getMail(),
+                        client.getType(),
+                        client.getFirstName(),
+                        client.getLastName(),
+                        client.getCompanyName(),
+                        client.getPib(),   //er
+                        client.getClientPackage().getName(),
+                        client.getPhoneNumber(secretKey),
+                        client.getAddress(secretKey),
+                        client.getCity(),
+                        client.getCountry(),
+                        client.getIsApproved()
+                );
+                return new ResponseEntity<>(clientDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error("Error fetching client by user ID {}: {}", userId, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

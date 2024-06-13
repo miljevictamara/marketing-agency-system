@@ -69,8 +69,8 @@ INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 100.00, 100);
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC', 50.00, 10);
 
-INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'andjela1108@gmail.com', '$2a$10$lhYgvOwC1Q.fxzQBkwVNI.xqwKaoQiY6Gum5fzeN9jsuYStzORNGi', false);
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'djordjevic.ra37.2020@uns.ac.rs', '$2a$10$PXKK744BnNriXiJB/9Y3h.AtYpMcGDo6fWls/mw.JtwVHs0/jS4vy', false);
 
 INSERT INTO public."user_role"(user_id, role_id) VALUES (1, 1);
 
-INSERT INTO public."administrator"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('Futoska 22', 'Lazarevac', 'Srbija', 'Ana', 'Miljevic', '+381632345678', 1);
+INSERT INTO public."administrator"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('EmI0VX/zjgRvhHaX8Ids8W2E/lw+gqNjntjlGmDdSq0kEacr99JTVpB4IqgZTGIG', 'Novi Sad', 'Srbija', 'Ana', 'Miljevic', 'mtAcjgCaLYaiW/flDAyyuz+B9C2Y70HyPGAL5+9rFTo=', 1);
