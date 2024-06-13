@@ -120,9 +120,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.userService.findUserIdByEmail(user.mail).subscribe({
       next: (wholeUser: User) => {
         if (wholeUser) {
-
           user.isBlocked = wholeUser.isBlocked;
-          
           this.submitted = true;
           const captcha = this.captchaResponse || '';
           this.authService.login(user, captcha).subscribe({
@@ -148,5 +146,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   onPasswordlesLoginClick() {
     this.router.navigate(['passwordless-login']);
+  }
+
+  onResetPasswordClick() {
+    this.router.navigate(['reset-password-request']);
   }
 }

@@ -326,4 +326,18 @@ verify(verifyCode: VerifyCode): Observable<any> {
   checkCommonPermissions(roleName: string, loggedInRole: string): Observable<boolean>{
     return this.http.get<boolean>(`https://localhost:8443/permissions/check/${roleName}/${loggedInRole}`);
   }
+
+
+
+
+
+
+
+  sendResetPasswordLink(email: string): Observable<any> {
+    return this.http.post(`https://localhost:8443/auth/reset-password`, { email });
+  }
+
+  changePassword(token: string, password: string): Observable<any> {
+    return this.http.post(`https://localhost:8443/auth/change-password`, { token, password });
+  }
 }
