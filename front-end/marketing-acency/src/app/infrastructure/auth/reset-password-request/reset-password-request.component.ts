@@ -20,6 +20,7 @@ export class ResetPasswordRequestComponent {
     this.authService.sendResetPasswordLink(this.email!).subscribe(
       response => {
         console.log('Reset link sent', response);
+        alert('Reset link sent to email!');
       },
       error => {
         console.error('Error sending reset link', error);

@@ -249,8 +249,12 @@ public class UserService {
             throw new RuntimeException("Invalid or expired token");
         }
 
-        User user = userRepository.findById(resetToken.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-        user.setPassword(newPassword);
+        User user = userRepository.findById(resetToken.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Hash the new password before saving
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
         userRepository.save(user);
 
         tokenRepository.delete(resetToken);
