@@ -94,6 +94,7 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers("/activation/**").permitAll();
         http.authorizeRequests().antMatchers("/package/**").permitAll();
         http.authorizeRequests().antMatchers("/api/notifications/**").permitAll();
+        http.authorizeRequests().antMatchers("/vpn/**").permitAll();
         http.authorizeRequests().antMatchers("/ws/**").permitAll() // Allow unauthenticated access to WebSocket endpoint
 
                 // ukoliko ne zelimo da koristimo @PreAuthorize anotacije nad metodama kontrolera, moze se iskoristiti hasRole() metoda da se ogranici

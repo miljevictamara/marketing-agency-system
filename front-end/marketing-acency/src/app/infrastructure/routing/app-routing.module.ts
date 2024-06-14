@@ -21,6 +21,7 @@ import { RegistrationRequestComponent } from 'src/app/feature-modules/administra
 import { QrcodeComponent } from '../auth/qrcode/qrcode.component';
 import { TwoFAVerificationComponent } from '../auth/two-fa-verification/two-fa-verification.component';
 import { LogMessagesComponent } from '../monitoring/log-messages/log-messages.component';
+import { VpnComponent } from 'src/app/feature-modules/user/vpn/vpn.component';
 import { ResetPasswordRequestComponent } from '../auth/reset-password-request/reset-password-request.component';
 import { ResetPasswordComponent } from '../auth/reset-password/reset-password.component';
 
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'qrcode', component: QrcodeComponent},
   { path: 'verify/:mail', component: TwoFAVerificationComponent },
   { path: 'log', component: LogMessagesComponent },
+  { path: 'vpn', component: VpnComponent },
   { path: 'reset-password-request', component: ResetPasswordRequestComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
 
