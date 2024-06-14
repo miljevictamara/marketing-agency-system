@@ -37,11 +37,13 @@ export class AppComponent implements OnInit{
  
 
   showSnackBar(message: string): void {
+    if( this.user && this.user?.roles[0]?.toString() === 'ROLE_ADMIN'){
     this.snackBar.open(message, 'Close', {
       duration: 5000, // Duration in milliseconds
       horizontalPosition: 'end', // Position horizontally, you can also use 'start' | 'center'
       verticalPosition: 'bottom' // Position vertically, you can also use 'top'
     });
+  }
   }
 
 }
