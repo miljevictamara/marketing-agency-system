@@ -426,7 +426,7 @@ public class ClientController {
 //                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //            }
 //        } catch (Exception e) {
-//            logger.error("Error updating client {} : {}", clientDto.getUser(),e.getMessage());
+//            logger.error("Error updating client {}", clientDto.getUser());
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
