@@ -65,12 +65,15 @@ export class UserService {
 
   rejectRegistration(userId: number, reason: string): Observable<any>{
     return this.http.put<any>(`https://localhost:8443/client/reject-registration-request/${userId}/${reason}`, {});
-}
+  }
 
   testVpn() {
     return this.http.get('https://localhost:8443/vpn/call');
   }
 
+  updateIsBlocked(userId: number): Observable<any>{
+    return this.http.put<any>('https://localhost:8443/user/blocking/' + userId, {});
+  }
   
 
 }

@@ -1,6 +1,8 @@
 package com.bsep.marketingacency.controller;
 
 import com.bsep.marketingacency.dto.AdministratorDto;
+import com.bsep.marketingacency.keystores.KeyStoreReader;
+import com.bsep.marketingacency.keystores.KeyStoreWriter;
 import com.bsep.marketingacency.model.Administrator;
 import com.bsep.marketingacency.service.AdministratorService;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,16 +52,22 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('GET_BYUSERID')")
     public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
         try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
+
             Administrator administrator = administratorService.getAdministratorByUserId(userId);
+            String alias = administrator.getUser().getMail();
+
+            SecretKey secretKey = keyStoreReader.readSecretKey(administrator.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+
             if (administrator != null) {
                 AdministratorDto administratorDto = new AdministratorDto(
                         administrator.getId(),
                         administrator.getFirstName(),
                         administrator.getLastName(),
-                        administrator.getAddress(),
+                        administrator.getAddress(secretKey),
                         administrator.getCity(),
                         administrator.getCountry(),
-                        administrator.getPhoneNumber(),
+                        administrator.getPhoneNumber(secretKey),
                         administrator.getUser()
                 );
                 return new ResponseEntity<>(administratorDto, HttpStatus.OK);
@@ -102,6 +111,10 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
     public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
         try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
+            String alias = administratorDto.getUser().getMail();
+            SecretKey secretKey = keyStoreReader.readSecretKey(administratorDto.getUser().getMail() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+
             Administrator updatedAdministrator = new Administrator(
                     administratorDto.getId(),
                     administratorDto.getFirstName(),
@@ -113,7 +126,7 @@ public class AdministratorController {
                     administratorDto.getUser()
             );
 
-            Administrator updated = administratorService.updateAdministrator(updatedAdministrator);
+            Administrator updated = administratorService.updateAdministrator(updatedAdministrator, secretKey);
 
             if (updated != null) {
                 logger.info("Administrator {} successfully updated.", administratorDto.getUser().getMail());
@@ -144,7 +157,13 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
         try {
-            Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto);
+            SecretKey secretKey = KeyStoreWriter.generateSecretKey("AES", 256);
+            KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+            keyStoreWriter.loadKeyStore(null, "marketing-agency".toCharArray());
+            keyStoreWriter.writeSecretKey(administratorDto.getUser().getMail(), secretKey, "marketing-agency".toCharArray());
+            keyStoreWriter.saveKeyStore(administratorDto.getUser().getMail() + ".jks", "marketing-agency".toCharArray());
+
+            Administrator savedAdministrator = administratorService.saveAdministrator(administratorDto, secretKey);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Administrator created.");
             logger.info("Administrator {} successfully created.", savedAdministrator.getUser().getMail());

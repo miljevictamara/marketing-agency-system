@@ -2,11 +2,14 @@ package com.bsep.marketingacency.model;
 
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.service.AESConverter;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import javax.persistence.*;
-import java.beans.ConstructorProperties;
 
 @Getter
 @Setter
@@ -108,12 +111,16 @@ public class Client {
         return clientPackage;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhoneNumber(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.phoneNumber);
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddress(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.address);
+    }
+
+    public Integer getPib(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromInteger(key, this.pib);
     }
 
     public String getCity() {
@@ -152,21 +159,22 @@ public class Client {
         this.companyName = companyName;
     }
 
-    public void setPib(Integer pib) {
-        this.pib = pib;
-    }
-
     public void setClientPackage(Package clientPackage) {
         this.clientPackage = clientPackage;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phoneNumber, SecretKey key) {
+        this.phoneNumber = AESConverter.encryptToString(key, phoneNumber);
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String address, SecretKey key) {
+        this.address = AESConverter.encryptToString(key, address);
     }
+
+    public void setPib(Integer pib, SecretKey key) {
+        this.pib = AESConverter.encryptToInteger(key, pib);
+    }
+
 
     public void setCity(String city) {
         this.city = city;
@@ -179,4 +187,6 @@ public class Client {
     public void setIsApproved(RegistrationRequestStatus isApproved) {
         this.isApproved = isApproved;
     }
+
+
 }

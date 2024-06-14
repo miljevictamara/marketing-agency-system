@@ -1,24 +1,33 @@
 package com.bsep.marketingacency.service;
 
-import com.bsep.marketingacency.controller.UserController;
 import com.bsep.marketingacency.dto.ClientDto;
-import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.RegistrationRequestStatus;
+import com.bsep.marketingacency.keystores.KeyStoreReader;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Package;
-import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.model.*;
 import com.bsep.marketingacency.repository.AdvertisementRepository;
 import com.bsep.marketingacency.repository.ClientRepository;
+import com.bsep.marketingacency.repository.KeyStoreAccessRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import com.bsep.marketingacency.util.HashUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +51,10 @@ public class ClientService {
 
     @Autowired
     private PackageService packageService;
+
+    @Autowired
+    private KeyStoreAccessRepository keyStoreAccessRepository;
+
 
     private final static Logger logger = LogManager.getLogger(ClientService.class);
 
@@ -69,7 +82,8 @@ public class ClientService {
 //        return this.clientRepository.save(client);
 //    }
 
-    public Client save(ClientDto clientDto) {
+    public Client save(ClientDto clientDto, SecretKey key) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+
         String mail = clientDto.getUser();
         User user = userService.findByMail(mail);
         if (user == null) {
@@ -89,18 +103,23 @@ public class ClientService {
         client.setFirstName(clientDto.getFirstName());
         client.setLastName(clientDto.getLastName());
         client.setCompanyName(clientDto.getCompanyName());
-        client.setPib(clientDto.getPib());
+        if (clientDto.getPib() != null)
+        {
+            client.setPib(clientDto.getPib(), key);
+        }
         client.setClientPackage(pack);
-        client.setPhoneNumber(clientDto.getPhoneNumber());
-        client.setAddress(clientDto.getAddress());
+        client.setPhoneNumber(clientDto.getPhoneNumber(), key);
+        client.setAddress(clientDto.getAddress(), key);
         client.setCity(clientDto.getCity());
         client.setCountry(clientDto.getCountry());
         client.setIsApproved(RegistrationRequestStatus.PENDING);
 
         Client savedClient = this.clientRepository.save(client);
 
+
         return savedClient;
     }
+
 
 
     public void delete(Client client){
@@ -234,8 +253,32 @@ public class ClientService {
     }
 
 
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<Client> getAllClients() throws IllegalBlockSizeException, BadPaddingException {
+        List<Client> clients = clientRepository.findAll();
+        KeyStoreReader keyStoreReader = new KeyStoreReader();
+
+        for (Client client : clients) {
+            String alias = client.getUser().getMail();
+            SecretKey secretKey = keyStoreReader.readSecretKey(
+                    alias + ".jks",
+                    alias,
+                    "marketing-agency".toCharArray(),
+                    "marketing-agency".toCharArray()
+            );
+
+            if (secretKey != null) {
+                client.setPhoneNumber(client.getPhoneNumber(secretKey));
+                client.setAddress(client.getAddress(secretKey));
+                if (client.getPib() != null) {
+                    client.setPib(client.getPib(), secretKey);
+                }
+            } else {
+                System.out.println("Secret key is null for client: " + client.getUser().getMail());
+            }
+        }
+
+
+        return clients;
     }
 
 //    public Client getClientByUserId(Long userId) { return clientRepository.findByUserId(userId); }
@@ -249,16 +292,16 @@ public class ClientService {
     }
 
 
-    public Client updateClient(Client updatedClient) {
+    public Client updateClient(Client updatedClient, SecretKey secretKey) throws IllegalBlockSizeException, BadPaddingException {
         Client existingClient = clientRepository.findById(updatedClient.getId())
                 .orElse(null);
         if(existingClient != null) {
             existingClient.setFirstName(updatedClient.getFirstName());
             existingClient.setLastName(updatedClient.getLastName());
-            existingClient.setAddress(updatedClient.getAddress());
+            existingClient.setAddress(updatedClient.getAddress(), secretKey);
             existingClient.setCity(updatedClient.getCity());
             existingClient.setCountry(updatedClient.getCountry());
-            existingClient.setPhoneNumber(updatedClient.getPhoneNumber());
+            existingClient.setPhoneNumber(updatedClient.getPhoneNumber(), secretKey);
 
             return clientRepository.save(existingClient);
         } else {
