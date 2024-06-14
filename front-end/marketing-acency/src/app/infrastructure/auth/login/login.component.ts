@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { UserService } from 'src/app/feature-modules/user/user.service';
-import { Observable } from 'rxjs';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-login',
@@ -74,11 +74,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error checking user role:', error);
         this.loginError = 'Error checking user role';
-        alert("Error occured, try again.")
+        alert("Error occurred, try again.")
       }
     });
   }
-
 
   private showRecaptcha() {
     if (this.recaptchaContainer) {
@@ -117,22 +116,39 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     const user = this.form.value;
-    this.submitted = true;
-    const captcha = this.captchaResponse || '';
-    this.authService.login(user, captcha).subscribe({
-      next: data => {
-        console.log(data);
-        this.router.navigate(['/']);
+
+    this.userService.findUserIdByEmail(user.mail).subscribe({
+      next: (wholeUser: User) => {
+        if (wholeUser) {
+          user.isBlocked = wholeUser.isBlocked;
+          this.submitted = true;
+          const captcha = this.captchaResponse || '';
+          this.authService.login(user, captcha).subscribe({
+            next: data => {
+              console.log(data);
+              this.router.navigate(['/']);
+            },
+            error: error => {
+              console.log(error);
+              this.submitted = false;
+              // Handle error messages or UI feedback
+            }
+          });
+        }
       },
-      error: error => {
-        console.log(error);
-        this.submitted = false;
-        // Handle error messages or UI feedback
+      error: (error) => {
+        console.error('Error finding user by email:', error);
+        this.loginError = 'Error finding user by email';
+        alert("Error occurred, try again.")
       }
     });
   }
 
   onPasswordlesLoginClick() {
     this.router.navigate(['passwordless-login']);
+  }
+
+  onResetPasswordClick() {
+    this.router.navigate(['reset-password-request']);
   }
 }

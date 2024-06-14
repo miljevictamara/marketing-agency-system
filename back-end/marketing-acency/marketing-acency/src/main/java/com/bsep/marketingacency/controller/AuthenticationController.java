@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 import java.util.UUID;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -467,4 +468,31 @@ public class AuthenticationController {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        userService.sendPasswordResetLink(email);
+        return ResponseEntity.ok("Password reset link sent");
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody Map<String, String> request) {
+        String token = request.get("token");
+        String newPassword = request.get("password");
+        userService.changePassword(token, newPassword);
+        return ResponseEntity.ok("Password changed successfully");
+    }
 }

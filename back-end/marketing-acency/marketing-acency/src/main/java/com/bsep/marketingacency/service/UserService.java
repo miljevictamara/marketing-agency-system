@@ -5,26 +5,38 @@ import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.ClientType;
 import com.bsep.marketingacency.model.Client;
+import com.bsep.marketingacency.model.ResetPasswordToken;
 import com.bsep.marketingacency.model.Role;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.ClientRepository;
+import com.bsep.marketingacency.repository.ResetPasswordTokenRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import com.bsep.marketingacency.util.HashUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ResetPasswordTokenRepository tokenRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -176,6 +188,76 @@ public class UserService {
     
     public List<User> findAllByRolesName(String roleName) {
         return userRepository.findAllByRolesName(roleName);
+    }
+
+
+    public User updateIsBlocked(Long id) {
+        User existingUser = userRepository.findById(id).orElse(null);
+
+        if (existingUser == null) {
+            logger.warn("User with ID {} not found.", HashUtil.hash(id.toString()));
+            return null;
+        }
+
+        existingUser.setIsBlocked(true);
+        User updatedUser = userRepository.save(existingUser);
+
+        logger.info("User with ID {} successfully activated.", HashUtil.hash(id.toString()));
+
+        return updatedUser;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public void sendPasswordResetLink(String email) {
+        User user = userRepository.findByMail(email);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        String token = UUID.randomUUID().toString();
+        ResetPasswordToken resetToken = new ResetPasswordToken();
+        resetToken.setToken(token);
+        resetToken.setUserId(user.getId());
+        resetToken.setExpiryDate(LocalDateTime.now().plusHours(24)); // 24-hour expiry
+        tokenRepository.save(resetToken);
+
+        String resetLink = "http://localhost:4200/reset-password?token=" + token;
+        sendEmail(user.getMail(), resetLink);
+    }
+
+    private void sendEmail(String email, String resetLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Password Reset Request");
+        message.setText("To reset your password, click the link below:\n" + resetLink);
+        mailSender.send(message);
+    }
+
+    public void changePassword(String token, String newPassword) {
+        ResetPasswordToken resetToken = tokenRepository.findByToken(token);
+        if (resetToken == null || resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Invalid or expired token");
+        }
+
+        User user = userRepository.findById(resetToken.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Hash the new password before saving
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+
+        tokenRepository.delete(resetToken);
     }
 
 

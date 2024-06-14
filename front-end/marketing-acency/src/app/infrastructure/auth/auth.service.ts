@@ -54,7 +54,7 @@ export class AuthService {
   login(user: User, captchaResponse: string) {
 
     if (user.isBlocked) {
-        console.log('Korisnik je blokiran ili neaktivan. Nije moguće izvršiti logovanje.');
+        alert('You are not allowed to log in!')
         return throwError('Korisnik je blokiran. Nije moguće izvršiti logovanje.');
       }
 
@@ -325,5 +325,19 @@ verify(verifyCode: VerifyCode): Observable<any> {
 
   checkCommonPermissions(roleName: string, loggedInRole: string): Observable<boolean>{
     return this.http.get<boolean>(`https://localhost:8443/permissions/check/${roleName}/${loggedInRole}`);
+  }
+
+
+
+
+
+
+
+  sendResetPasswordLink(email: string): Observable<any> {
+    return this.http.post(`https://localhost:8443/auth/reset-password`, { email });
+  }
+
+  changePassword(token: string, password: string): Observable<any> {
+    return this.http.post(`https://localhost:8443/auth/change-password`, { token, password });
   }
 }

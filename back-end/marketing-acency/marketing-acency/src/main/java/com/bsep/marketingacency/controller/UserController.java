@@ -179,4 +179,14 @@ public class UserController {
     }
 
 
+    @PutMapping(value = "/blocking/{id}")
+    public ResponseEntity<String> updateIsBlocked(@PathVariable Long id) {
+        try {
+            userService.updateIsBlocked(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while activating user with ID: {}", HashUtil.hash(id.toString()));
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

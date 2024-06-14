@@ -15,6 +15,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { QrcodeComponent } from './qrcode/qrcode.component';
 import { TwoFAVerificationComponent } from './two-fa-verification/two-fa-verification.component';
+import { ResetPasswordRequestComponent } from './reset-password-request/reset-password-request.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { TwoFAVerificationComponent } from './two-fa-verification/two-fa-verific
     ForbiddenPasswordlessLoginComponent,
     SuccessfulPasswordlessLoginComponent,
     QrcodeComponent,
-    TwoFAVerificationComponent
+    TwoFAVerificationComponent,
+    ResetPasswordRequestComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
