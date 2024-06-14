@@ -129,9 +129,8 @@ public class EmailService {
 
     @Async
     public void sendRegistrationRejectionAsync(Client client, String reason) throws MailException, InterruptedException {
-        logger.info("Async method is being executed in a different thread. Thread id: {}", Thread.currentThread().getId());
         Thread.sleep(10000);
-        logger.info("Preparing to send email for client with ID {}", HashUtil.hash(String.valueOf(client.getId())));
+        logger.info("Preparing to send email to {}", client.getUser().getMail());
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
@@ -151,7 +150,7 @@ public class EmailService {
             javaMailSender.send(mail);
             logger.info("Rejection email sent successfully to client {}", HashUtil.hash(client.getUser().getMail()));
         } catch (MailException e) {
-            logger.error("Error sending rejection email to client {}: {}", HashUtil.hash(client.getUser().getMail()), e.getMessage());
+            logger.error("Error sending rejection email to client {}.", HashUtil.hash(client.getUser().getMail()));
             throw e;
         }
     }
@@ -258,7 +257,7 @@ public class EmailService {
         //logger.info("Async metoda se izvrsava u drugom Threadu u odnosu na prihvaceni zahtev. Thread id: {}", Thread.currentThread().getId());
 
         Thread.sleep(10000);
-        logger.info("Preparing to send passwordless login email...");
+        logger.info("Preparing to send passwordless login email.");
 
         try {
             User user = userService.findByMail(mail);
@@ -277,7 +276,7 @@ public class EmailService {
             loginTokenService.save(loginToken);
 
             String hashedToken = HashUtil.hash(String.valueOf(loginToken.getId()));
-            logger.info("Generated passwordless login token for user with email {}. Token: {}", mail, hashedToken);
+            logger.info("Generated passwordless login token for client {}. Token: {}", mail, hashedToken);
 
             String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
             //String hmac = generateHmac(loginLink, hmacSecret);

@@ -169,7 +169,7 @@ public class AdministratorController {
             logger.info("Administrator {} successfully created.", savedAdministrator.getUser().getMail());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error while creating administrator {}: {}", administratorDto.getUser().getMail(), e.getMessage());
+            logger.error("Error while creating administrator {}", administratorDto.getUser().getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

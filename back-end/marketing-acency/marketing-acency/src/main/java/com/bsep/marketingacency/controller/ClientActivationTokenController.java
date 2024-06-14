@@ -48,7 +48,7 @@ public class ClientActivationTokenController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
-            logger.error("Error finding user with token ID {}: {}", tokenId, e.getMessage());
+            logger.error("Error finding user with token {}.", tokenId);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

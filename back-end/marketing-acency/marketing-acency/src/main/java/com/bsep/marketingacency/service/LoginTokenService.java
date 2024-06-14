@@ -29,18 +29,16 @@ public class LoginTokenService {
     }
 
     public User findUser(UUID tokenId){
-        logger.info("Attempting to find user associated with passwordless login token ID {}.", HashUtil.hash(String.valueOf(tokenId)));
         LoginToken token = loginTokenRepository.findById(tokenId).orElse(null);
         if (token == null) {
             logger.warn("No passwordless login token found for token ID {}.", HashUtil.hash(String.valueOf(tokenId)));
             return null;
         }
         if (isExpired(token)) {
-            logger.warn("Passwordless login token with ID {} has expired.", HashUtil.hash(String.valueOf(tokenId)));
+            logger.warn("Passwordless login token {} has expired.", HashUtil.hash(String.valueOf(tokenId)));
             return null;
         }
         User user = token.getUser();
-        //logger.info("Successfully found user associated with token ID {}.", HashUtil.hash(String.valueOf(tokenId)));
         return user;
     }
 
@@ -68,10 +66,9 @@ public class LoginTokenService {
         if (!token.getIsUsed()) {
             token.setIsUsed(true);
             save(token);
-            //logger.info("Login token with  ID {} never been used.", HashUtil.hash(tokenId.toString()));
             return false;
         } else {
-            logger.info("Passwordless login token with ID {} has already been used.", HashUtil.hash(tokenId.toString()));
+            logger.info("Passwordless login token {} has already been used.", HashUtil.hash(tokenId.toString()));
         }
         return true;
     }

@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://localhost:4200")
 @RequestMapping("/advertisement")
 public class AdvertisementController {
-    private Logger logger =  LoggerFactory.getLogger(AdministratorController.class);
+    private Logger logger =  LoggerFactory.getLogger(AdvertisementController.class);
 
     @Autowired
     private AdvertisementService advertisementService;
@@ -41,7 +41,7 @@ public class AdvertisementController {
         try {
             return advertisementService.getPendingAdvertisements();
         } catch (Exception e) {
-            logger.error("Error retrieving pending advertisements: {}", e.getMessage());
+            logger.error("Error retrieving pending advertisements.");
             throw e;
         }
     }
@@ -60,7 +60,7 @@ public class AdvertisementController {
         try {
             return advertisementService.getAcceptedAdvertisements();
         } catch (Exception e) {
-            logger.error("Error retrieving accepted advertisements: {}", e.getMessage());
+            logger.error("Error retrieving accepted advertisements.");
             throw e;
         }
     }
@@ -101,7 +101,7 @@ public class AdvertisementController {
     @PreAuthorize("hasAuthority('UPDATE_ADVERTISMENT')")
     public ResponseEntity<AdvertisementDto> updateAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
         try {
-            // Convert EmployeeDto to Employee object
+
             Long id = advertisementDto.getClientId();
             Client client = clientService.findById(id);
 
@@ -118,7 +118,6 @@ public class AdvertisementController {
                     advertisementDto.getStatus()
             );
 
-            // Call the service method to update the advertisement
             Advertisement updated = advertisementService.updateAdvertisement(advertisementDto);
 
             if (updated != null) {
@@ -129,7 +128,7 @@ public class AdvertisementController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error updating advertisement {} : {}", HashUtil.hash(advertisementDto.getId().toString()), e.getMessage());
+            logger.error("Error updating advertisement {}.", HashUtil.hash(advertisementDto.getId().toString()));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -148,7 +147,7 @@ public class AdvertisementController {
         try {
             return advertisementService.getAdvertisementsByClientUserId(clientUserId);
         } catch (Exception e) {
-            logger.error("Error fetching advertisements for client user ID {}: {}", HashUtil.hash(clientUserId.toString()), e.getMessage());
+            logger.error("Error fetching advertisements for client with user ID {}.", HashUtil.hash(clientUserId.toString()));
             throw e;
         }
     }
@@ -172,7 +171,7 @@ public class AdvertisementController {
             logger.info("Advertisement created successfully with ID: {}", HashUtil.hash(savedAdvertisement.getId().toString()));
             return new ResponseEntity<>("Advertisement created.", HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error creating advertisement {}: {}", HashUtil.hash(advertisementDto.getId().toString()),e.getMessage());
+            logger.error("Error creating advertisement {}.", HashUtil.hash(advertisementDto.getId().toString()));
             return new ResponseEntity<>("Error creating advertisement.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -191,7 +190,7 @@ public class AdvertisementController {
             Long id =  advertisementService.getClientIdByAdvertismentId(requestId);
             return new ResponseEntity<>(id,HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error fetching client ID for advertisement ID {}: {}", HashUtil.hash(requestId.toString()), e.getMessage());
+            logger.error("Error fetching client ID for advertisement {}.", HashUtil.hash(requestId.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

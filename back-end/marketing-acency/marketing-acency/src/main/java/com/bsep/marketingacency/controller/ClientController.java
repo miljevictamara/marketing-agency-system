@@ -60,8 +60,6 @@ public class ClientController {
     private TOTPManager totpManager;
 
 
-    @Autowired
-    private KeyStoreAccessRepository keyStoreAccessRepository;
 //    @PostMapping(value = "/save-user")
 //    public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
 //
@@ -105,7 +103,7 @@ public class ClientController {
             String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$";
             String password = userDto.getPassword();
             if (!Pattern.matches(passwordRegex, password)) {
-                logger.warn("Password does not meet complexity requirements for user with email {}.", userDto.getMail());
+                logger.warn("Password does not meet complexity requirements for client {}.", userDto.getMail());
                 return ResponseEntity.badRequest().body("Password must be at least 8 characters long and contain at least one digit, one lowercase letter, one uppercase letter, one special character, and no whitespace.");
             }
 
@@ -117,20 +115,19 @@ public class ClientController {
             }
 
             if (!userDto.getPassword().equals(userDto.getConfirmationPassword())) {
-                logger.warn("Password and confirmation password do not match for user with email {}.", userDto.getMail());
+                logger.warn("Password and confirmation password do not match for client {}.", userDto.getMail());
                 return new ResponseEntity<>("Password and confirmation password do not match", HttpStatus.CONFLICT);
             }
 
             if (userDto.getMfa()) {
                 userDto.setSecret(totpManager.generateSecret());
-                logger.info("Secret generated for user with email {}.", userDto.getMail());
+                logger.info("Secret generated for client {}.", userDto.getMail());
             }
 
             User savedUser = userService.save(userDto);
-            logger.info("User with email {} successfully saved.", userDto.getMail());
             return new ResponseEntity<>("User saved.", HttpStatus.CREATED);
         } catch (Exception ex) {
-            logger.error("An error occurred while saving user with email {}.", userDto.getMail(), ex);
+            logger.error("An error occurred while saving user {}.", userDto.getMail());
             return new ResponseEntity<>("An error occurred while saving the user. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -161,7 +158,7 @@ public class ClientController {
             logger.info("Client with email {} successfully sent registration request.", clientDto.getUser());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error registering client with email {}: {}", clientDto.getUser(), e.getMessage());
+            logger.error("Error registering client {}.", clientDto.getUser());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -182,10 +179,9 @@ public class ClientController {
     public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
         try {
             User savedUser = userService.saveEmployeeUser(userDto);
-            logger.info("Employee user with email {} successfully saved.", userDto.getMail());
             return new ResponseEntity<>("User saved.", HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error saving employee user with email {}: {}", userDto.getMail(), e.getMessage());
+            logger.error("Error saving employee {}.", userDto.getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -204,10 +200,10 @@ public class ClientController {
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         try {
             User savedUser = userService.saveAdminUser(userDto);
-            logger.info("Admin user with email {} successfully saved.", userDto.getMail());
+            //logger.info("Admin user with email {} successfully saved.", userDto.getMail());
             return new ResponseEntity<>("User saved.", HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error saving admin user with email {}: {}", userDto.getMail(), e.getMessage());
+            logger.error("Error saving admin user with email {}.", userDto.getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -236,15 +232,15 @@ public class ClientController {
 
             try {
                 emailService.sendRegistrationApprovalAsync(client, token);
-                logger.info("Registration approval email sent successfully for client with ID {}", HashUtil.hash(String.valueOf(id)));
+                logger.info("Registration approval email sent successfully to {}.", client.getUser().getMail());
             } catch (Exception e) {
-                logger.error("Error sending registration approval email for client with ID {}: {}", HashUtil.hash(String.valueOf(id)), e.getMessage());
+                logger.error("Error sending registration approval to {}.", client.getUser().getMail());
                 throw e;
             }
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error approving registration request for client with ID {}: {}", HashUtil.hash(String.valueOf(id)), e.getMessage());
+            logger.error("Error approving registration request to client {}.", HashUtil.hash(id.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -282,7 +278,7 @@ public class ClientController {
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error rejecting registration request for client with ID {}: {}", HashUtil.hash(String.valueOf(id)), e.getMessage());
+            logger.error("Error rejecting registration request for client {}.", HashUtil.hash(String.valueOf(id)));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -301,7 +297,7 @@ public class ClientController {
         try {
             return clientService.getAllClients();
         } catch (Exception e) {
-            logger.error("Error retriving all clients: {}", e.getMessage());
+            logger.error("Error retrieving all clients.");
             throw e;
         }
     }
@@ -339,7 +335,7 @@ public class ClientController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error fetching client by user ID {}: {}", userId, e.getMessage());
+            logger.error("Error fetching client by user ID {}.", HashUtil.hash(userId.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

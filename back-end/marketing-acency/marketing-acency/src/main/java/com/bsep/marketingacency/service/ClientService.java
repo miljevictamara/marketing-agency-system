@@ -153,7 +153,7 @@ public class ClientService {
         token.setIsUsed(false);
         clientActivationTokenService.save(token);
 
-        logger.info("Activation token generated for client with ID {}. Token ID: {}", HashUtil.hash(id.toString()), HashUtil.hash(String.valueOf(token.getId())));
+        logger.info("Activation token generated for client {}. Token: {}", client.getUser().getMail(), HashUtil.hash(String.valueOf(token.getId())));
 
         return token;
     }
@@ -211,7 +211,7 @@ public class ClientService {
 //    }
 
     public Boolean checkIfClientCanLoginWithoutPassword(String mail) {
-        logger.info("Checking if client with email {} can log in without password.", mail);
+        logger.info("Checking if client {} can log in without password.", mail);
 
         try {
             User user = userService.findByMail(mail);
@@ -222,12 +222,17 @@ public class ClientService {
             Client client = clientRepository.findByUserId(user.getId());
             if (client == null) {
                 String hashedUserId = HashUtil.hashUserId(String.valueOf(user.getId()));
-                logger.warn("Client with user ID {} does not exist.", hashedUserId);
+                logger.warn("Client {} does not exist.", client.getUser().getMail());
                 return false;
             }
 
             if (!user.getIsActivated()) {
-                logger.warn("User with email {} is not activated.", mail);
+                logger.warn("Client {} is not activated.", mail);
+                return false;
+            }
+
+            if (user.getIsBlocked()) {
+                logger.warn("Client {} is blocked.", mail);
                 return false;
             }
 
@@ -236,18 +241,18 @@ public class ClientService {
                 String packageName = clientPackage.getName();
 
                 if ("GOLD".equals(packageName) || "STANDARD".equals(packageName)) {
-                    logger.info("Client with email {} can log in without password.", mail);
+                    logger.info("Client {} can log in without password.", mail);
                     return true;
                 }
             } else {
-                logger.warn("Client with email {} does not have a package assigned.", mail);
+                logger.warn("Client {} does not have a package assigned.", mail);
             }
 
-            logger.info("Client with email {} cannot log in without password.", mail);
+            logger.info("Client {} cannot log in without password.", mail);
             return false;
 
         } catch (Exception ex) {
-            logger.error("Error while checking if client with email {} can log in without password.", mail, ex);
+            logger.error("Error while checking if client {} can log in without password.", mail, ex);
             return false;
         }
     }

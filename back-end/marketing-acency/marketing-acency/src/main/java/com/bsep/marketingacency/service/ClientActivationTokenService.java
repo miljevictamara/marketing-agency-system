@@ -84,7 +84,7 @@ public class ClientActivationTokenService {
         try {
             ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElse(null);
             if (token == null) {
-                logger.error("Client activation token with ID {} not found.", HashUtil.hash(tokenId.toString()));
+                logger.error("Client activation token {} not found.", HashUtil.hash(tokenId.toString()));
                 return null;
             }
 
@@ -96,7 +96,7 @@ public class ClientActivationTokenService {
 
             return true;
         } catch (Exception e) {
-            logger.error("Error checking if token with ID {} is used: {}", HashUtil.hash(tokenId.toString()), e.getMessage());
+            logger.error("Error checking if token {} is used.", HashUtil.hash(tokenId.toString()));
             return null;
         }
     }

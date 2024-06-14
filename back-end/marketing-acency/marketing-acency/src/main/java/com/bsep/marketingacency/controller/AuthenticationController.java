@@ -142,11 +142,11 @@ public class AuthenticationController {
             }
 
             if (user.getIsBlocked()) {
-                logger.warn("User with email {} is blocked.", user.getMail());
+                logger.warn("User {} is blocked.", user.getMail());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is blocked.");
             }
             if (!user.getIsActivated()) {
-                logger.warn("User with email {} is not activated.", user.getMail());
+                logger.warn("User {} is not activated.", user.getMail());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is not activated.");
             }
 
@@ -155,8 +155,8 @@ public class AuthenticationController {
                 try {
                     verifyRecaptcha(gRecaptchaResponse);
                 } catch (Exception ex) {
-                    logger.error("Error verifying ReCaptcha for user with email {}.", authenticationRequest.getMail(), ex);
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha");
+                    logger.error("Error verifying ReCaptcha for user {}.", authenticationRequest.getMail(), ex);
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha.");
                 }
             }
 
@@ -169,7 +169,7 @@ public class AuthenticationController {
                 User authenticatedUser = (User) authentication.getPrincipal();
 
                 if (authenticatedUser.isMfa()) {
-                    logger.info("User with email {} is using two-factor authentication.", authenticatedUser.getMail());
+                    logger.info("User {} is using two-factor authentication.", authenticatedUser.getMail());
                     return ResponseEntity.ok().body("");
                 }
 
@@ -180,15 +180,15 @@ public class AuthenticationController {
                 int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
                 UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
-                logger.info("User with email {} successfully logged in.", authenticatedUser.getMail());
+                logger.info("User {} successfully logged in.", authenticatedUser.getMail());
                 return ResponseEntity.ok(tokenState);
             } catch (BadCredentialsException ex) {
-                logger.warn("Invalid credentials for user with email {}.", authenticationRequest.getMail());
+                logger.warn("Invalid credentials for user {}.", authenticationRequest.getMail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
 
         } catch (AuthenticationException ex) {
-            logger.error("Authentication failed for user with email {}.", authenticationRequest.getMail(), ex);
+            logger.error("Authentication failed for user {}.", authenticationRequest.getMail(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
         }
     }
@@ -206,9 +206,6 @@ public class AuthenticationController {
         RecaptchaResponse response = restTemplate.postForObject(recaptchaServerUrl,request, RecaptchaResponse.class);
 
         logger.info("Verifying recaptcha, Success: {}", response.isSuccess());
-//        System.out.println("Success: " + response.isSuccess());
-//        System.out.println("Hostname: " + response.getHostname());
-//        System.out.println("Challenge Timestamp: " + response.getChallenge_ts());
 
         if(response.getErrorCodes() != null){
             for(String error : response.getErrorCodes()){
@@ -234,14 +231,14 @@ public class AuthenticationController {
                 int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
                 UserTokenState tokenState = new UserTokenState(jwt, expiresIn, refreshJwt, refreshExpiresIn);
-                logger.info("User with email {} successfully passed 2fA and logged in.", verifyTOTP.getMail());
+                logger.info("User {} successfully passed 2fA and logged in.", verifyTOTP.getMail());
                 return ResponseEntity.ok(tokenState);
             } else {
-                logger.warn("Invalid 2fA code for user with email {}.", verifyTOTP.getMail());
+                logger.warn("Invalid 2fA code for user {}.", verifyTOTP.getMail());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid verification code.");
             }
         } catch (Exception ex) {
-            logger.error("Error during 2FA verification for user with email {}.", verifyTOTP.getMail(), ex);
+            logger.error("Error during 2FA verification for user {}.", verifyTOTP.getMail(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during 2FA verification.");
         }
     }
@@ -283,7 +280,7 @@ public class AuthenticationController {
     public ResponseEntity<UserTokenState> createAuthenticationTokenWithoutPassword(
             @RequestBody String mail) {
 
-        logger.info("Attempting to generate jwt tokens without password for user with mail {}", mail );
+        logger.info("Attempting to generate jwt tokens without password for client {}.", mail );
         User user = userService.findByMail(mail);
 
         if (user != null) {
@@ -294,14 +291,14 @@ public class AuthenticationController {
                 String refresh_jwt = tokenUtils.generateRefreshToken(user);
                 int refreshExpiresIn = tokenUtils.getRefreshExpiredIn();
 
-                logger.info("User with email {} successfully logged in without password.", mail);
+                logger.info("Client {} successfully logged in without password.", mail);
 
                 return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, refresh_jwt, refreshExpiresIn));
             } else {
                 if (user.getIsBlocked()) {
-                    logger.warn("Passwordless login failed, user with email {} is blocked.", mail);
+                    logger.warn("Passwordless login failed, client {} is blocked.", mail);
                 } else {
-                    logger.warn("Passwordless login failed, user with email {} is not activated..", mail);
+                    logger.warn("Passwordless login failed, client {} is not activated..", mail);
                 }
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -317,7 +314,6 @@ public class AuthenticationController {
         try {
             User user = loginTokenService.findUser(tokenId);
             if (user != null) {
-                logger.info("User with email {} attempting passwordless login.", user.getMail());
                 Boolean isTokenUsed = loginTokenService.checkIfUsed(tokenId);
                 if (!isTokenUsed) {
                     return ResponseEntity.ok(user);
@@ -370,14 +366,14 @@ public class AuthenticationController {
             int expiresIn = tokenUtils.getExpiredIn();
             NewAccessToken newAccessToken = new NewAccessToken(jwt, expiresIn);
             if (!user.getIsBlocked()) {
-                logger.info("Token refreshed successfully for user with email {}.", mail);
+                logger.info("Token refreshed successfully for user {}.", mail);
                 return new ResponseEntity<>(newAccessToken, HttpStatus.OK);
             } else {
-                logger.warn("Token refresh failed, user with email {} is blocked.", mail);
+                logger.warn("Token refresh failed, user {} is blocked.", mail);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } else {
-            logger.warn("Token refresh failed, user with email {} not found.", mail);
+            logger.warn("Token refresh failed, user {} not found.", mail);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -402,7 +398,7 @@ public class AuthenticationController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
-            logger.error("Error occurred while finding user by ID: {}.", id, e);
+            logger.error("Error occurred while finding user by ID: {}.", id);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -432,7 +428,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok(filteredClients);
         } catch (Exception e) {
-            logger.error("Error occurred while retrieving all individual clients.", e);
+            logger.error("Error occurred while retrieving all individual clients.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -462,7 +458,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok(filteredClients);
         } catch (Exception ex) {
-            logger.error("An error occurred while fetching legal entity clients.", ex);
+            logger.error("An error occurred while fetching legal entity clients.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

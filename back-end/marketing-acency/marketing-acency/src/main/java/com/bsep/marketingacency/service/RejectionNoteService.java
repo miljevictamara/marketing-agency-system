@@ -62,7 +62,7 @@ public class RejectionNoteService {
                 if (currentTime.after(new Date(rejection.getRejectionDate().getTime() + TimeUnit.MINUTES.toMillis(60)))) {
                     return true;
                 } else {
-                    logger.info("The user {} has been rejected and can not register yet.", email);
+                    logger.info("The client {} has been rejected and can not register yet.", email);
                     return false;
                 }
             }
