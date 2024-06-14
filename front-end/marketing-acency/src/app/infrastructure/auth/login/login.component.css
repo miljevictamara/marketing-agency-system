@@ -21,7 +21,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px; 
     text-align: center;
-    height: 400px;
+    height:450px;
   }
   
   .login-form input {
@@ -113,6 +113,26 @@
     margin-right: 10px; 
     width: 30px;
     height: 30px; 
+}
+
+.reset {
+  background-color: #0e1111; 
+  border: 1px solid rgb(128,0,32);
+  border-radius: 20px; 
+  color: rgb(128,0,32); 
+  padding: 10px 20px; 
+  cursor: pointer;
+  padding: 15px 30px; 
+  margin-right: 10px;
+  margin-top: 10px;
+  width: 60%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.reset:hover {
+  background-color: white; 
+  color: rgb(35, 35, 53);
+  border: 2px solid rgb(35, 35, 53);
 }
 
   

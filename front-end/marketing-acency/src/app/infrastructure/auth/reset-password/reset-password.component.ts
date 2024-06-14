@@ -6,7 +6,7 @@ import { AuthService } from '../auth.service';
   selector: 'app-reset-password',
   template: `
     <form (ngSubmit)="onSubmit()">
-      <label for="password">New Password:</label>
+      <label for="password">New Password</label>
       <input type="password" id="password" [(ngModel)]="password" name="password" required>
       <button type="submit">Change Password</button>
     </form>
