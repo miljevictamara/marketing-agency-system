@@ -25,14 +25,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -40,18 +42,18 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "https://localhost:4200")
 public class AuthenticationController {
-    @Value("6LcDAe8pAAAAALU_7vCCHftQh0wgcjYOOPKLifoI")
-    private String recaptchaSecret;
+   // @Value("6LcDAe8pAAAAALU_7vCCHftQh0wgcjYOOPKLifoI")
+  //  private String recaptchaSecret;
 
-    @Value("https://www.google.com/recaptcha/api/siteverify")
-    private String recaptchaServerUrl;
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
+  //  @Value("https://www.google.com/recaptcha/api/siteverify")
+  //  private String recaptchaServerUrl;
+//    @Bean
+ //   public RestTemplate restTemplate(RestTemplateBuilder builder) {
+ //       return builder.build();
+  //  }
 
-    @Autowired
-    private RestTemplate restTemplate;
+//    @Autowired
+  //  private RestTemplate restTemplate;
     @Autowired
     private TokenUtils tokenUtils;
 
@@ -168,7 +170,7 @@ public class AuthenticationController {
             if (user.getRole().getName().equals("ROLE_EMPLOYEE")) {
                 String gRecaptchaResponse = authenticationRequest.getCaptchaResponse();
                 try {
-                    verifyRecaptcha(gRecaptchaResponse);
+                    recaptchaService.verifyRecaptcha(gRecaptchaResponse);
                 } catch (Exception ex) {
                     logger.error("Error verifying ReCaptcha for user {}.", authenticationRequest.getMail(), ex);
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error verifying ReCaptcha.");
@@ -208,7 +210,7 @@ public class AuthenticationController {
         }
     }
 
-
+/*
     private void verifyRecaptcha(String gRecaptchaResposnse){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -229,7 +231,7 @@ public class AuthenticationController {
         }
 
 
-    }
+    }*/
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyCode(@RequestBody VerifyTOTP verifyTOTP) {

@@ -5,6 +5,7 @@ import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.ClientActivationToken;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.ClientActivationTokenRepository;
+import com.bsep.marketingacency.repository.UserRepository;
 import com.bsep.marketingacency.util.HashUtil;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -20,16 +21,22 @@ import java.util.UUID;
 public class ClientActivationTokenService {
     @Autowired
     private ClientActivationTokenRepository clientActivationTokenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Autowired
     private UserService userService;
-    @Autowired
-    private  ClientService clientService;
+
     private Logger logger =  LoggerFactory.getLogger(ClientActivationTokenService.class);
 
     public ClientActivationToken save(ClientActivationToken token){
         return clientActivationTokenRepository.save(token);
     }
-
+    public ClientActivationToken findById(UUID tokenId) {
+        return clientActivationTokenRepository.findById(tokenId).orElse(null);
+    }
+/*
     public User findUser(UUID tokenId){
         ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElseGet(null);
         Client client = clientService.findById(token.getUser().getId());
@@ -41,7 +48,7 @@ public class ClientActivationTokenService {
         User user = token.getUser();
         return user;
     }
-
+*/
 //    public User findUser(UUID tokenId){
 //        try {
 //            ClientActivationToken token = clientActivationTokenRepository.findById(tokenId).orElse(null);
@@ -114,10 +121,11 @@ public class ClientActivationTokenService {
 
     public void delete(Long userId) {
         try {
-            clientActivationTokenRepository.deleteAllByUserId(userId);
+            //clientActivationTokenRepository.deleteByUserId(userId);
+            clientActivationTokenRepository.deleteByUser(userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId)));
            // logger.info("Deleted all client activation tokens for user with userId {}", userId);
         } catch (Exception e) {
-            logger.error("Error while deleting activation tokens for user {}.", userId);
+            logger.error("Error while deleting activation tokens for user {}.", HashUtil.hash(userId.toString()));
         }
     }
 }

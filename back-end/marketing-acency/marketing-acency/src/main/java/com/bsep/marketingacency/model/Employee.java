@@ -4,16 +4,17 @@ import com.bsep.marketingacency.service.AESConverter;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.persistence.*;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
-import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
 public class Employee {
-    @javax.persistence.Id
+    @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 

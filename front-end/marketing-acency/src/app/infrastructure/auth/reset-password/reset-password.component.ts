@@ -4,13 +4,9 @@ import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-reset-password',
-  template: `
-    <form (ngSubmit)="onSubmit()">
-      <label for="password">New Password</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-      <button type="submit">Change Password</button>
-    </form>
-  `
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.css']
+
 })
 export class ResetPasswordComponent implements OnInit {
   password: string | undefined;

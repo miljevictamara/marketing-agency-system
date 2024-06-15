@@ -44,7 +44,6 @@ public class LogWatcherService {
                 }
             }
 
-            // Ažuriraj posljednji indeks na osnovu broja pročitanih linija
             lastReadIndex = lines.size();
             if (!warningLines.isEmpty()) {
                 String emailMessage = String.join("\n", warningLines);
