@@ -1,0 +1,17 @@
+<H2>Requests for Advertisements</H2>
+<table>
+    <tr>
+        <th>Deadline</th>
+        <th>Active from:</th>
+        <th>Active to:</th>
+        <th>Request description:</th>
+        <th>Accept</th>
+    </tr>
+    <tr *ngFor="let request of requests">
+        <td>{{ request.deadline | date:'dd.MM.yyyy.' }}</td>
+        <td>{{ request.active_from | date:'dd.MM.yyyy.' }}</td>
+        <td>{{ request.active_to | date:'dd.MM.yyyy.' }}</td>
+        <td>{{ request.request_description }}</td>
+        <td><button *ngIf="updateAdvertisment" (click)="onAcceptClicked(request)">Accept</button></td>
+    </tr>
+</table>

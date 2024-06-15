@@ -1,0 +1,232 @@
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 130vh;
+    background-color: #f4f4f4; 
+    padding: 20px; 
+    width: auto;
+    margin-top: -160px;
+  }
+  .heightC{
+    min-height: 100vh;
+}
+
+.registration-div {
+    border: 2px solid rgb(35, 35, 53); /* Dodato: okvir */
+    width: 380px;
+    background-color: #0e1111;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px; 
+    text-align: center;
+    height: 450px;
+    margin: 0 auto;
+    margin-top: 60px;
+  }
+  
+.registration-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px; /* Povećano: razmak između polja */
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  
+.registration {
+    background-color: rgb(128,0,32); 
+    border: none;
+    border-radius: 20px; 
+    color: white; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    padding: 15px 30px; 
+    margin-right: 10px;
+    width: 60%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+.registration:hover {
+    background-color: white; 
+    color: rgb(35, 35, 53);
+    border: 2px solid rgb(35, 35, 53);
+  }
+  
+.invalid-field {
+    border: 2px solid #ff0000; 
+  }
+  
+.registration-title {
+    text-align: center;
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #2f8cc3; 
+    margin-bottom: 20px; 
+  }
+  
+.registration-image {
+    width: 100px;
+    height: 100px; 
+  }
+  
+.registrationTitle {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    font-size: 1.1vw;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+.inputDiv {
+    margin-bottom: 50px;
+}
+
+.imageTitle {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+  
+.s {
+    display: flex; /* Postavljamo kontejner da koristi fleksibilni prikaz */
+}
+
+.individualButton {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(128,0,32);
+    flex: 1; 
+    margin-right: 20px; 
+    height: 200px;
+    width: 250px;
+    border-radius: 20px; 
+    border-width: 0px;
+    color:white;
+    font-size: 0.85vw;
+}
+
+.legalEntityButton {
+  background-color: rgb(128,0,32);
+  flex: 1; 
+  height: 200px;
+  width: 250px;
+  border-radius: 20px; 
+  border-width: 0px;
+  color:white;
+  font-size: 0.85vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.individualButton img,
+.legalEntityButton img {
+    max-width: 200px; 
+    max-height: 170px; 
+}
+
+.individualButton:hover {
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.legalEntityButton:hover {
+  border: 2px solid white;
+}
+  
+.subtitle {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  font-size: 1.2vw;
+  font-weight: 400;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.user-form {
+  width: 100%;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 100px;
+}
+
+.user-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 15px; 
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.thirdStepButton {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(128,0,32);
+  flex: 1; 
+  height: 40px;
+  width: 100px;
+  border-radius: 20px; 
+  border-width: 0px;
+  color:white;
+  font-size: 0.85vw;
+}
+
+.thirdStepButton:hover {
+  background-color: white; 
+  color: rgb(35, 35, 53);
+  border: 2px solid rgb(35, 35, 53);
+}
+
+.individual-form {
+  width: 100%;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.individual-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px; 
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.packageButton {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0e1111;
+  flex: 1; 
+  margin-right: 20px; 
+  height: 135px;
+  width: 120px;
+  border-radius: 20px; 
+  border-width: 0px;
+  color:white;
+  font-size: 0.85vw;
+}
+
+.packageButton:hover {
+  border: 2px solid white;
+}
+
+.packageButton img {
+    max-width: 100px; 
+    max-height: 100px; 
+}
+
+.packages {
+  display: flex;
+  margin-left: 5px;
+  margin-bottom: 40px;
+}
+
+.lastStep {
+  margin-top: 90px;
+}
+
+h2 {
+  color: white;
+}

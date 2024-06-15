@@ -1,0 +1,40 @@
+.services {
+    background-color: rgb(23, 0, 6); 
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.title {
+    font-size: 2.2vw;
+    margin-left: 40vw;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.s {
+    display: flex; 
+    flex-wrap: wrap; 
+    margin-left: 32vw;
+}
+
+.col {
+    display: flex; /* Dodato */
+    flex-direction: column;
+    align-items: center;
+    text-align: center; 
+    margin-left: 17px;
+    margin-right: 17px;
+}
+
+.service {
+    font-size: 1.1vw;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.img {
+    height: 100px;
+    width: 100px;
+    margin-top: 10px;
+}

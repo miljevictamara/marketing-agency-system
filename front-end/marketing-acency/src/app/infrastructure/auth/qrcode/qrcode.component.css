@@ -1,0 +1,17 @@
+.container-big {
+    margin: 40px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    font-weight: 1.5vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(128,0,32)
+  }
+ 
+
+  

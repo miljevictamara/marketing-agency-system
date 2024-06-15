@@ -1,0 +1,60 @@
+/* src/app/components/log-messages/log-messages.component.css */
+.log-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    height: 100vh;
+
+    
+  }
+  .title{
+    align-items: center;
+  }
+
+  .log-card {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 800px;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  mat-card-title{
+    text-align: center; 
+    justify-content: center;
+  }
+
+  h2{
+ margin-left: 230px;
+ color: white;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ font-weight: 320;
+ font-size: 1.5vw;
+  }
+  
+  mat-card-header {
+    background-color: black;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  mat-list-item {
+    padding: 10px 0;
+    word-wrap: break-word; /* Ensure long words break to avoid overflow */
+    white-space: pre-wrap; /* Preserve whitespace and ensure line breaks */
+    min-height: 10vh;
+  }
+  
+  mat-divider {
+    margin: 10px 0; /* Space above and below the divider */
+  }
+  
+  .message-container {
+    padding: 10px 0;
+  }
+  
+  p {
+    margin: 5px 0;
+    padding: 2px 0;
+  }
+  

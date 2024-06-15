@@ -1,0 +1,22 @@
+<div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
+    <form #individualForm="ngForm" [formGroup]="advertisementForm" class="individual-form">  
+        <h2>Request for an advertisement:</h2>
+        <div class="inputDiv">
+
+            <input type="text" formControlName="slogan" matInput placeholder="Slogan" required>
+            <input type="number" formControlName="duration" matInput placeholder="Duration" required>
+            <input type="text" formControlName="description" matInput placeholder="Description" required><br/>
+            <label>Deadline</label><br/>
+            <input type="date" formControlName="deadline" matInput required><br/>
+            <label>Active from</label><br/>
+            <input type="date" formControlName="activeFrom" matInput required><br/>
+            <label>Active to</label><br/>
+            <input type="date" formControlName="activeTo" matInput required>
+            <input type="text" formControlName="requestDescription" matInput placeholder="Request description" required>
+        </div>        
+    </form>
+
+    <button class="thirdStepButton" (click)="addAdvertisement()">
+        Send a request
+    </button>
+</div>

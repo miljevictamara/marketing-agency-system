@@ -1,0 +1,14 @@
+<div class="verify-container">   
+    <form #verifyForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!submitted" [formGroup]="form" class="verify-form"> 
+        <div class="imageTitle">
+            <img src="assets/2fa.png" alt="2fa Image" class="2fa-image">
+        </div>    
+
+        <div class="inputDiv">
+            <input  formControlName="code" matInput placeholder="Enter code" required>
+        </div>
+        
+        <button  color="primary" type="submit" class="verify" >Verify</button>
+
+    </form>
+</div>

@@ -1,0 +1,25 @@
+<H2>Employees</H2>
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Phone number</th>
+        <th>Blocked?</th>
+        <th>Block</th>
+    </tr>
+    <tr *ngFor="let employee of employees">
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.address }}</td>
+        <td>{{ employee.city }}</td>
+        <td>{{ employee.country }}</td>
+        <td>{{ employee.phoneNumber }}</td>
+        <td>{{ employee.user.isBlocked }}</td>
+        <td *ngIf="employee.user.id !== undefined">
+            <button *ngIf="employee.user.isBlocked == false" (click)="blockEmployee(employee.user.id)">Block</button>
+        </td>
+    </tr>
+</table>

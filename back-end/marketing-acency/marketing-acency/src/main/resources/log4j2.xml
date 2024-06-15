@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} | %p | [%-20c{1}] | %m%n"/>
+
+        </Console>
+        <RollingFile name="MyFile" fileName="./app.log" append="true" filePattern="./archived/app.log.%i.zip">
+            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} | %p | [%-20c{1}] | %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="90 KB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFile"/>
+        </Root>
+
+        <Logger name="com.bsep.marketingacency.controller" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFile"/>
+        </Logger>
+
+        <Logger name="com.bsep.marketingacency.service" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFile"/>
+        </Logger>
+
+        <Logger name="com.bsep.marketingacency.repository" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFile"/>
+        </Logger>
+
+    </Loggers>
+</Configuration>

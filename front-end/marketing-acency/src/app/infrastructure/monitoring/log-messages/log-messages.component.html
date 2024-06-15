@@ -1,0 +1,25 @@
+<!-- src/app/components/log-messages/log-messages.component.html -->
+<div *ngIf="user && user.mail !== '' && hasAdminRole()" class="log-container">
+    <mat-card class="log-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h2 class="title">Monitor warnings and errors</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <ng-container *ngFor="let message of messages; let i = index">
+            <mat-list-item>
+              <div class="message-container">
+                <p><strong>Date:</strong> {{ getMessageDate(message) }}</p>
+                <p><strong>Type:</strong> {{ getMessageType(message) }}</p>
+                <p><strong>Content:</strong> {{ getMessageContent(message) }}</p>
+              </div>
+            </mat-list-item>
+            <mat-divider *ngIf="i < messages.length - 1"></mat-divider> <!-- Divider between items, not after the last item -->
+          </ng-container>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

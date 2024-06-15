@@ -1,0 +1,25 @@
+/* Style for the checkbox when it is not checked */
+.mat-checkbox:not(.mat-checkbox-checked) .mat-checkbox-frame {
+    border-color: red !important; /* Set the border color to red when unchecked */
+}
+
+/* Style for the checkbox frame */
+.mat-checkbox-checked .mat-checkbox-background {
+    background-color: red !important; /* Set the background color to red when checked */
+}
+
+.mat-checkbox-inner-container {
+    border-radius: 3px; /* Optional: to make the checkbox rounded */
+}
+
+/* Style for the checkbox label text */
+.mat-checkbox-label {
+    color: white !important; /* Set the label text color to white */
+}
+
+/* Override the default checked styles */
+.mat-checkbox-checked .mat-checkbox-frame,
+.mat-checkbox-checked .mat-checkbox-background {
+    border-color: white !important; /* Set the border color to white when checked */
+    background-color: white !important; /* Set the background color to white when checked */
+}

@@ -1,0 +1,121 @@
+<head>
+    <script src="https://unpkg.com/@edgeworkscreative/pwned-password@latest/dist/pwned-password.js"></script>
+</head>
+<div class="registration-container">
+    <!-- First step -->   
+    <div class="registration-div" *ngIf="!shouldRenderIndividual && !shouldRenderLegalEntity && !shouldRenderThirdStepIndividual && !shouldRenderLastStepIndividual && !shouldRenderThirdStepLegalEntity && !shouldRenderLastStepLegalEntity"> 
+        <div class="imageTitle">
+            <img src="assets/registration.png" alt="Registration Image" class="registration-image">
+            <p class="registrationTitle">Registration</p>
+        </div>
+        
+        <p class="subtitle">Are you?</p>
+
+        <div class="s">
+            <button class="individualButton">
+                <img src="assets/individual.png" alt="Individual" (click)="registerIndividual()">Individual
+            </button>
+            <button class="legalEntityButton">
+                <img src="assets/legalEntity.png" alt="Legal Entity" (click)="registerLegalEntity()">Legal Entity
+        </button>
+    </div>
+        
+        
+
+        <!--<div class="inputDiv">
+            <input formControlName="mail" matInput placeholder="mail" required>
+            <input formControlName="password" matInput placeholder="password" required type="password">
+        </div>-->
+        
+       <!-- <button [disabled]="!registrationForm.form.valid" color="primary"
+            type="submit" class="registration">Log in</button>-->
+
+       </div>
+
+       
+    <div *ngIf="shouldRenderIndividual || shouldRenderLegalEntity" class="registration-div">
+        <!--Second step as individual - create user -->
+        <h2 class="credentials">Client credentials</h2>
+        <form #userForm="ngForm" [formGroup]="formUser" class="user-form">  
+            <div class="inputDiv">
+                <input formControlName="mail" matInput placeholder="email" required>
+                <!--<input formControlName="password" matInput placeholder="password" required type="password">-->
+                <pwned-password id="pwnedPasswordInput" #pwnedPasswordInput class="pwned-password" name="password" placeholder="password"></pwned-password>
+                <!--<input formControlName="password" matInput placeholder="password" class="password-input" required type="password">-->
+                <input formControlName="confirmationPassword" matInput placeholder="confirm password" required type="password">
+            </div> 
+            <div >
+                <mat-checkbox color="primary" class="checkbox" formControlName="enableTwoFactorAuth">Enable two-factor authentication  </mat-checkbox>
+            </div>       
+        </form>
+
+        <button class="thirdStepButton" (click)="thirdStepIndividual()">
+            Next
+        </button>
+    </div>
+
+    <div *ngIf="shouldRenderThirdStepIndividual" class="registration-div">
+        <!-- Third step as individual-->
+        <h2 class="info">Client info</h2>
+        <form #individualForm="ngForm" [formGroup]="formIndividual" class="individual-form">  
+            <div class="inputDiv">
+                <input formControlName="firstname" matInput placeholder="firstname" required>
+                <input formControlName="lastname" matInput placeholder="lastname" required>
+                <input formControlName="address" matInput placeholder="address" required>
+                <input formControlName="city" matInput placeholder="city" required>
+                <input formControlName="country" matInput placeholder="country" required>
+                <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+            </div>        
+        </form>
+
+        <button class="thirdStepButton" (click)="lastStepIndividual()">
+            Next
+        </button>
+    </div>
+
+    <div *ngIf="shouldRenderThirdStepLegalEntity" class="registration-div">
+        <!-- Third step as legal entity-->
+        <h2 class="info">Client info</h2>
+        <form #individualForm="ngForm" [formGroup]="formLegalEntity" class="individual-form">  
+            <div class="inputDiv">
+                <input formControlName="companyName" matInput placeholder="company name" required>
+                <input formControlName="pib" matInput placeholder="pib" required>
+                <input formControlName="address" matInput placeholder="address" required>
+                <input formControlName="city" matInput placeholder="city" required>
+                <input formControlName="country" matInput placeholder="country" required>
+                <input formControlName="phoneNumber" matInput placeholder="phone number" required>
+            </div>        
+        </form>
+
+        <button class="thirdStepButton" (click)="lastStepLegalEntity()">
+            Next
+        </button>
+    </div>
+   
+
+    <div *ngIf="shouldRenderLastStepIndividual || shouldRenderLastStepLegalEntity" class="registration-div">
+        <div class="lastStep">
+            <p class="subtitle">Choose package</p>
+            <div class="packages">        
+                <button class="packageButton" [ngClass]="{ 'selected': selectedPackage === 'gold' }" (click)="addGoldPackage()">
+                    <img src="assets/gold.png" alt="Gold Package">Gold
+                </button>                
+                <button class="packageButton" [ngClass]="{ 'selected': selectedPackage === 'standard' }">
+                    <img src="assets/silver.png" alt="Standard Package" (click)="addStandardPackage()">Standard
+                </button>
+                <button class="packageButton" [ngClass]="{ 'selected': selectedPackage === 'basic' }">
+                    <img src="assets/bronze.png" alt="Basic Package" (click)="addBasicPackage()">Basic
+                </button>
+            </div>
+            <button class="thirdStepButton" *ngIf="shouldRenderLastStepIndividual" (click)="submitIndividual()">
+                Submit
+            </button>
+            <button class="thirdStepButton" *ngIf="shouldRenderLastStepLegalEntity" (click)="submitLegalEntity()">
+                Submit
+            </button>
+        </div>
+        
+
+        
+
+</div>

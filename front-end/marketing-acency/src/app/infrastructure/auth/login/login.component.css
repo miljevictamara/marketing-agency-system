@@ -1,0 +1,138 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 130vh;
+    background-color: #f4f4f4; 
+    padding: 20px; 
+    width: auto;
+    margin-top: -160px;
+  }
+  re-captcha.is-invalid > div {
+    border: 1px solid #dc3545 !important;
+    border-radius: 0.2rem;
+  }
+  .login-form {
+    border: 2px solid rgb(35, 35, 53); /* Dodato: okvir */
+    width: 300px;
+    background-color: #0e1111;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px; 
+    text-align: center;
+    height:450px;
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px; /* Povećano: razmak između polja */
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  
+  .login {
+    background-color: rgb(128,0,32); 
+    border: none;
+    border-radius: 20px; 
+    color: white; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    padding: 15px 30px; 
+    margin-right: 10px;
+    width: 60%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .login:hover {
+    background-color: white; 
+    color: rgb(35, 35, 53);
+    border: 2px solid rgb(35, 35, 53);
+  }
+  
+  .invalid-field {
+    border: 2px solid #ff0000; 
+  }
+  
+  .login-title {
+    text-align: center;
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #2f8cc3; 
+    margin-bottom: 20px; 
+  }
+  
+  .login-image {
+    width: 100px;
+    height: 100px; 
+  }
+  
+  .loginTitle {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    font-size: 1.1vw;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .inputDiv{
+    margin-bottom: 50px;
+  }
+
+  .imageTitle {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .passwordless-button {
+    display: flex; /* Koristimo fleksibilni layout */
+    align-items: center; /* Centriramo sadržaj vertikalno */
+    background-color: rgb(128,0,32); 
+    border: none;
+    border-radius: 20px; 
+    color: white; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    padding: 15px 30px; 
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 250px;
+    height: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.passwordless-button:hover {
+  background-color: white; 
+  color: rgb(35, 35, 53);
+  border: 2px solid rgb(35, 35, 53);
+}
+
+.passwordless-image {
+    margin-right: 10px; 
+    width: 30px;
+    height: 30px; 
+}
+
+.reset {
+  background-color: #0e1111; 
+  border: 1px solid rgb(128,0,32);
+  border-radius: 20px; 
+  color: rgb(128,0,32); 
+  padding: 10px 20px; 
+  cursor: pointer;
+  padding: 15px 30px; 
+  margin-right: 10px;
+  margin-top: 10px;
+  width: 60%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.reset:hover {
+  background-color: white; 
+  color: rgb(35, 35, 53);
+  border: 2px solid rgb(35, 35, 53);
+}
+
+  

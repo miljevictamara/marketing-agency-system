@@ -1,0 +1,135 @@
+.table {   
+    padding-bottom: 10px;
+    margin: 50px auto 50px;
+    width: 70%;
+}
+
+.table th, .table td { 
+    padding: 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none; 
+    width: calc(100% / 5); 
+}
+
+th{
+    background:  linear-gradient(rgb(35, 35, 53), rgb(35, 35, 53));
+    color: white;
+}
+
+.table th {
+    font-size: 18px;
+    font-weight: normal; 
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(35, 35, 53);
+}
+
+tbody tr.active-row {
+    font-weight: bold;
+    color: rgb(35, 35, 53);
+}
+
+.rejectButton {
+    background-color: rgb(128,0,32); 
+    border: none;
+    border-radius: 20px; 
+    color: white; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    padding: 15px 30px; 
+    margin-right: 10px;
+    width: 60%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .rejectButton:hover {
+    background-color: white; 
+    border: 2px solid rgb(128,0,32);
+    color: rgb(35, 35, 53);
+  }
+
+  .approveButton {
+    background-color: rgb(35, 35, 53); 
+    border: none;
+    border-radius: 20px; 
+    color: white; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    padding: 15px 30px; 
+    margin-right: 10px;
+    width: 60%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .approveButton:hover {
+    background-color: white; 
+    border: 2px solid rgb(35, 35, 53);
+    color: rgb(35, 35, 53);
+  }
+
+  .message-form-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 25vw;
+    height: 33%;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .table-legalEntity {   
+    padding-bottom: 10px;
+    width: 70%;
+    margin: 0px auto 260px;
+}
+
+.table-legalEntity th,
+.table-legalEntity td {
+    padding: 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none; /* Removed border for cells */
+    width: calc(100% / 5); /* Assuming you have 5 columns, adjust accordingly */
+}
+th{
+    background:  linear-gradient(rgb(35, 35, 53), rgb(35, 35, 53));
+    color: white;
+}
+
+.table-legalEntity th {
+    font-size: 18px;
+    font-weight: normal; 
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(35, 35, 53);
+}
+
+tbody tr.active-row {
+    font-weight: bold;
+    color: rgb(35, 35, 53);
+}
+
+
+    
+.title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2vw;
+    font-weight: 400;
+    text-decoration: none;
+    margin-top: 100px;
+    text-align: center; /* Additional centering for older browsers */
+  }
