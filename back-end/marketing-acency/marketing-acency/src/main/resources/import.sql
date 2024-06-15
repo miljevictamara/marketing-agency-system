@@ -76,7 +76,20 @@ INSERT INTO public."package"(id, name, price, visits_number) VALUES (1, 'GOLD', 
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (2, 'STANDARD', 100.00, 100);
 INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC', 50.00, 10);
 
-INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'djordjevic.ra37.2020@uns.ac.rs', '$2a$10$PXKK744BnNriXiJB/9Y3h.AtYpMcGDo6fWls/mw.JtwVHs0/jS4vy', false);
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'miljevictamara+admin@gmail.com', '$2a$10$PuZvybfHUwvac0yP5VO.z.i09kNhRl.XPU/f143P.D2LVO8XfrfOK', false);
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'miljevictamara+client@gmail.com', '$2a$10$PuZvybfHUwvac0yP5VO.z.i09kNhRl.XPU/f143P.D2LVO8XfrfOK', false);
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'miljevictamara+client1@gmail.com', '$2a$10$PuZvybfHUwvac0yP5VO.z.i09kNhRl.XPU/f143P.D2LVO8XfrfOK', false);
+INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'miljevictamara+employee@gmail.com', '$2a$10$PuZvybfHUwvac0yP5VO.z.i09kNhRl.XPU/f143P.D2LVO8XfrfOK', false);
+
 
 INSERT INTO public."user_role"(user_id, role_id) VALUES (1, 1);
-INSERT INTO public."administrator"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('EmI0VX/zjgRvhHaX8Ids8W2E/lw+gqNjntjlGmDdSq0kEacr99JTVpB4IqgZTGIG', 'Novi Sad', 'Srbija', 'Ana', 'Miljevic', 'mtAcjgCaLYaiW/flDAyyuz+B9C2Y70HyPGAL5+9rFTo=', 1);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (2, 3);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (3, 3);
+INSERT INTO public."user_role"(user_id, role_id) VALUES (4, 2);
+
+
+INSERT INTO public."administrator"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('PdqLOWR/Gzm8MgFrlJN2gubzO0YxdNsIx/8AZHnvdnXS3aIvBa1Kuzr7qR24QwZc', 'Novi Sad', 'Srbija', 'gZVlhxjFE6Fii0TuIq1CJ6ZLdBHR1QazUSES2t4KD5U=', 'iI3CMJvd/5JY0PNyMqkmZBjKPA4MD5PXtI8FE6faycg=', 'eRAlEn6DYtBKvIBQ3m47/qT0Z5aEiASgVQRMKIV7BsA=', 1);
+INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('a/W2Kim187e2Vn1jgVBugUs3o3Ew+6n+PmEaPdCFp1k=', 'Novi Sad', null, 'Srbija', '99zjYjd4LzOafDi2yJTE84i9aBfc89cKRvOV7tS+vYc=', 0, '59nn0rJeETuYRBS0gnzNQQWUMkMbXLfvlraVMxWOVvw=', '982X5ereqNZYnJIjJJBEsSBGHllXs85AGYistbc0aDQ=', null, 'INDIVIDUAL', 1, 2);
+INSERT INTO public."client"(address, city, company_name, country, first_name, is_approved, last_name, phone_number, pib, role, package_id, user_id) VALUES ('hkCTT9sq4ayHLssmI+S7ykn923BDik/lSLLo5HXG+wk=', 'Beograd', null, 'Srbija', 'aROehpjEtyaTAFXDUjmR7cV8IavUezR6s84a5jBAZVs=', 0, 'wfXO4tiaIbcKBOqKiwIy1ITtDlNU+gPsqQRAczK6/6M=', 'dOor9tYJTP6ILRlHGHNn/PY7ARZsWGPunbyd6VCaC24=', null, 'INDIVIDUAL', 1, 3);
+
+INSERT INTO public."employee"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('/TbdrkPcp5461gu5BtpkfWisnKtk/ZVkUL8nIE+/o4w=', 'Novi Sad', 'Srbija', 'azrPiEvoPoUiQphz2Stv9h6Qdv6+3sZzD1fQ/RV4mFg=', 'vEfhmcskOViuiycaGbgThRBrzJXx13CKIAey/kBSQz4=', 'xP9mQlIphVAQi6ku1ruAs9KLYDG13Qz0s0C7y8bW5dM=', 4);

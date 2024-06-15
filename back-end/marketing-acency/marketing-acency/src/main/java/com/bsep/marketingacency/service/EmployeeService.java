@@ -64,8 +64,8 @@ public class EmployeeService {
                     "marketing-agency".toCharArray()
             );
 
-            employee.setPhoneNumber(employee.getFirstName(secretKey));
-            employee.setPhoneNumber(employee.getLastName(secretKey));
+            employee.setFirstName(employee.getFirstName(secretKey));
+            employee.setLastName(employee.getLastName(secretKey));
             employee.setPhoneNumber(employee.getPhoneNumber(secretKey));
             employee.setAddress(employee.getAddress(secretKey));
         }

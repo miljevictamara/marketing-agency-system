@@ -13,7 +13,7 @@ export class ClientService {
   constructor(private http: HttpClient) { }
 
   getClients(): Observable<Client[]> {
-    return this.http.get<Client[]>('https://localhost:8443/client/all/');
+    return this.http.get<Client[]>('https://localhost:8443/client/all');
   }
 
   getClientByUserId(userId: number): Observable<Client> {
