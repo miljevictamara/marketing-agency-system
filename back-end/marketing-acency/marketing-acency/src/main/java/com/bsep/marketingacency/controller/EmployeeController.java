@@ -7,6 +7,7 @@ import com.bsep.marketingacency.keystores.KeyStoreWriter;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.service.EmployeeService;
+import com.bsep.marketingacency.util.HashUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class EmployeeController {
 
             SecretKey secretKey = keyStoreReader.readSecretKey(employee.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
 
+            logger.info("Trying to retrieve employee {} information.", employee.getUser().getMail());
             if (employee != null) {
                 EmployeeDto employeeDto = new EmployeeDto(
                         employee.getId(),
@@ -76,13 +78,14 @@ public class EmployeeController {
                         employee.getPhoneNumber(secretKey),
                         employee.getUser()
                 );
+                logger.info("Employee {} information successfully retrieved.", employee.getUser().getMail());
                 return new ResponseEntity<>(employeeDto, HttpStatus.OK);
             } else {
-                logger.warn("Employee with user ID {} not found.", userId);
+                logger.warn("Employee {} not found.", employee.getUser().getMail());
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error fetching employee with user ID {}: {}", userId, e.getMessage());
+            logger.error("Error fetching employee with user ID {}.", HashUtil.hash(userId.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -120,6 +123,7 @@ public class EmployeeController {
             String alias = employeeDto.getUser().getMail();
             SecretKey secretKey = keyStoreReader.readSecretKey(employeeDto.getUser().getMail() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
 
+            logger.info("Trying to update employee {}.", employeeDto.getUser().getMail());
             Employee updatedEmployee = new Employee(
                     employeeDto.getId(),
                     employeeDto.getFirstName(),
@@ -141,7 +145,7 @@ public class EmployeeController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error updating employee {}: {}", employeeDto.getUser().getMail(), e.getMessage());
+            logger.error("Error updating employee {}.", employeeDto.getUser().getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -158,9 +162,10 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('GET_ALL_EMPLOYEES')")
     public List<Employee> getAllEmployees() throws IllegalBlockSizeException, BadPaddingException {
         try {
+            logger.info("Trying to retrieve all employees.");
             return employeeService.getAllEmployees();
         } catch (Exception e) {
-            logger.error("Error fetching all employees: {}", e.getMessage());
+            logger.error("Error fetching all employees.");
             throw e;
         }
     }
@@ -189,7 +194,7 @@ public class EmployeeController {
             Employee savedEmployee = employeeService.saveEmployee(employeeDto, secretKey);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Employee created.");
-            logger.info("Employee {} created.", savedEmployee.getUser().getMail());
+            logger.info("Employee {} successfully created.", savedEmployee.getUser().getMail());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("Error creating employee: {}", e.getMessage());

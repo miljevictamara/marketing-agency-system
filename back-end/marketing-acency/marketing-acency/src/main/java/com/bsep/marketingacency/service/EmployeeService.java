@@ -1,5 +1,6 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.controller.EmployeeController;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.keystores.KeyStoreReader;
@@ -7,6 +8,8 @@ import com.bsep.marketingacency.model.Advertisement;
 import com.bsep.marketingacency.model.AdvertisementStatus;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bsep.marketingacency.repository.EmployeeRepository;
@@ -23,6 +26,8 @@ public class EmployeeService {
 
     @Autowired
     private UserService userService;
+
+    private Logger logger =  LoggerFactory.getLogger(EmailService.class);
 
     public Employee getEmployeeByUserId(Long userId) {
         return employeeRepository.findByUserId(userId);
@@ -62,6 +67,12 @@ public class EmployeeService {
 
             employee.setPhoneNumber(employee.getPhoneNumber(secretKey));
             employee.setAddress(employee.getAddress(secretKey));
+        }
+
+        if(employees.isEmpty()){
+            logger.info("No employees found.");
+        }else {
+            logger.info("All employees successfully retrieved.");
         }
 
         return employees;

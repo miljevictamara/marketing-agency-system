@@ -1,5 +1,6 @@
 package com.bsep.marketingacency.service;
 
+import com.bsep.marketingacency.controller.AdvertisementController;
 import com.bsep.marketingacency.dto.AdvertisementDto;
 import com.bsep.marketingacency.dto.EmployeeDto;
 import com.bsep.marketingacency.model.Advertisement;
@@ -7,6 +8,10 @@ import com.bsep.marketingacency.model.AdvertisementStatus;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.Employee;
 import com.bsep.marketingacency.repository.AdvertisementRepository;
+import com.bsep.marketingacency.util.HashUtil;
+import lombok.extern.flogger.Flogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +23,32 @@ public class AdvertisementService {
     @Autowired
     private ClientService clientService;
 
+    private Logger logger =  LoggerFactory.getLogger(AdvertisementService.class);
+
     public AdvertisementService(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
 
     public List<Advertisement> getPendingAdvertisements() {
-        return advertisementRepository.findByStatus(AdvertisementStatus.PENDING);
+        List<Advertisement> advertisements = advertisementRepository.findByStatus(AdvertisementStatus.PENDING);
+        if (advertisements.isEmpty()) {
+            logger.info("No pending advertisements found.");
+        }else {
+            logger.info("Pending advertisements successfully retrieved.");
+        }
+        return advertisements;
+        //return advertisementRepository.findByStatus(AdvertisementStatus.PENDING);
     }
 
     public List<Advertisement> getAcceptedAdvertisements() {
-        return advertisementRepository.findByStatus(AdvertisementStatus.ACCEPTED);
+        List<Advertisement> advertisements = advertisementRepository.findByStatus(AdvertisementStatus.ACCEPTED);
+        if (advertisements.isEmpty()) {
+            logger.info("No accepted advertisements found.");
+        }else {
+            logger.info("Accepted advertisements successfully retrieved.");
+        }
+        return advertisements;
+        //return advertisementRepository.findByStatus(AdvertisementStatus.ACCEPTED);
     }
 
     public Advertisement updateAdvertisement(AdvertisementDto updatedAdvertisement) {
@@ -54,7 +75,13 @@ public class AdvertisementService {
     }
 
     public List<Advertisement> getAdvertisementsByClientUserId(Long clientUserId) {
-        return advertisementRepository.findByClientUserId(clientUserId);
+        List<Advertisement> advertisements = advertisementRepository.findByClientUserId(clientUserId);
+        if (advertisements.isEmpty()) {
+            logger.info("No advertisements found for client {}.", HashUtil.hash(clientUserId.toString()));
+        }else {
+            logger.info("Advertisements successfully retrieved for client {}.", HashUtil.hash(clientUserId.toString()));
+        }
+        return advertisements;
     }
 
     public Advertisement saveAdvertisement(AdvertisementDto advertisementDto) {

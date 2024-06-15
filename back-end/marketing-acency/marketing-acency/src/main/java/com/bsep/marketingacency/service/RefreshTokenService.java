@@ -63,13 +63,12 @@ public class RefreshTokenService {
     public int deleteByUserId(Long userId) {
         try {
             int deletedTokens = refreshTokenRepository.deleteByUser(userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId)));
-            //logger.info("Deleted refresh tokens for user with userId {}", HashUtil.hash(userId.toString()));
             return deletedTokens;
         } catch (IllegalArgumentException e) {
-            logger.warn("User not found with id: {}", HashUtil.hash(userId.toString()));
+            logger.warn("User {} not found.", HashUtil.hash(userId.toString()));
             throw e;
         } catch (Exception e) {
-            logger.error("Error while deleting refresh tokens for user with userId {}", HashUtil.hash(userId.toString()), e);
+            logger.error("Error while deleting refresh tokens for user {}.", HashUtil.hash(userId.toString()));
             throw new RuntimeException("Failed to delete refresh tokens", e);
         }
     }

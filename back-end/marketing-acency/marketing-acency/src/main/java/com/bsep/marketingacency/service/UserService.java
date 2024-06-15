@@ -54,7 +54,7 @@ public class UserService {
     public User findByMail(String email) {
         User user = userRepository.findByMail(email);
         if (user == null) {
-            logger.warn("User with email {} does not exist.", email);
+            logger.warn("User {} does not exist.", email);
         }
         return user;
     }
@@ -63,9 +63,9 @@ public class UserService {
     public User findUserById(Long id) {
         User user = userRepository.findUserById(id);
         if (user != null) {
-            logger.info("User found for ID: {}.", HashUtil.hash(id.toString()));
+            //logger.info("User found for ID: {}.", HashUtil.hash(id.toString()));
         } else {
-            logger.warn("User not found for ID: {}.", HashUtil.hash(id.toString()));
+            logger.warn("User not found by ID: {}.", HashUtil.hash(id.toString()));
         }
         return user;
     }
@@ -176,12 +176,12 @@ public class UserService {
     public void deleteUser(Long userId) {
         try {
             userRepository.deleteById(userId);
-            logger.info("Deleted user with userId {}", HashUtil.hash(userId.toString()));
+            //logger.info("Deleted user {}.", HashUtil.hash(userId.toString()));
         } catch (EmptyResultDataAccessException e) {
-            logger.warn("User not found with id: {}", HashUtil.hash(userId.toString()));
+            logger.warn("User {} not found.", HashUtil.hash(userId.toString()));
             throw e;
         } catch (Exception e) {
-            logger.error("Error while deleting user with userId {}", HashUtil.hash(userId.toString()), e);
+            logger.error("Error while deleting user {}.", HashUtil.hash(userId.toString()));
             throw new RuntimeException("Failed to delete user", e);
         }
     }
@@ -195,14 +195,14 @@ public class UserService {
         User existingUser = userRepository.findById(id).orElse(null);
 
         if (existingUser == null) {
-            logger.warn("User with ID {} not found.", HashUtil.hash(id.toString()));
+            logger.warn("User {} not found.", HashUtil.hash(id.toString()));
             return null;
         }
 
         existingUser.setIsBlocked(true);
         User updatedUser = userRepository.save(existingUser);
 
-        logger.info("User with ID {} successfully activated.", HashUtil.hash(id.toString()));
+        logger.info("User {} successfully blocked.", HashUtil.hash(id.toString()));
 
         return updatedUser;
     }
@@ -218,47 +218,123 @@ public class UserService {
 
 
 
+//    public void sendPasswordResetLink(String email) {
+//        User user = userRepository.findByMail(email);
+//        if (user == null) {
+//            throw new RuntimeException("User not found");
+//        }
+//
+//        String token = UUID.randomUUID().toString();
+//        ResetPasswordToken resetToken = new ResetPasswordToken();
+//        resetToken.setToken(token);
+//        resetToken.setUserId(user.getId());
+//        resetToken.setExpiryDate(LocalDateTime.now().plusHours(24)); // 24-hour expiry
+//        tokenRepository.save(resetToken);
+//
+//        String resetLink = "http://localhost:4200/reset-password?token=" + token;
+//        sendEmail(user.getMail(), resetLink);
+//    }
+
     public void sendPasswordResetLink(String email) {
-        User user = userRepository.findByMail(email);
-        if (user == null) {
-            throw new RuntimeException("User not found");
+        try {
+            User user = userRepository.findByMail(email);
+            if (user == null) {
+                logger.warn("User {},who request a password reset, not found.", email);
+                throw new RuntimeException("User {} not found");
+            }
+
+
+            String token = UUID.randomUUID().toString();
+            ResetPasswordToken resetToken = new ResetPasswordToken();
+            resetToken.setToken(token);
+            resetToken.setUserId(user.getId());
+            resetToken.setExpiryDate(LocalDateTime.now().plusHours(24)); // 24-hour expiry
+            tokenRepository.save(resetToken);
+
+            logger.info("Reset token {} generated for {}.", HashUtil.hash(token), email);
+
+            String resetLink = "http://localhost:4200/reset-password?token=" + token;
+            sendEmail(user.getMail(), resetLink);
+
+
+        } catch (Exception ex) {
+            logger.error("Error while generating reset token for {}.", email);
+            throw new RuntimeException("Error while sending password reset link", ex);
         }
-
-        String token = UUID.randomUUID().toString();
-        ResetPasswordToken resetToken = new ResetPasswordToken();
-        resetToken.setToken(token);
-        resetToken.setUserId(user.getId());
-        resetToken.setExpiryDate(LocalDateTime.now().plusHours(24)); // 24-hour expiry
-        tokenRepository.save(resetToken);
-
-        String resetLink = "http://localhost:4200/reset-password?token=" + token;
-        sendEmail(user.getMail(), resetLink);
     }
+
+
+//    private void sendEmail(String email, String resetLink) {
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(email);
+//        message.setSubject("Password Reset Request");
+//        message.setText("To reset your password, click the link below:\n" + resetLink);
+//        mailSender.send(message);
+//    }
 
     private void sendEmail(String email, String resetLink) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Password Reset Request");
-        message.setText("To reset your password, click the link below:\n" + resetLink);
-        mailSender.send(message);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setSubject("Password Reset Request");
+            message.setText("To reset your password, click the link below:\n" + resetLink);
+            mailSender.send(message);
+
+            logger.info("Password reset email sent to {}.", email);
+        } catch (Exception ex) {
+            logger.error("Error while sending password reset email to {}.", email);
+            throw new RuntimeException("Error while sending email", ex);
+        }
     }
+
+
+//    public void changePassword(String token, String newPassword) {
+//        ResetPasswordToken resetToken = tokenRepository.findByToken(token);
+//        if (resetToken == null || resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+//            throw new RuntimeException("Invalid or expired token");
+//        }
+//
+//        User user = userRepository.findById(resetToken.getUserId())
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Hash the new password before saving
+//        String encodedPassword = passwordEncoder.encode(newPassword);
+//        user.setPassword(encodedPassword);
+//        userRepository.save(user);
+//
+//        tokenRepository.delete(resetToken);
+//    }
 
     public void changePassword(String token, String newPassword) {
-        ResetPasswordToken resetToken = tokenRepository.findByToken(token);
-        if (resetToken == null || resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Invalid or expired token");
+        try {
+            logger.info("Trying to check reset token {} validity.", HashUtil.hash(token));
+            ResetPasswordToken resetToken = tokenRepository.findByToken(token);
+            if (resetToken == null || resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+                logger.warn("Reset token {} is not valid.", HashUtil.hash(token));
+                throw new RuntimeException("Invalid or expired token");
+            }
+
+            logger.info("Reset token {} is valid.", HashUtil.hash(token));
+
+            User user = userRepository.findById(resetToken.getUserId())
+                    .orElseThrow(() -> {
+                        logger.error("User {} not found for resetting password.", HashUtil.hash(resetToken.getUserId().toString()));
+                        return new RuntimeException("User not found");
+                    });
+
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+
+            tokenRepository.delete(resetToken);
+
+            logger.info("Password changed successfully for user {}.", HashUtil.hash(resetToken.getUserId().toString()));
+        } catch (Exception ex) {
+            logger.error("Error while changing password for token {}.", HashUtil.hash(token));
+            throw new RuntimeException("Error while changing password", ex);
         }
-
-        User user = userRepository.findById(resetToken.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Hash the new password before saving
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedPassword);
-        userRepository.save(user);
-
-        tokenRepository.delete(resetToken);
     }
+
 
 
 }

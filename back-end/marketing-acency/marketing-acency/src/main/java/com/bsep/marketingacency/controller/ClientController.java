@@ -95,9 +95,10 @@ public class ClientController {
 
     @PostMapping(value = "/save-user")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
+        logger.info("{} trying to make client registration request.", userDto.getMail());
         try {
             if (!rejectionNoteService.isUserRejectionExpired(userDto.getMail())) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User has already been rejected. Please try again later.");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client has already been rejected. Please try again later.");
             }
 
             String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+.=])(?=\\S+$).{8,}$";
@@ -121,6 +122,7 @@ public class ClientController {
 
             if (userDto.getMfa()) {
                 userDto.setSecret(totpManager.generateSecret());
+                logger.info("Client {} enabled 2fa.", userDto.getMail());
                 logger.info("Secret generated for client {}.", userDto.getMail());
             }
 
@@ -155,7 +157,7 @@ public class ClientController {
             boolean isMfaEnabled = savedClient.getUser().isMfa();
             String secretImageUri = isMfaEnabled ? totpManager.getUriForImage(savedClient.getUser().getSecret()) : null;
             ClientRegistrationResponse response = new ClientRegistrationResponse(isMfaEnabled, secretImageUri);
-            logger.info("Client with email {} successfully sent registration request.", clientDto.getUser());
+            logger.info("{} successfully make client registration request.", clientDto.getUser());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error("Error registering client {}.", clientDto.getUser());
@@ -178,6 +180,7 @@ public class ClientController {
     @PreAuthorize("hasAuthority('SAVE_EMPLOYEE_USER')")
     public ResponseEntity<String> saveEmployeeUser(@RequestBody UserDto userDto) {
         try {
+            logger.info("Trying to register employee user {}.", userDto.getMail());
             User savedUser = userService.saveEmployeeUser(userDto);
             return new ResponseEntity<>("User saved.", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -199,6 +202,7 @@ public class ClientController {
     @PreAuthorize("hasAuthority('SAVE_ADMIN_USER')")
     public ResponseEntity<String> saveAdminUser(@RequestBody UserDto userDto) {
         try {
+            logger.info("Trying to register admin user {}.", userDto.getMail());
             User savedUser = userService.saveAdminUser(userDto);
             //logger.info("Admin user with email {} successfully saved.", userDto.getMail());
             return new ResponseEntity<>("User saved.", HttpStatus.CREATED);
@@ -232,7 +236,7 @@ public class ClientController {
 
             try {
                 emailService.sendRegistrationApprovalAsync(client, token);
-                logger.info("Registration approval email sent successfully to {}.", client.getUser().getMail());
+                //logger.info("Registration approval email sent successfully to {}.", client.getUser().getMail());
             } catch (Exception e) {
                 logger.error("Error sending registration approval to {}.", client.getUser().getMail());
                 throw e;
@@ -295,6 +299,7 @@ public class ClientController {
     @PreAuthorize("hasAuthority('GET_ALL_CLIENTS')")
     public List<Client> getAllClients() throws IllegalBlockSizeException, BadPaddingException {
         try {
+            logger.info("Trying to retrieve all clients.");
             return clientService.getAllClients();
         } catch (Exception e) {
             logger.error("Error retrieving all clients.");
@@ -307,10 +312,13 @@ public class ClientController {
     @PreAuthorize("hasAuthority('GET_CLIENT_BYUSERID')")
     public ResponseEntity<ClientDto> getClientByUserId(@PathVariable Long userId) throws IllegalBlockSizeException, BadPaddingException {
         try {
+
             KeyStoreReader keyStoreReader = new KeyStoreReader();
 
             Client client = clientService.getClientByUserId(userId);
             String alias = client.getUser().getMail();
+
+            logger.info("Trying to retrieve client {} information.", client.getUser().getMail());
 
             SecretKey secretKey = keyStoreReader.readSecretKey(client.getUser().getMail()+".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
 
@@ -330,6 +338,7 @@ public class ClientController {
                         client.getCountry(),
                         client.getIsApproved()
                 );
+                logger.info("Client {} information successfully retrieved.", client.getUser().getMail());
                 return new ResponseEntity<>(clientDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -361,6 +370,7 @@ public class ClientController {
         if (secretKey == null) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
 
         Client updatedClient = new Client(
                 clientDto.getId(),
@@ -396,6 +406,8 @@ public class ClientController {
 //
 //            String packageName = clientDto.getClientPackage();
 //            Package pack = packageService.findByName(packageName);
+
+                //logger.info("Trying to update client {}.", mail);
 //
 //            Client updatedClient = new Client(
 //                    clientDto.getId(),
