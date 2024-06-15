@@ -6,6 +6,10 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.*;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

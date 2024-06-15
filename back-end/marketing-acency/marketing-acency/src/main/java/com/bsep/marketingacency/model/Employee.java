@@ -6,6 +6,10 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
+
 @Getter
 @Setter
 @Entity
