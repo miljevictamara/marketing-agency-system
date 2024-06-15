@@ -38,6 +38,7 @@ public class AdvertisementController {
     @GetMapping("/pending")
     @PreAuthorize("hasAuthority('GET_PENDING_ADVERTISMENTS')")
     public List<Advertisement> getPendingAdvertisements() {
+        logger.info("Trying to retrieve pending advertisements.");
         try {
             return advertisementService.getPendingAdvertisements();
         } catch (Exception e) {
@@ -57,6 +58,7 @@ public class AdvertisementController {
     @GetMapping("/accepted")
     @PreAuthorize("hasAuthority('GET_ACCEPTED_ADVERTISMENTS')")
     public List<Advertisement> getAcceptedAdvertisements() {
+        logger.info("Trying to retrieve accepted advertisements.");
         try {
             return advertisementService.getAcceptedAdvertisements();
         } catch (Exception e) {
@@ -100,6 +102,7 @@ public class AdvertisementController {
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('UPDATE_ADVERTISMENT')")
     public ResponseEntity<AdvertisementDto> updateAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
+        logger.info("Trying to update advertisement {}.", HashUtil.hash(advertisementDto.getId().toString()));
         try {
 
             Long id = advertisementDto.getClientId();
@@ -144,6 +147,7 @@ public class AdvertisementController {
     @GetMapping("/byClientUserId/{clientUserId}")
     @PreAuthorize("hasAuthority('GET__ADVERTISMENTS_BY_CLIENT')")
     public List<Advertisement> getAdvertisementsByClientUserId(@PathVariable Long clientUserId) {
+        logger.info("Trying to retrieve advertisements for client {}.", HashUtil.hash(clientUserId.toString()));
         try {
             return advertisementService.getAdvertisementsByClientUserId(clientUserId);
         } catch (Exception e) {
@@ -166,13 +170,14 @@ public class AdvertisementController {
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('CREATE_ADVERTISMENT')")
     public ResponseEntity<String> createAdvertisement(@RequestBody AdvertisementDto advertisementDto) {
+        logger.info("Trying to create advertisement request.");
         try {
             Advertisement savedAdvertisement = advertisementService.saveAdvertisement(advertisementDto);
-            logger.info("Advertisement created successfully with ID: {}", HashUtil.hash(savedAdvertisement.getId().toString()));
+            logger.info("Advertisement request {} created successfully.", HashUtil.hash(savedAdvertisement.getId().toString()));
             return new ResponseEntity<>("Advertisement created.", HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error creating advertisement {}.", HashUtil.hash(advertisementDto.getId().toString()));
-            return new ResponseEntity<>("Error creating advertisement.", HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Error creating advertisement request {}.", HashUtil.hash(advertisementDto.getId().toString()));
+            return new ResponseEntity<>("Error creating advertisement request.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

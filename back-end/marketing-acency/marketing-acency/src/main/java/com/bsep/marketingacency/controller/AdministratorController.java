@@ -5,6 +5,7 @@ import com.bsep.marketingacency.keystores.KeyStoreReader;
 import com.bsep.marketingacency.keystores.KeyStoreWriter;
 import com.bsep.marketingacency.model.Administrator;
 import com.bsep.marketingacency.service.AdministratorService;
+import com.bsep.marketingacency.util.HashUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('GET_BYUSERID')")
     public ResponseEntity<AdministratorDto> getAdministratorByUserId(@PathVariable Long userId) {
         try {
+            logger.info("Trying to retrieve administrator information by userId {}.", HashUtil.hash(userId.toString()));
             KeyStoreReader keyStoreReader = new KeyStoreReader();
 
             Administrator administrator = administratorService.getAdministratorByUserId(userId);
@@ -70,13 +72,14 @@ public class AdministratorController {
                         administrator.getPhoneNumber(secretKey),
                         administrator.getUser()
                 );
+                logger.info("Administrator {} information successfully retrieved.", administratorDto.getUser().getMail());
                 return new ResponseEntity<>(administratorDto, HttpStatus.OK);
             } else {
-                logger.warn("Administrator with user ID {} not found.", userId);
+                logger.warn("Administrator with user ID {} not found.", HashUtil.hash(userId.toString()));
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error while fetching administrator by user ID {}: {}", userId, e.getMessage());
+            logger.error("Error while fetching administrator by user ID {}.", HashUtil.hash(userId.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -111,6 +114,7 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
     public ResponseEntity<AdministratorDto> updateAdministrator(@RequestBody AdministratorDto administratorDto) {
         try {
+            logger.info("Trying to update administrator {}.", administratorDto.getUser().getMail());
             KeyStoreReader keyStoreReader = new KeyStoreReader();
             String alias = administratorDto.getUser().getMail();
             SecretKey secretKey = keyStoreReader.readSecretKey(administratorDto.getUser().getMail() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
@@ -136,7 +140,7 @@ public class AdministratorController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error while updating administrator {}: {}", administratorDto.getUser().getMail(), e.getMessage());
+            logger.error("Error while updating administrator {}.", administratorDto.getUser().getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -157,6 +161,7 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     public ResponseEntity<Map<String, String>> createAdministrator(@RequestBody AdministratorDto administratorDto) {
         try {
+            logger.info("Trying to create administrator {}.", administratorDto.getUser().getMail());
             SecretKey secretKey = KeyStoreWriter.generateSecretKey("AES", 256);
             KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
             keyStoreWriter.loadKeyStore(null, "marketing-agency".toCharArray());
@@ -169,7 +174,7 @@ public class AdministratorController {
             logger.info("Administrator {} successfully created.", savedAdministrator.getUser().getMail());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error while creating administrator {}", administratorDto.getUser().getMail());
+            logger.error("Error while creating administrator {}.", administratorDto.getUser().getMail());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

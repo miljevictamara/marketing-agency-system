@@ -48,9 +48,9 @@ public class EmailService {
 
     @Async
     public void sendRegistrationApprovalAsync(Client client, ClientActivationToken token) throws MailException, InterruptedException {
-        logger.info("Async method is being executed in a different thread. Thread id: {}", Thread.currentThread().getId());
+        //logger.info("Async method is being executed in a different thread. Thread id: {}", Thread.currentThread().getId());
         Thread.sleep(10000);
-        logger.info("Preparing to send email for client with ID {}", HashUtil.hash(String.valueOf(client.getId())));
+        logger.info("Preparing to send activation email to {}", client.getUser().getMail());
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
@@ -72,7 +72,7 @@ public class EmailService {
         mail.setText(message);
 
         javaMailSender.send(mail);
-        logger.info("Activation email sent successfully to client {}", HashUtil.hash(client.getUser().getMail()));
+        logger.info("Activation email sent successfully to {}.",client.getUser().getMail());
     }
 
 
@@ -106,7 +106,7 @@ public class EmailService {
 
     @Async
     public void sendLogMessageToAdmins(String line) throws MailException {
-        System.out.println("Sending log message to admins...");
+        //System.out.println("Sending log message to admins...");
 
         List<User> adminUsers = userService.findAllByRolesName("ROLE_ADMIN");
 
@@ -130,7 +130,7 @@ public class EmailService {
     @Async
     public void sendRegistrationRejectionAsync(Client client, String reason) throws MailException, InterruptedException {
         Thread.sleep(10000);
-        logger.info("Preparing to send email to {}", client.getUser().getMail());
+        logger.info("Preparing to send rejection email to {}.", client.getUser().getMail());
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(client.getUser().getMail());
@@ -148,9 +148,9 @@ public class EmailService {
 
         try {
             javaMailSender.send(mail);
-            logger.info("Rejection email sent successfully to client {}", HashUtil.hash(client.getUser().getMail()));
+            logger.info("Rejection email sent successfully to client {}.", client.getUser().getMail());
         } catch (MailException e) {
-            logger.error("Error sending rejection email to client {}.", HashUtil.hash(client.getUser().getMail()));
+            logger.error("Error sending rejection email to client {}.", client.getUser().getMail());
             throw e;
         }
     }
@@ -201,7 +201,7 @@ public class EmailService {
             String recalculatedHmac = generateHmac(data, hmacSecret);
             return hmac.equals(recalculatedHmac);
         } catch (Exception e) {
-            logger.error("Error verifying HMAC: {}", e.getMessage());
+            logger.error("Error verifying HMAC: {}.", e.getMessage());
             return false;
         }
     }
@@ -276,7 +276,7 @@ public class EmailService {
             loginTokenService.save(loginToken);
 
             String hashedToken = HashUtil.hash(String.valueOf(loginToken.getId()));
-            logger.info("Generated passwordless login token for client {}. Token: {}", mail, hashedToken);
+            //logger.info("Generated passwordless login token for client {}. Token: {}", mail, hashedToken);
 
             String loginLink = "https://localhost:4200/passwordless-login-link/" + loginToken.getId();
             //String hmac = generateHmac(loginLink, hmacSecret);
@@ -290,13 +290,13 @@ public class EmailService {
             message.setText(text);
 
             javaMailSender.send(message);
-            logger.info("Email for passwordless login sent to {}.", client.getUser().getMail());
+            logger.info("Passwordless login email sent successfully to client {}.", client.getUser().getMail());
 
         } catch (MailException ex) {
-            logger.error("Failed to send passwordless login email to {} due to a MailException.", mail, ex);
+            logger.error("Failed to send passwordless login email to {} due to a MailException.", mail);
             throw ex;
         } catch (Exception ex) {
-            logger.error("An unexpected error occurred while sending passwordless login email to {}.", mail, ex);
+            logger.error("An unexpected error occurred while sending passwordless login email to {}.", mail);
             throw ex;
         }
     }

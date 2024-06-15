@@ -130,11 +130,26 @@ public class AuthenticationController {
 //    }
 //    }
 
+    private String getUserIpAddress(HttpServletRequest request) {
+        String xForwardedForHeader = request.getHeader("X-Forwarded-For");
+        if (xForwardedForHeader == null) {
+            String remoteAddr = request.getRemoteAddr();
+            logger.debug("RemoteAddr: {}", remoteAddr);
+            return remoteAddr;
+        }
+        String[] ips = xForwardedForHeader.split(",");
+        String userIpAddress = ips[0].trim();
+        return userIpAddress;
+    }
+
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest,
+            HttpServletRequest request,
             HttpServletResponse response
     ) {
+        String userIpAddress = getUserIpAddress(request);
+        logger.info("Someone is trying to login from IP address: {}.", userIpAddress);
         try {
             User user = userService.findByMail(authenticationRequest.getMail());
             if (user == null) {
@@ -183,7 +198,7 @@ public class AuthenticationController {
                 logger.info("User {} successfully logged in.", authenticatedUser.getMail());
                 return ResponseEntity.ok(tokenState);
             } catch (BadCredentialsException ex) {
-                logger.warn("Invalid credentials for user {}.", authenticationRequest.getMail());
+                logger.warn("Invalid credentials for {}.", authenticationRequest.getMail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
 
@@ -218,6 +233,7 @@ public class AuthenticationController {
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyCode(@RequestBody VerifyTOTP verifyTOTP) {
+        logger.info("Trying to verify 2fa code for {}.", verifyTOTP.getMail());
         try {
             Boolean isValid = userService.verify(verifyTOTP.getMail(), verifyTOTP.getCode());
 
@@ -234,11 +250,11 @@ public class AuthenticationController {
                 logger.info("User {} successfully passed 2fA and logged in.", verifyTOTP.getMail());
                 return ResponseEntity.ok(tokenState);
             } else {
-                logger.warn("Invalid 2fA code for user {}.", verifyTOTP.getMail());
+                logger.warn("Invalid 2fA code for {}.", verifyTOTP.getMail());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid verification code.");
             }
         } catch (Exception ex) {
-            logger.error("Error during 2FA verification for user {}.", verifyTOTP.getMail(), ex);
+            logger.error("Error during 2FA verification for {}.", verifyTOTP.getMail(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during 2FA verification.");
         }
     }
@@ -312,10 +328,12 @@ public class AuthenticationController {
     @GetMapping("/{tokenId}")
     public ResponseEntity<User> findUser(@PathVariable("tokenId") UUID tokenId) {
         try {
+            logger.info("Trying to check passwordless login token {} validity.", HashUtil.hash(tokenId.toString()));
             User user = loginTokenService.findUser(tokenId);
             if (user != null) {
                 Boolean isTokenUsed = loginTokenService.checkIfUsed(tokenId);
                 if (!isTokenUsed) {
+                    logger.info("Passwordless login token {} is valid.", HashUtil.hash(tokenId.toString()));
                     return ResponseEntity.ok(user);
                 } else {
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -361,6 +379,7 @@ public class AuthenticationController {
     @PostMapping("/refreshToken")
     public ResponseEntity<NewAccessToken> refreshToken(@RequestBody String mail) {
         User user = userService.findByMail(mail);
+        logger.info("Trying to refresh token for {}.", mail);
         if (user != null) {
             String jwt = tokenUtils.generateToken(user);
             int expiresIn = tokenUtils.getExpiredIn();
@@ -419,6 +438,7 @@ public class AuthenticationController {
     @GetMapping(value = "/allIndividuals")
     @PreAuthorize("hasAuthority('VIEW_ALL_INDIVIDUALS')")
     public ResponseEntity<List<Client>> getAllIndividuals() {
+        logger.info("Trying to retrieve registration requests form individual clients.");
         try {
             List<Client> individualClients = userService.getAllIndividuals();
 
@@ -426,9 +446,15 @@ public class AuthenticationController {
                     .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
                     .collect(Collectors.toList());
 
+            if(filteredClients.isEmpty()){
+                logger.info("No requests for registration from individual clients found.");
+            }else{
+                logger.info("Requests for registration form individual clients successfully found.");
+            }
+
             return ResponseEntity.ok(filteredClients);
         } catch (Exception e) {
-            logger.error("Error occurred while retrieving all individual clients.");
+            logger.error("Error occurred while retrieving registration requests form individual clients.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -449,6 +475,7 @@ public class AuthenticationController {
     @GetMapping(value = "/allLegalEntities")
     @PreAuthorize("hasAuthority('VIEW_ALL_LEGAL_ENTITIES')")
     public ResponseEntity<List<Client>> getAllLegalEntities() {
+        logger.info("Trying to retrieve registration requests from legal entity clients.");
         try {
             List<Client> legalEntityClients = userService.getAllLegalEntities();
 
@@ -456,25 +483,62 @@ public class AuthenticationController {
                     .filter(client -> client.getIsApproved() == RegistrationRequestStatus.PENDING)
                     .collect(Collectors.toList());
 
+            if(filteredClients.isEmpty()){
+                logger.info("No requests for registration from legal entity clients found.");
+            }else{
+                logger.info("Requests for registration form legal entity clients successfully found.");
+            }
+
             return ResponseEntity.ok(filteredClients);
+
         } catch (Exception ex) {
-            logger.error("An error occurred while fetching legal entity clients.");
+            logger.error("An error occurred while fetching legal entity client registration requests.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
+
+//    @PostMapping("/reset-password")
+//    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+//        String email = request.get("email");
+//        userService.sendPasswordResetLink(email);
+//        return ResponseEntity.ok("Password reset link sent");
+//    }
+
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        userService.sendPasswordResetLink(email);
-        return ResponseEntity.ok("Password reset link sent");
+        logger.info("User {} wants to reset password.", email);
+        try {
+            userService.sendPasswordResetLink(email);
+            return ResponseEntity.ok("Password reset link sent");
+        } catch (Exception ex) {
+            logger.error("Error while sending password reset link to {}.", email);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while sending password reset link");
+        }
     }
+
+
+//    @PostMapping("/change-password")
+//    public ResponseEntity<String> changePassword(@RequestBody Map<String, String> request) {
+//        String token = request.get("token");
+//        String newPassword = request.get("password");
+//        userService.changePassword(token, newPassword);
+//        return ResponseEntity.ok("Password changed successfully");
+//    }
 
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody Map<String, String> request) {
         String token = request.get("token");
         String newPassword = request.get("password");
-        userService.changePassword(token, newPassword);
-        return ResponseEntity.ok("Password changed successfully");
+        logger.info("Password resetting for reset token {}.", HashUtil.hash(token));
+        try {
+            userService.changePassword(token, newPassword);
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception ex) {
+            logger.error("Error while changing password for {}.", token);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while changing password");
+        }
     }
+
 }

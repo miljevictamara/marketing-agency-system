@@ -82,7 +82,7 @@ public class LoginTokenService {
             loginTokenRepository.deleteAllByUserId(userId);
             //logger.info("Deleted all login tokens for user with userId {}", userId);
         } catch (Exception e) {
-            logger.error("Error while deleting login tokens for user with userId {}", HashUtil.hash(userId.toString()), e);
+            logger.error("Error while deleting login tokens for user {}.", HashUtil.hash(userId.toString()));
         }
     }
 

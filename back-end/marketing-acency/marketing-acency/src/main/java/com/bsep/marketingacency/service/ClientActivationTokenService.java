@@ -117,7 +117,7 @@ public class ClientActivationTokenService {
             clientActivationTokenRepository.deleteAllByUserId(userId);
            // logger.info("Deleted all client activation tokens for user with userId {}", userId);
         } catch (Exception e) {
-            logger.error("Error while deleting client activation tokens for user with userId {}", userId, e);
+            logger.error("Error while deleting activation tokens for user {}.", userId);
         }
     }
 }

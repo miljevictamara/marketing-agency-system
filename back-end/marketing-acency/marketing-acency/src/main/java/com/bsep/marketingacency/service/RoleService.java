@@ -32,7 +32,7 @@ public class RoleService {
     public Role findByName(String name) {
         Role role = this.roleRepository.findByName(name);
         if (role == null) {
-            logger.warn("Role with name {} not found.", name);
+            logger.warn("Role {} not found.", name);
         }
         return role;
     }

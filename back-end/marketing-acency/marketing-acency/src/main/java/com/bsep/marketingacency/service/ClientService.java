@@ -147,9 +147,10 @@ public class ClientService {
 
     public ClientActivationToken approveRegistrationRequest(Long id) {
         Client client = clientRepository.getById(id);
+        logger.info("Trying to approve client {} registration request.", client.getUser().getMail());
         client.setIsApproved(RegistrationRequestStatus.APPROVED);
         this.clientRepository.save(client);
-        logger.info("Client with ID {} has been approved.", HashUtil.hash(id.toString()));
+        logger.info("Client {} registration request has been approved.", client.getUser().getMail());
 
         ClientActivationToken token = new ClientActivationToken();
         token.setDuration(10);
@@ -166,6 +167,7 @@ public class ClientService {
 
     public void rejectRegistrationRequest(Long id, String reason) {
         Client client = clientRepository.getById(id);
+        logger.info("Trying to reject client {} registration request.", client.getUser().getMail());
         client.setIsApproved(RegistrationRequestStatus.REJECTED);
         RejectionNote rejectionNote = new RejectionNote();
         rejectionNote.setEmail(client.getUser().getMail());
@@ -257,7 +259,7 @@ public class ClientService {
             return false;
 
         } catch (Exception ex) {
-            logger.error("Error while checking if client {} can log in without password.", mail, ex);
+            logger.error("Error while checking if client {} can log in without password.", mail);
             return false;
         }
     }
@@ -266,6 +268,12 @@ public class ClientService {
     public List<Client> getAllClients() throws IllegalBlockSizeException, BadPaddingException {
         List<Client> clients = clientRepository.findAll();
         KeyStoreReader keyStoreReader = new KeyStoreReader();
+
+        if(clients.isEmpty()){
+            logger.info("No clients found.");
+        }else {
+            logger.info("All clients successfully retrieved.");
+        }
 
         for (Client client : clients) {
             String alias = client.getUser().getMail();
@@ -343,7 +351,7 @@ public class ClientService {
         try {
             Client client = clientRepository.findByUserId(userId);
             if (client == null) {
-                logger.warn("Client with userId {} not found", HashUtil.hash(userId.toString()));
+                logger.warn("Client with userId {} not found.", HashUtil.hash(userId.toString()));
                 return;
             }
 
@@ -351,21 +359,21 @@ public class ClientService {
                 List<Advertisement> clientAdvertisements = advertisementRepository.findByClient(client);
                 if (clientAdvertisements != null && !clientAdvertisements.isEmpty()) {
                     advertisementRepository.deleteAll(clientAdvertisements);
-                    logger.info("Deleted {} advertisements for client with userId {}", clientAdvertisements.size(), HashUtil.hash(userId.toString()));
+                    //logger.info("Deleted {} advertisements for client with userId {}.", clientAdvertisements.size(), HashUtil.hash(userId.toString()));
                 }
             } catch (Exception e) {
-                logger.error("Error while deleting advertisements for client with userId {}", HashUtil.hash(userId.toString()), e);
+                logger.error("Error while deleting advertisements for client with userId {}.", HashUtil.hash(userId.toString()));
             }
 
             try {
                 clientRepository.delete(client);
-                logger.info("Deleted client with userId {}", HashUtil.hash(userId.toString()));
+                //logger.info("Deleted client with userId {}.", HashUtil.hash(userId.toString()));
             } catch (Exception e) {
-                logger.error("Error while deleting client with userId {}", HashUtil.hash(userId.toString()), e);
+                logger.error("Error while deleting client with userId {}.", HashUtil.hash(userId.toString()));
             }
 
         } catch (Exception e) {
-            logger.error("Error while retrieving client with userId {}", HashUtil.hash(userId.toString()), e);
+            logger.error("Error while retrieving client with userId {}.", HashUtil.hash(userId.toString()));
         }
     }
 }

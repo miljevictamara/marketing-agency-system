@@ -36,11 +36,11 @@ public class PackageController {
             if (packagee != null) {
                 return new ResponseEntity<>(packagee, HttpStatus.OK);
             } else {
-                logger.warn("Package with name {} not found.", name);
+                logger.warn("Package {} not found.", name);
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            logger.error("Error retrieving package by name {}: {}", name, e.getMessage());
+            logger.error("Error retrieving package by name {}.", name);
             throw e;
         }
     }

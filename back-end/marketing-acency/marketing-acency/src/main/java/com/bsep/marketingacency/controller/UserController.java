@@ -58,7 +58,7 @@ public class UserController {
             userService.updateIsActivated(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error("Error while activating user with ID: {}", HashUtil.hash(id.toString()));
+            logger.error("Error while activating user with ID: {}.", HashUtil.hash(id.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -71,10 +71,9 @@ public class UserController {
             if(user == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            //logger.info("User with email {} found.", mail);
             return ResponseEntity.ok(user);
         } catch (Exception ex) {
-            logger.error("Error while finding user by email: {}", mail);
+            logger.error("Error while finding user by email: {}.", mail);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -98,7 +97,7 @@ public class UserController {
             }
             return ResponseEntity.ok(true);
         } catch (Exception ex) {
-            logger.error("Error while checking if user has appropriate package for email: {}", mail, ex);
+            logger.error("Error while checking if client {} has appropriate package.", mail);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -123,7 +122,7 @@ public class UserController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception ex) {
-            logger.error("Error while finding user by email: {}", mail, ex);
+            logger.error("Error while finding user by email: {}.", mail, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -148,13 +147,13 @@ public class UserController {
             if (user != null) {
                 Map<String, String> response = new HashMap<>();
                 response.put("role", user.getRole().getName());
-                logger.info("User with email {} has role: {}", mail, user.getRole().getName());
+                logger.info("User {} has role: {}.", mail, user.getRole().getName());
                 return ResponseEntity.ok(response);
             } else {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception ex) {
-            logger.error("Error while checking user role for email: {}", mail, ex);
+            logger.error("Error while checking user {} role.", mail);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -162,12 +161,13 @@ public class UserController {
     @DeleteMapping(value = "/{userId}/{password}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) throws IOException {
         User user = userService.findUserById(userId);
+        logger.info("{} trying wants to be deleted.", user.getMail());
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            logger.warn("Incorrect password for user {}", user.getMail());
+            logger.warn("Incorrect password for client {}.", user.getMail());
             return new ResponseEntity<>("Incorrect password!", HttpStatus.CONFLICT);
         }
 
@@ -177,6 +177,8 @@ public class UserController {
         refreshTokenService.deleteByUserId(userId);
         rejectionNoteService.delete(userId);
         userService.deleteUser(userId);
+
+        logger.info("Client {} and all associated entities successfully deleted from the system.", user.getMail());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -22,15 +22,15 @@ public class VPNController {
     @GetMapping("/call")
     public ResponseEntity<String> callVpnEndpoint() {
         String server = "http://10.13.13.1:3000/";
-
+        logger.info("Trying to test VPN.");
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(server, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                logger.info("Successful VPN call. Response: {}", response.getBody());
+                logger.info("Successful VPN call. Response: {}.", response.getBody());
                 return ResponseEntity.ok("{\"message\": \"" + response.getBody() + "\"}");
             } else {
-                logger.error("VPN call failed. Status code: {}", response.getStatusCode());
+                logger.error("VPN call failed. Status code: {}.", response.getStatusCode());
                 return ResponseEntity.status(response.getStatusCode()).body("Request failed");
             }
         } catch (Exception e) {

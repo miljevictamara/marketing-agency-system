@@ -49,7 +49,7 @@ public class PermissionController {
             Role role = roleService.findByName(roleName);
             return role.getPermissions();
         } catch (Exception e) {
-            logger.error("Error retrieving permissions for role {}: {}", roleName, e.getMessage());
+            logger.error("Error retrieving permissions for role {}.", roleName);
             throw e;
         }
     }
@@ -68,7 +68,7 @@ public class PermissionController {
         try {
             return permissionService.getPermissions();
         } catch (Exception e) {
-            logger.error("Error fetching all permissions: {}", e.getMessage());
+            logger.error("Error fetching all permissions.");
             throw e;
         }
     }
@@ -84,7 +84,7 @@ public class PermissionController {
         try {
             return roleService.getRoles();
         } catch (Exception e) {
-            logger.error("Error fetching all roles: {}", e.getMessage());
+            logger.error("Error fetching all roles.");
             throw e;
         }
     }
@@ -118,7 +118,7 @@ public class PermissionController {
             logger.info(updatedPermissionsInfo);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            logger.error("Error updating permissions for role '{}': {}", roleName, e.getMessage());
+            logger.error("Error updating permissions for role '{}'.", roleName);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating permissions for role.");
         }
     }
@@ -140,7 +140,6 @@ public class PermissionController {
     public Boolean hasPermission(@PathVariable String permissionName, @PathVariable String mail) {
         try {
             User user = userService.findByMail(mail);
-
             if (user != null) {
                 return user.getRoles().stream()
                   .flatMap(role -> role.getPermissions().stream())
@@ -149,7 +148,7 @@ public class PermissionController {
             return false;
 
         } catch (Exception e) {
-            logger.error("Error checking permission for user '{}': {}", mail, e.getMessage());
+            logger.error("Error checking permission for {}.", mail);
             throw e;
         }
     }
@@ -190,7 +189,7 @@ public class PermissionController {
 
             return false;
         } catch (Exception e) {
-            logger.error("Error checking permissions for roles '{}', '{}': {}", roleName, loggedUserRole, e.getMessage());
+            logger.error("Error checking permissions for roles '{}', '{}'.", roleName, loggedUserRole);
             throw e;
         }
     }
