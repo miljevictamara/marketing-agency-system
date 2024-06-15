@@ -68,8 +68,8 @@ public class EmployeeController {
             if (employee != null) {
                 EmployeeDto employeeDto = new EmployeeDto(
                         employee.getId(),
-                        employee.getFirstName(),
-                        employee.getLastName(),
+                        employee.getFirstName(secretKey),
+                        employee.getLastName(secretKey),
                         employee.getAddress(secretKey),
                         employee.getCity(),
                         employee.getCountry(),

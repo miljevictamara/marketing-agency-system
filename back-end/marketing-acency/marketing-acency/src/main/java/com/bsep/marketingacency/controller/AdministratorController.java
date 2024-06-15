@@ -62,8 +62,8 @@ public class AdministratorController {
             if (administrator != null) {
                 AdministratorDto administratorDto = new AdministratorDto(
                         administrator.getId(),
-                        administrator.getFirstName(),
-                        administrator.getLastName(),
+                        administrator.getFirstName(secretKey),
+                        administrator.getLastName(secretKey),
                         administrator.getAddress(secretKey),
                         administrator.getCity(),
                         administrator.getCountry(),

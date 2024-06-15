@@ -16,9 +16,13 @@ import com.bsep.marketingacency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -154,9 +158,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+    @PreAuthorize("hasAuthority('DELETE_USER')")
     @DeleteMapping(value = "/{userId}/{password}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) throws IOException {
         User user = userService.findUserById(userId);
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
@@ -166,7 +170,6 @@ public class UserController {
             logger.warn("Incorrect password for user {}", user.getMail());
             return new ResponseEntity<>("Incorrect password!", HttpStatus.CONFLICT);
         }
-
 
         clientService.deleteClient(userId);
         loginTokenService.delete(userId);
@@ -179,13 +182,25 @@ public class UserController {
     }
 
 
+    @DeleteMapping(value = "/keystore/{email}")
+    public ResponseEntity<String> deleteKeystore(@PathVariable String email) throws IOException {
+        if (email == null) {
+            return new ResponseEntity<>("Email not found", HttpStatus.NOT_FOUND);
+        }
+
+        String keystorePath = email + ".jks";
+        Files.deleteIfExists(Paths.get(keystorePath));
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PreAuthorize("hasAuthority('BLOCK_USER')")
     @PutMapping(value = "/blocking/{id}")
     public ResponseEntity<String> updateIsBlocked(@PathVariable Long id) {
         try {
             userService.updateIsBlocked(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error("Error while activating user with ID: {}", HashUtil.hash(id.toString()));
+            logger.error("Error while blocking user with ID: {}", HashUtil.hash(id.toString()));
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

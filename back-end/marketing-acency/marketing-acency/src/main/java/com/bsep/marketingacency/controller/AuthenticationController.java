@@ -463,20 +463,6 @@ public class AuthenticationController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");

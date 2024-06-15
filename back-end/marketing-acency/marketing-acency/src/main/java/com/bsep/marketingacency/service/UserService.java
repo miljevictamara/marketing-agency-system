@@ -4,6 +4,7 @@ import com.bsep.marketingacency.controller.UserController;
 import com.bsep.marketingacency.dto.ClientDto;
 import com.bsep.marketingacency.dto.UserDto;
 import com.bsep.marketingacency.enumerations.ClientType;
+import com.bsep.marketingacency.keystores.KeyStoreReader;
 import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.ResetPasswordToken;
 import com.bsep.marketingacency.model.Role;
@@ -21,6 +22,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,9 @@ public class UserService {
 
     @Autowired
     private TOTPManager totpManager;
+
+    @Autowired
+    private ResetPasswordTokenRepository resetPasswordTokenRepository;
 
     private final static Logger logger = LogManager.getLogger(UserService.class);
     public User findByMail(String email) {
@@ -118,6 +125,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+
 //    public User updateIsActivated(Long id) {
 //        User existingUser = userRepository.findById(id).orElseGet(null);
 //
@@ -143,15 +151,76 @@ public class UserService {
     }
 
 
-    public List<Client> getAllIndividuals() {
-        List<Client> individualClients = clientRepository.findByType(ClientType.INDIVIDUAL);
-        return individualClients;
+    public List<Client> getAllIndividuals() throws IllegalBlockSizeException, BadPaddingException {
+        List<Client> clients = clientRepository.findByType(ClientType.INDIVIDUAL);
+
+        KeyStoreReader keyStoreReader = new KeyStoreReader();
+
+        for (Client client : clients) {
+            String alias = client.getUser().getMail();
+            SecretKey secretKey = keyStoreReader.readSecretKey(
+                    alias + ".jks",
+                    alias,
+                    "marketing-agency".toCharArray(),
+                    "marketing-agency".toCharArray()
+            );
+
+            if (secretKey != null) {
+                if (client.getFirstName() != null) {
+                    client.setFirstName(client.getFirstName(secretKey));
+                }
+                if (client.getLastName() != null){
+                    client.setLastName(client.getLastName(secretKey));
+                }
+
+                client.setPhoneNumber(client.getPhoneNumber(secretKey));
+                client.setAddress(client.getAddress(secretKey));
+                if (client.getPib() != null) {
+                    client.setPib(client.getPib(), secretKey);
+                }
+            } else {
+                System.out.println("Secret key is null for client: " + client.getUser().getMail());
+            }
+        }
+
+        return clients;
+
     }
 
 
-    public List<Client> getAllLegalEntities() {
-        List<Client> legalEntityClients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
-        return legalEntityClients;
+    public List<Client> getAllLegalEntities() throws IllegalBlockSizeException, BadPaddingException {
+        List<Client> clients = clientRepository.findByType(ClientType.LEGAL_ENTITY);
+
+        KeyStoreReader keyStoreReader = new KeyStoreReader();
+
+        for (Client client : clients) {
+            String alias = client.getUser().getMail();
+            SecretKey secretKey = keyStoreReader.readSecretKey(
+                    alias + ".jks",
+                    alias,
+                    "marketing-agency".toCharArray(),
+                    "marketing-agency".toCharArray()
+            );
+
+            if (secretKey != null) {
+                if (client.getFirstName() != null) {
+                    client.setFirstName(client.getFirstName(secretKey));
+                }
+                if (client.getLastName() != null){
+                    client.setLastName(client.getLastName(secretKey));
+                }
+
+                client.setPhoneNumber(client.getPhoneNumber(secretKey));
+                client.setAddress(client.getAddress(secretKey));
+                if (client.getPib() != null) {
+                    client.setPib(client.getPib(), secretKey);
+                }
+            } else {
+                System.out.println("Secret key is null for client: " + client.getUser().getMail());
+            }
+        }
+
+        return clients;
     }
 
 
@@ -175,6 +244,7 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         try {
+            resetPasswordTokenRepository.deleteByUserId(userId);
             userRepository.deleteById(userId);
             logger.info("Deleted user with userId {}", HashUtil.hash(userId.toString()));
         } catch (EmptyResultDataAccessException e) {

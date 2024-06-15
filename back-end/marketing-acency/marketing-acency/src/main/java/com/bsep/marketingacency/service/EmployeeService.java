@@ -32,8 +32,8 @@ public class EmployeeService {
         Employee existingEmployee = employeeRepository.findById(updatedEmployee.getId())
                 .orElse(null);
         if (existingEmployee != null) {
-            existingEmployee.setFirstName(updatedEmployee.getFirstName());
-            existingEmployee.setLastName(updatedEmployee.getLastName());
+            existingEmployee.setFirstName(updatedEmployee.getFirstName(), secretKey);
+            existingEmployee.setLastName(updatedEmployee.getLastName(), secretKey);
             existingEmployee.setAddress(updatedEmployee.getAddress(), secretKey);
             existingEmployee.setCity(updatedEmployee.getCity());
             existingEmployee.setCountry(updatedEmployee.getCountry());
@@ -47,7 +47,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployees() throws IllegalBlockSizeException, BadPaddingException {
-
         List<Employee> employees = employeeRepository.findAll();
         KeyStoreReader keyStoreReader = new KeyStoreReader();
 
@@ -60,6 +59,8 @@ public class EmployeeService {
                     "marketing-agency".toCharArray()
             );
 
+            employee.setPhoneNumber(employee.getFirstName(secretKey));
+            employee.setPhoneNumber(employee.getLastName(secretKey));
             employee.setPhoneNumber(employee.getPhoneNumber(secretKey));
             employee.setAddress(employee.getAddress(secretKey));
         }
@@ -69,8 +70,8 @@ public class EmployeeService {
 
     public Employee saveEmployee(EmployeeDto employeeDto, SecretKey secretKey) {
         Employee employee = new Employee();
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setLastName(employeeDto.getLastName());
+        employee.setFirstName(employeeDto.getFirstName(), secretKey);
+        employee.setLastName(employeeDto.getLastName(), secretKey);
         employee.setAddress(employeeDto.getAddress(), secretKey);
         employee.setCity(employeeDto.getCity());
         employee.setCountry(employeeDto.getCountry());

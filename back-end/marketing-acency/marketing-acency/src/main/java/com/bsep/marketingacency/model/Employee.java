@@ -133,5 +133,19 @@ public class Employee {
         this.address = AESConverter.encryptToString(key, address);
     }
 
+    public String getFirstName(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.firstName);
+    }
 
+    public String getLastName(SecretKey key) throws IllegalBlockSizeException, BadPaddingException {
+        return AESConverter.decryptFromString(key, this.lastName);
+    }
+
+    public void setFirstName(String firstName, SecretKey key) {
+        this.firstName = AESConverter.encryptToString(key, firstName);
+    }
+
+    public void setLastName(String lastName, SecretKey key) {
+        this.lastName = AESConverter.encryptToString(key, lastName);
+    }
 }

@@ -145,10 +145,11 @@ public class ClientController {
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClientRegistrationResponse> register(@RequestBody ClientDto clientDto) {
         try {
+
             SecretKey secretKey = KeyStoreWriter.generateSecretKey("AES", 256);
             KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
             keyStoreWriter.loadKeyStore(null, "marketing-agency".toCharArray());
-            keyStoreWriter.writeSecretKey(clientDto.getUser(), secretKey, "marketing-agency".toCharArray());
+            keyStoreWriter.writeSecretKey(clientDto.getUser(), secretKey,"marketing-agency".toCharArray());
             keyStoreWriter.saveKeyStore(clientDto.getUser() + ".jks", "marketing-agency".toCharArray());
 
             Client savedClient = clientService.save(clientDto, secretKey);
@@ -319,8 +320,8 @@ public class ClientController {
                         client.getId(),
                         client.getUser().getMail(),
                         client.getType(),
-                        client.getFirstName(),
-                        client.getLastName(),
+                        client.getFirstName(secretKey),
+                        client.getLastName(secretKey),
                         client.getCompanyName(),
                         client.getPib(),   //er
                         client.getClientPackage().getName(),
@@ -347,43 +348,49 @@ public class ClientController {
     @PutMapping("/update")
     @PreAuthorize("hasAuthority('UPDATE_CLIENT')")
     public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto clientDto) throws IllegalBlockSizeException, BadPaddingException {
-        KeyStoreReader keyStoreReader = new KeyStoreReader();
+        try {
+            KeyStoreReader keyStoreReader = new KeyStoreReader();
 
-        String mail = clientDto.getUser();
-        User user = userService.findByMail(mail);
+            String mail = clientDto.getUser();
+            User user = userService.findByMail(mail);
 
-        String packageName = clientDto.getClientPackage();
-        Package pack = packageService.findByName(packageName);
+            String packageName = clientDto.getClientPackage();
+            Package pack = packageService.findByName(packageName);
 
-        String alias = clientDto.getUser();
-        SecretKey secretKey = keyStoreReader.readSecretKey(clientDto.getUser() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
+            String alias = clientDto.getUser();
+            SecretKey secretKey = keyStoreReader.readSecretKey(clientDto.getUser() + ".jks", alias, "marketing-agency".toCharArray(), "marketing-agency".toCharArray());
 
-        if (secretKey == null) {
+            if (secretKey == null) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+            Client updatedClient = new Client(
+                    clientDto.getId(),
+                    user,
+                    clientDto.getType(),
+                    clientDto.getFirstName(),
+                    clientDto.getLastName(),
+                    clientDto.getCompanyName(),
+                    clientDto.getPib(),
+                    pack,
+                    clientDto.getPhoneNumber(),
+                    clientDto.getAddress(),
+                    clientDto.getCity(),
+                    clientDto.getCountry(),
+                    clientDto.getIsApproved()
+            );
+
+            Client updated = clientService.updateClient(updatedClient, secretKey);
+
+            if (updated != null) {
+                logger.info("Client {} successfully updated.", updated.getUser());
+                return new ResponseEntity<>(clientDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            logger.error("Error updating client {}", clientDto.getUser());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        Client updatedClient = new Client(
-                clientDto.getId(),
-                user,
-                clientDto.getType(),
-                clientDto.getFirstName(),
-                clientDto.getLastName(),
-                clientDto.getCompanyName(),
-                clientDto.getPib(),
-                pack,
-                clientDto.getPhoneNumber(),
-                clientDto.getAddress(),
-                clientDto.getCity(),
-                clientDto.getCountry(),
-                clientDto.getIsApproved()
-        );
-
-        Client updated = clientService.updateClient(updatedClient, secretKey);
-
-        if (updated != null) {
-            return new ResponseEntity<>(clientDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
         ///i ovooo!!!!

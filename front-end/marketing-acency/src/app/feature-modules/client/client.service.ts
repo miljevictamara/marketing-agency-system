@@ -27,4 +27,8 @@ export class ClientService {
   deleteUser(userId: number, password: string): Observable<any>{
     return this.http.delete<any>(`https://localhost:8443/user/${userId}/${password}`, {});
   }
+
+  deleteKeystore(email: string): Observable<any>{
+    return this.http.delete<any>(`https://localhost:8443/user/keystore/${email}`, {});
+  }
 }

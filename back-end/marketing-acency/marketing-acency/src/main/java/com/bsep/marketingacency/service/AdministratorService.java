@@ -21,8 +21,8 @@ public class AdministratorService {
         Administrator existingAdministrator = administratorRepository.findById(updatedAdministrator.getId())
                 .orElse(null);
         if (existingAdministrator != null) {
-            existingAdministrator.setFirstName(updatedAdministrator.getFirstName());
-            existingAdministrator.setLastName(updatedAdministrator.getLastName());
+            existingAdministrator.setFirstName(updatedAdministrator.getFirstName(), secretKey);
+            existingAdministrator.setLastName(updatedAdministrator.getLastName(), secretKey);
             existingAdministrator.setAddress(updatedAdministrator.getAddress(), secretKey);
             existingAdministrator.setCity(updatedAdministrator.getCity());
             existingAdministrator.setCountry(updatedAdministrator.getCountry());
@@ -38,8 +38,8 @@ public class AdministratorService {
 
     public Administrator saveAdministrator(AdministratorDto administratorDto, SecretKey secretKey) {
         Administrator administrator = new Administrator();
-        administrator.setFirstName(administratorDto.getFirstName());
-        administrator.setLastName(administratorDto.getLastName());
+        administrator.setFirstName(administratorDto.getFirstName(), secretKey);
+        administrator.setLastName(administratorDto.getLastName(), secretKey);
         administrator.setAddress(administratorDto.getAddress(), secretKey);
         administrator.setCity(administratorDto.getCity());
         administrator.setCountry(administratorDto.getCountry());

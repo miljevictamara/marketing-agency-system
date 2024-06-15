@@ -20,6 +20,10 @@ INSERT INTO permission(id, name) VALUES (12, 'GET_ALL_CLIENTS');
 INSERT INTO permission(id, name) VALUES (23, 'APROVE_REGISTRATION_REQUEST');
 INSERT INTO permission(id, name) VALUES (24, 'REJECT_REGISTRATION_REQUEST');
 INSERT INTO permission(id, name) VALUES (30, 'LOG_MESSAGES');
+INSERT INTO permission(id, name) VALUES (31, 'DELETE_USER');
+INSERT INTO permission(id, name) VALUES (32, 'BLOCK_USER');
+
+
 
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 1);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 2);
@@ -38,6 +42,9 @@ INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 24);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 25);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 26);
 INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 30);
+INSERT INTO roles_perms(role_id, permission_id) VALUES (3, 31);
+INSERT INTO roles_perms(role_id, permission_id) VALUES (1, 32);
+
 
 
 --permisije za klijenta i employee
@@ -72,5 +79,4 @@ INSERT INTO public."package"(id, name, price, visits_number) VALUES (3, 'BASIC',
 INSERT INTO public."users" (is_activated, is_blocked, mail, password,mfa) VALUES (true, false, 'djordjevic.ra37.2020@uns.ac.rs', '$2a$10$PXKK744BnNriXiJB/9Y3h.AtYpMcGDo6fWls/mw.JtwVHs0/jS4vy', false);
 
 INSERT INTO public."user_role"(user_id, role_id) VALUES (1, 1);
-
 INSERT INTO public."administrator"(address, city, country, first_name, last_name, phone_number, user_id) VALUES ('EmI0VX/zjgRvhHaX8Ids8W2E/lw+gqNjntjlGmDdSq0kEacr99JTVpB4IqgZTGIG', 'Novi Sad', 'Srbija', 'Ana', 'Miljevic', 'mtAcjgCaLYaiW/flDAyyuz+B9C2Y70HyPGAL5+9rFTo=', 1);

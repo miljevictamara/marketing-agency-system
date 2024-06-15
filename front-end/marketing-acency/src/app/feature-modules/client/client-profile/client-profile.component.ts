@@ -94,12 +94,21 @@ export class ClientProfileComponent {
     this.shouldRenderDeleteForm = false;
     this.password =  this.addPasswordForm.value.password;
     const userId = this.authService.getCurrentUserId();
+    const email = this.user?.mail;
 
     this.clientService.deleteUser(userId!, this.password).subscribe({
       next: () => {
         console.log('User deleted!');
         this.addPasswordForm.reset();
         this.authService.logout();
+       /* this.clientService.deleteKeystore(email!).subscribe({
+          next: () => {
+            console.log('Keystore deleted!');
+          },
+          error: (error: any) => {
+            console.error('Error deleting keystore:', error);
+          }
+        })*/
       },
       error: (error) => {
         console.error('Error deleting profile:', error);

@@ -100,8 +100,13 @@ public class ClientService {
         Client client = new Client();
         client.setUser(user);
         client.setType(clientDto.getType());
-        client.setFirstName(clientDto.getFirstName());
-        client.setLastName(clientDto.getLastName());
+        if (clientDto.getFirstName() != null){
+            client.setFirstName(clientDto.getFirstName(), key);
+        }
+        if (clientDto.getLastName() != null) {
+            client.setLastName(clientDto.getLastName(), key);
+        }
+
         client.setCompanyName(clientDto.getCompanyName());
         if (clientDto.getPib() != null)
         {
@@ -272,6 +277,13 @@ public class ClientService {
             );
 
             if (secretKey != null) {
+                if (client.getFirstName() != null) {
+                    client.setFirstName(client.getFirstName(secretKey));
+                }
+                if (client.getLastName() != null){
+                    client.setLastName(client.getLastName(secretKey));
+                }
+
                 client.setPhoneNumber(client.getPhoneNumber(secretKey));
                 client.setAddress(client.getAddress(secretKey));
                 if (client.getPib() != null) {
@@ -301,8 +313,8 @@ public class ClientService {
         Client existingClient = clientRepository.findById(updatedClient.getId())
                 .orElse(null);
         if(existingClient != null) {
-            existingClient.setFirstName(updatedClient.getFirstName());
-            existingClient.setLastName(updatedClient.getLastName());
+            existingClient.setFirstName(updatedClient.getFirstName(), secretKey);
+            existingClient.setLastName(updatedClient.getLastName(), secretKey);
             existingClient.setAddress(updatedClient.getAddress(), secretKey);
             existingClient.setCity(updatedClient.getCity());
             existingClient.setCountry(updatedClient.getCountry());

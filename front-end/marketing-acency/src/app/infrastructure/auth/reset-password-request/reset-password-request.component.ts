@@ -3,13 +3,8 @@ import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-reset-password-request',
-  template: `
-    <form (ngSubmit)="onSubmit()">
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="email" name="email" required>
-      <button type="submit">Send Reset Link</button>
-    </form>
-  `
+  templateUrl: './reset-password-request.component.html',
+  styleUrls: ['./reset-password-request.component.css']
 })
 export class ResetPasswordRequestComponent {
   email: string | undefined;
