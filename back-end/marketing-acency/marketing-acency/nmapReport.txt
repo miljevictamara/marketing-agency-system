@@ -1,0 +1,8 @@
+# Nmap 7.95 scan initiated Sat Jun 15 22:39:45 2024 as: nmap --script vuln -p 8443 -oN report2.txt 127.0.0.1
+Nmap scan report for kubernetes.docker.internal (127.0.0.1)
+Host is up (0.00s latency).
+
+PORT     STATE SERVICE
+8443/tcp open  https-alt
+
+# Nmap done at Sat Jun 15 22:41:26 2024 -- 1 IP address (1 host up) scanned in 100.77 seconds
