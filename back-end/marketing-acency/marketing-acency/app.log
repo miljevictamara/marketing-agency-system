@@ -1,0 +1,308 @@
+2024-06-12T15:24:45.167+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.178+02:00 | WARN | [SqlExceptionHelper  ] | table "advertisement" does not exist, skipping
+2024-06-12T15:24:45.179+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.179+02:00 | WARN | [SqlExceptionHelper  ] | table "client" does not exist, skipping
+2024-06-12T15:24:45.180+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.180+02:00 | WARN | [SqlExceptionHelper  ] | table "client_activation_token" does not exist, skipping
+2024-06-12T15:24:45.181+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.181+02:00 | WARN | [SqlExceptionHelper  ] | table "employee" does not exist, skipping
+2024-06-12T15:24:45.182+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.182+02:00 | WARN | [SqlExceptionHelper  ] | table "login_token" does not exist, skipping
+2024-06-12T15:24:45.183+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.183+02:00 | WARN | [SqlExceptionHelper  ] | table "package" does not exist, skipping
+2024-06-12T15:24:45.184+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.185+02:00 | WARN | [SqlExceptionHelper  ] | table "permission" does not exist, skipping
+2024-06-12T15:24:45.186+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.186+02:00 | WARN | [SqlExceptionHelper  ] | table "refreshtoken" does not exist, skipping
+2024-06-12T15:24:45.187+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.187+02:00 | WARN | [SqlExceptionHelper  ] | table "rejection_note" does not exist, skipping
+2024-06-12T15:24:45.188+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.189+02:00 | WARN | [SqlExceptionHelper  ] | table "role" does not exist, skipping
+2024-06-12T15:24:45.190+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.190+02:00 | WARN | [SqlExceptionHelper  ] | table "roles_perms" does not exist, skipping
+2024-06-12T15:24:45.191+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.191+02:00 | WARN | [SqlExceptionHelper  ] | table "user_role" does not exist, skipping
+2024-06-12T15:24:45.191+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.192+02:00 | WARN | [SqlExceptionHelper  ] | table "users" does not exist, skipping
+2024-06-12T15:24:45.192+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:24:45.193+02:00 | WARN | [SqlExceptionHelper  ] | sequence "refreshtoken_seq" does not exist, skipping
+2024-06-12T15:24:45.528+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T15:24:47.685+02:00 | WARN | [JpaBaseConfiguration$JpaWebConfiguration] | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-12T15:24:48.862+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@45f20384, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6d3dc0c5, org.springframework.security.web.context.SecurityContextHolderFilter@3bfbe2a6, org.springframework.security.web.header.HeaderWriterFilter@1201c2f6, org.springframework.web.filter.CorsFilter@4467088e, org.springframework.security.web.authentication.logout.LogoutFilter@5b1ebbe, com.bsep.marketingacency.auth.TokenAuthenticationFilter@283074e8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@62243a7a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@42a698bd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7d0bbc49, org.springframework.security.web.session.SessionManagementFilter@5f386009, org.springframework.security.web.access.ExceptionTranslationFilter@14ca4b4d, org.springframework.security.web.access.intercept.AuthorizationFilter@2541b4d3]
+2024-06-12T15:24:48.875+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/auth/login', POST]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.876+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/auth/login', POST]
+2024-06-12T15:24:48.877+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.877+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/', GET]
+2024-06-12T15:24:48.878+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/swagger-ui/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.878+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/swagger-ui/', GET]
+2024-06-12T15:24:48.879+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/v3/api-docs/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.879+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/v3/api-docs/', GET]
+2024-06-12T15:24:48.879+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/webjars/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.880+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/webjars/', GET]
+2024-06-12T15:24:48.880+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.880+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/.html', GET]
+2024-06-12T15:24:48.880+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='favicon.ico', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.880+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='favicon.ico', GET]
+2024-06-12T15:24:48.880+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.881+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.html', GET]
+2024-06-12T15:24:48.881+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.css', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.881+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.css', GET]
+2024-06-12T15:24:48.881+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.js', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:24:48.881+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.js', GET]
+2024-06-12T15:24:49.413+02:00 | INFO | [Http11NioProtocol   ] | Starting ProtocolHandler ["https-jsse-nio-8443"]
+2024-06-12T15:24:49.877+02:00 | INFO | [certificate         ] | Connector [https-jsse-nio-8443], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\Mina\.keystore] using alias [server_alias] with trust store [null]
+2024-06-12T15:24:49.891+02:00 | INFO | [TomcatWebServer     ] | Tomcat started on port 8443 (https) with context path '/'
+2024-06-12T15:24:49.893+02:00 | INFO | [SimpleBrokerMessageHandler] | Starting...
+2024-06-12T15:24:49.894+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6c39ba30]]
+2024-06-12T15:24:49.895+02:00 | INFO | [SimpleBrokerMessageHandler] | Started.
+2024-06-12T15:24:49.906+02:00 | INFO | [MarketingAcencyApplication] | Started MarketingAcencyApplication in 14.909 seconds (process running for 16.862)
+2024-06-12T15:24:59.397+02:00 | INFO | [[/]                 ] | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-12T15:24:59.398+02:00 | INFO | [DispatcherServlet   ] | Initializing Servlet 'dispatcherServlet'
+2024-06-12T15:24:59.401+02:00 | INFO | [DispatcherServlet   ] | Completed initialization in 2 ms
+2024-06-12T15:24:59.413+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:24:59.463+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:25:49.411+02:00 | INFO | [WebSocketMessageBrokerStats] | WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 2 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(2)-CONNECTED(2)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 15, active threads = 0, queued tasks = 0, completed tasks = 15], outboundChannel[pool size = 5, active threads = 0, queued tasks = 0, completed tasks = 5], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 3, completed tasks = 19]
+2024-06-12T15:32:43.112+02:00 | WARN | [UserService         ] | User with email FDSF does not exist.
+2024-06-12T15:33:12.975+02:00 | INFO | [UserController      ] | User with email admin@gmail.com has role: ROLE_EMPLOYEE
+2024-06-12T15:33:35.264+02:00 | INFO | [UserController      ] | User with email admin@gmail.com has role: ROLE_EMPLOYEE
+2024-06-12T15:34:18.493+02:00 | INFO | [UserController      ] | User with email batranovicnina@gmail.com has role: ROLE_ADMIN
+2024-06-12T15:34:18.668+02:00 | WARN | [BCryptPasswordEncoder] | Encoded password does not look like BCrypt
+2024-06-12T15:34:18.670+02:00 | WARN | [AuthenticationController] | Invalid credentials for user with email batranovicnina@gmail.com.
+2024-06-12T15:34:37.098+02:00 | INFO | [UserController      ] | User with email batranovicnina@gmail.com has role: ROLE_ADMIN
+2024-06-12T15:34:37.117+02:00 | WARN | [BCryptPasswordEncoder] | Encoded password does not look like BCrypt
+2024-06-12T15:34:37.117+02:00 | WARN | [AuthenticationController] | Invalid credentials for user with email batranovicnina@gmail.com.
+2024-06-12T15:35:00.992+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopping...
+2024-06-12T15:35:00.992+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6c39ba30]]
+2024-06-12T15:35:00.993+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopped.
+2024-06-12T15:35:01.003+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T15:35:01.075+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown initiated...
+2024-06-12T15:35:01.079+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown completed.
+2024-06-12T15:35:09.314+02:00 | INFO | [MarketingAcencyApplication] | Starting MarketingAcencyApplication using Java 21.0.1 with PID 15256 (C:\Users\Mina\Desktop\bsep\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency\target\classes started by Mina in C:\Users\Mina\Desktop\bsep\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency)
+2024-06-12T15:35:09.325+02:00 | INFO | [MarketingAcencyApplication] | No active profile set, falling back to 1 default profile: "default"
+2024-06-12T15:35:10.345+02:00 | INFO | [RepositoryConfigurationDelegate] | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-12T15:35:10.456+02:00 | INFO | [RepositoryConfigurationDelegate] | Finished Spring Data repository scanning in 103 ms. Found 12 JPA repository interfaces.
+2024-06-12T15:35:11.299+02:00 | INFO | [TomcatWebServer     ] | Tomcat initialized with port 8443 (https)
+2024-06-12T15:35:11.318+02:00 | INFO | [Http11NioProtocol   ] | Initializing ProtocolHandler ["https-jsse-nio-8443"]
+2024-06-12T15:35:11.323+02:00 | INFO | [StandardService     ] | Starting service [Tomcat]
+2024-06-12T15:35:11.324+02:00 | INFO | [StandardEngine      ] | Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-12T15:35:11.415+02:00 | INFO | [[/]                 ] | Initializing Spring embedded WebApplicationContext
+2024-06-12T15:35:11.415+02:00 | INFO | [ServletWebServerApplicationContext] | Root WebApplicationContext: initialization completed in 2044 ms
+2024-06-12T15:35:11.665+02:00 | INFO | [LogHelper           ] | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-12T15:35:11.791+02:00 | INFO | [Version             ] | HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-06-12T15:35:11.857+02:00 | INFO | [RegionFactoryInitiator] | HHH000026: Second-level cache disabled
+2024-06-12T15:35:12.291+02:00 | INFO | [SpringPersistenceUnitInfo] | No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-12T15:35:12.334+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Starting...
+2024-06-12T15:35:12.516+02:00 | INFO | [HikariPool          ] | HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4af7ac25
+2024-06-12T15:35:12.518+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Start completed.
+2024-06-12T15:35:12.581+02:00 | WARN | [deprecation         ] | HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-12T15:35:14.144+02:00 | INFO | [JtaPlatformInitiator] | HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-12T15:35:14.168+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.168+02:00 | WARN | [SqlExceptionHelper  ] | relation "administrator" does not exist, skipping
+2024-06-12T15:35:14.169+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.169+02:00 | WARN | [SqlExceptionHelper  ] | relation "advertisement" does not exist, skipping
+2024-06-12T15:35:14.170+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.170+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
+2024-06-12T15:35:14.170+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.171+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
+2024-06-12T15:35:14.171+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.171+02:00 | WARN | [SqlExceptionHelper  ] | relation "client_activation_token" does not exist, skipping
+2024-06-12T15:35:14.172+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.172+02:00 | WARN | [SqlExceptionHelper  ] | relation "employee" does not exist, skipping
+2024-06-12T15:35:14.172+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.172+02:00 | WARN | [SqlExceptionHelper  ] | relation "login_token" does not exist, skipping
+2024-06-12T15:35:14.173+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.173+02:00 | WARN | [SqlExceptionHelper  ] | relation "refreshtoken" does not exist, skipping
+2024-06-12T15:35:14.174+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.174+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
+2024-06-12T15:35:14.174+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.174+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
+2024-06-12T15:35:14.175+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.175+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
+2024-06-12T15:35:14.176+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.176+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
+2024-06-12T15:35:14.177+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.177+02:00 | WARN | [SqlExceptionHelper  ] | table "administrator" does not exist, skipping
+2024-06-12T15:35:14.177+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.177+02:00 | WARN | [SqlExceptionHelper  ] | table "advertisement" does not exist, skipping
+2024-06-12T15:35:14.178+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.178+02:00 | WARN | [SqlExceptionHelper  ] | table "client" does not exist, skipping
+2024-06-12T15:35:14.178+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.178+02:00 | WARN | [SqlExceptionHelper  ] | table "client_activation_token" does not exist, skipping
+2024-06-12T15:35:14.179+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.179+02:00 | WARN | [SqlExceptionHelper  ] | table "employee" does not exist, skipping
+2024-06-12T15:35:14.179+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.179+02:00 | WARN | [SqlExceptionHelper  ] | table "login_token" does not exist, skipping
+2024-06-12T15:35:14.180+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.180+02:00 | WARN | [SqlExceptionHelper  ] | table "package" does not exist, skipping
+2024-06-12T15:35:14.180+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.181+02:00 | WARN | [SqlExceptionHelper  ] | table "permission" does not exist, skipping
+2024-06-12T15:35:14.181+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.181+02:00 | WARN | [SqlExceptionHelper  ] | table "refreshtoken" does not exist, skipping
+2024-06-12T15:35:14.182+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.182+02:00 | WARN | [SqlExceptionHelper  ] | table "rejection_note" does not exist, skipping
+2024-06-12T15:35:14.183+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.183+02:00 | WARN | [SqlExceptionHelper  ] | table "role" does not exist, skipping
+2024-06-12T15:35:14.183+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.183+02:00 | WARN | [SqlExceptionHelper  ] | table "roles_perms" does not exist, skipping
+2024-06-12T15:35:14.184+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.184+02:00 | WARN | [SqlExceptionHelper  ] | table "user_role" does not exist, skipping
+2024-06-12T15:35:14.184+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.184+02:00 | WARN | [SqlExceptionHelper  ] | table "users" does not exist, skipping
+2024-06-12T15:35:14.185+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:14.185+02:00 | WARN | [SqlExceptionHelper  ] | sequence "refreshtoken_seq" does not exist, skipping
+2024-06-12T15:35:14.436+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T15:35:15.375+02:00 | WARN | [JpaBaseConfiguration$JpaWebConfiguration] | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-12T15:35:15.862+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@551bc2c6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6b6b4177, org.springframework.security.web.context.SecurityContextHolderFilter@97e9568, org.springframework.security.web.header.HeaderWriterFilter@1923301a, org.springframework.web.filter.CorsFilter@bf32f3f, org.springframework.security.web.authentication.logout.LogoutFilter@26f50a28, com.bsep.marketingacency.auth.TokenAuthenticationFilter@70d61624, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@377b773c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@18213a65, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b50e70a, org.springframework.security.web.session.SessionManagementFilter@33a38f07, org.springframework.security.web.access.ExceptionTranslationFilter@6eaa5458, org.springframework.security.web.access.intercept.AuthorizationFilter@3d306fd5]
+2024-06-12T15:35:15.870+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/auth/login', POST]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.870+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/auth/login', POST]
+2024-06-12T15:35:15.871+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.872+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/', GET]
+2024-06-12T15:35:15.872+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/swagger-ui/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.872+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/swagger-ui/', GET]
+2024-06-12T15:35:15.872+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/v3/api-docs/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.872+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/v3/api-docs/', GET]
+2024-06-12T15:35:15.872+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/webjars/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.872+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/webjars/', GET]
+2024-06-12T15:35:15.872+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.872+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/.html', GET]
+2024-06-12T15:35:15.873+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='favicon.ico', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.873+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='favicon.ico', GET]
+2024-06-12T15:35:15.873+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.873+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.html', GET]
+2024-06-12T15:35:15.873+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.css', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.873+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.css', GET]
+2024-06-12T15:35:15.873+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.js', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:15.873+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.js', GET]
+2024-06-12T15:35:16.097+02:00 | INFO | [Http11NioProtocol   ] | Starting ProtocolHandler ["https-jsse-nio-8443"]
+2024-06-12T15:35:16.400+02:00 | INFO | [certificate         ] | Connector [https-jsse-nio-8443], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\Mina\.keystore] using alias [server_alias] with trust store [null]
+2024-06-12T15:35:16.412+02:00 | INFO | [TomcatWebServer     ] | Tomcat started on port 8443 (https) with context path '/'
+2024-06-12T15:35:16.417+02:00 | INFO | [SimpleBrokerMessageHandler] | Starting...
+2024-06-12T15:35:16.418+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@167da81d]]
+2024-06-12T15:35:16.418+02:00 | INFO | [SimpleBrokerMessageHandler] | Started.
+2024-06-12T15:35:16.430+02:00 | INFO | [MarketingAcencyApplication] | Started MarketingAcencyApplication in 7.56 seconds (process running for 9.046)
+2024-06-12T15:35:16.680+02:00 | INFO | [[/]                 ] | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-12T15:35:16.680+02:00 | INFO | [DispatcherServlet   ] | Initializing Servlet 'dispatcherServlet'
+2024-06-12T15:35:16.682+02:00 | INFO | [DispatcherServlet   ] | Completed initialization in 2 ms
+2024-06-12T15:35:16.689+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:35:16.717+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:35:40.192+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopping...
+2024-06-12T15:35:40.193+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@167da81d]]
+2024-06-12T15:35:40.193+02:00 | INFO | [SimpleBrokerMessageHandler] | Stopped.
+2024-06-12T15:35:43.168+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T15:35:43.228+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown initiated...
+2024-06-12T15:35:43.232+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Shutdown completed.
+2024-06-12T15:35:46.867+02:00 | INFO | [MarketingAcencyApplication] | Starting MarketingAcencyApplication using Java 21.0.1 with PID 19364 (C:\Users\Mina\Desktop\bsep\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency\target\classes started by Mina in C:\Users\Mina\Desktop\bsep\bsep-ra-2024-kt2-tim-15\back-end\marketing-acency\marketing-acency)
+2024-06-12T15:35:46.877+02:00 | INFO | [MarketingAcencyApplication] | No active profile set, falling back to 1 default profile: "default"
+2024-06-12T15:35:47.690+02:00 | INFO | [RepositoryConfigurationDelegate] | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-12T15:35:47.791+02:00 | INFO | [RepositoryConfigurationDelegate] | Finished Spring Data repository scanning in 92 ms. Found 12 JPA repository interfaces.
+2024-06-12T15:35:48.716+02:00 | INFO | [TomcatWebServer     ] | Tomcat initialized with port 8443 (https)
+2024-06-12T15:35:48.729+02:00 | INFO | [Http11NioProtocol   ] | Initializing ProtocolHandler ["https-jsse-nio-8443"]
+2024-06-12T15:35:48.733+02:00 | INFO | [StandardService     ] | Starting service [Tomcat]
+2024-06-12T15:35:48.734+02:00 | INFO | [StandardEngine      ] | Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-12T15:35:48.802+02:00 | INFO | [[/]                 ] | Initializing Spring embedded WebApplicationContext
+2024-06-12T15:35:48.802+02:00 | INFO | [ServletWebServerApplicationContext] | Root WebApplicationContext: initialization completed in 1880 ms
+2024-06-12T15:35:49.026+02:00 | INFO | [LogHelper           ] | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-12T15:35:49.095+02:00 | INFO | [Version             ] | HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-06-12T15:35:49.135+02:00 | INFO | [RegionFactoryInitiator] | HHH000026: Second-level cache disabled
+2024-06-12T15:35:49.487+02:00 | INFO | [SpringPersistenceUnitInfo] | No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-12T15:35:49.519+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Starting...
+2024-06-12T15:35:49.681+02:00 | INFO | [HikariPool          ] | HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@46188a89
+2024-06-12T15:35:49.683+02:00 | INFO | [HikariDataSource    ] | HikariPool-1 - Start completed.
+2024-06-12T15:35:49.727+02:00 | WARN | [deprecation         ] | HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-12T15:35:51.086+02:00 | INFO | [JtaPlatformInitiator] | HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-12T15:35:51.107+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.108+02:00 | WARN | [SqlExceptionHelper  ] | relation "administrator" does not exist, skipping
+2024-06-12T15:35:51.109+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.109+02:00 | WARN | [SqlExceptionHelper  ] | relation "advertisement" does not exist, skipping
+2024-06-12T15:35:51.109+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.109+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
+2024-06-12T15:35:51.110+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.110+02:00 | WARN | [SqlExceptionHelper  ] | relation "client" does not exist, skipping
+2024-06-12T15:35:51.110+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.111+02:00 | WARN | [SqlExceptionHelper  ] | relation "client_activation_token" does not exist, skipping
+2024-06-12T15:35:51.111+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.111+02:00 | WARN | [SqlExceptionHelper  ] | relation "employee" does not exist, skipping
+2024-06-12T15:35:51.112+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.112+02:00 | WARN | [SqlExceptionHelper  ] | relation "login_token" does not exist, skipping
+2024-06-12T15:35:51.112+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.112+02:00 | WARN | [SqlExceptionHelper  ] | relation "refreshtoken" does not exist, skipping
+2024-06-12T15:35:51.113+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.113+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
+2024-06-12T15:35:51.114+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.114+02:00 | WARN | [SqlExceptionHelper  ] | relation "roles_perms" does not exist, skipping
+2024-06-12T15:35:51.115+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.115+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
+2024-06-12T15:35:51.115+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.115+02:00 | WARN | [SqlExceptionHelper  ] | relation "user_role" does not exist, skipping
+2024-06-12T15:35:51.116+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.116+02:00 | WARN | [SqlExceptionHelper  ] | table "administrator" does not exist, skipping
+2024-06-12T15:35:51.117+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.117+02:00 | WARN | [SqlExceptionHelper  ] | table "advertisement" does not exist, skipping
+2024-06-12T15:35:51.117+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.117+02:00 | WARN | [SqlExceptionHelper  ] | table "client" does not exist, skipping
+2024-06-12T15:35:51.118+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.118+02:00 | WARN | [SqlExceptionHelper  ] | table "client_activation_token" does not exist, skipping
+2024-06-12T15:35:51.118+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.118+02:00 | WARN | [SqlExceptionHelper  ] | table "employee" does not exist, skipping
+2024-06-12T15:35:51.119+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.119+02:00 | WARN | [SqlExceptionHelper  ] | table "login_token" does not exist, skipping
+2024-06-12T15:35:51.120+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.120+02:00 | WARN | [SqlExceptionHelper  ] | table "package" does not exist, skipping
+2024-06-12T15:35:51.120+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.120+02:00 | WARN | [SqlExceptionHelper  ] | table "permission" does not exist, skipping
+2024-06-12T15:35:51.121+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.121+02:00 | WARN | [SqlExceptionHelper  ] | table "refreshtoken" does not exist, skipping
+2024-06-12T15:35:51.121+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.122+02:00 | WARN | [SqlExceptionHelper  ] | table "rejection_note" does not exist, skipping
+2024-06-12T15:35:51.122+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.122+02:00 | WARN | [SqlExceptionHelper  ] | table "role" does not exist, skipping
+2024-06-12T15:35:51.123+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.123+02:00 | WARN | [SqlExceptionHelper  ] | table "roles_perms" does not exist, skipping
+2024-06-12T15:35:51.123+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.123+02:00 | WARN | [SqlExceptionHelper  ] | table "user_role" does not exist, skipping
+2024-06-12T15:35:51.124+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.124+02:00 | WARN | [SqlExceptionHelper  ] | table "users" does not exist, skipping
+2024-06-12T15:35:51.124+02:00 | WARN | [SqlExceptionHelper  ] | SQL Warning Code: 0, SQLState: 00000
+2024-06-12T15:35:51.125+02:00 | WARN | [SqlExceptionHelper  ] | sequence "refreshtoken_seq" does not exist, skipping
+2024-06-12T15:35:51.399+02:00 | INFO | [LocalContainerEntityManagerFactoryBean] | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-12T15:35:52.308+02:00 | WARN | [JpaBaseConfiguration$JpaWebConfiguration] | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-12T15:35:52.702+02:00 | INFO | [DefaultSecurityFilterChain] | Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1006d0e3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4f61c7e1, org.springframework.security.web.context.SecurityContextHolderFilter@7e9b68c5, org.springframework.security.web.header.HeaderWriterFilter@18213a65, org.springframework.web.filter.CorsFilter@1fb4377d, org.springframework.security.web.authentication.logout.LogoutFilter@70d61624, com.bsep.marketingacency.auth.TokenAuthenticationFilter@6289376f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3f04349b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@14ca4b4d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@442e7215, org.springframework.security.web.session.SessionManagementFilter@19dc9dda, org.springframework.security.web.access.ExceptionTranslationFilter@260af8f7, org.springframework.security.web.access.intercept.AuthorizationFilter@7115d5af]
+2024-06-12T15:35:52.709+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/auth/login', POST]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.709+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/auth/login', POST]
+2024-06-12T15:35:52.711+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.711+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/', GET]
+2024-06-12T15:35:52.711+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/swagger-ui/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.711+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/swagger-ui/', GET]
+2024-06-12T15:35:52.711+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/v3/api-docs/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.711+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/v3/api-docs/', GET]
+2024-06-12T15:35:52.711+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/webjars/', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.711+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/webjars/', GET]
+2024-06-12T15:35:52.711+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='/.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.712+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='/.html', GET]
+2024-06-12T15:35:52.712+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='favicon.ico', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.712+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='favicon.ico', GET]
+2024-06-12T15:35:52.712+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.html', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.712+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.html', GET]
+2024-06-12T15:35:52.712+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.css', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.712+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.css', GET]
+2024-06-12T15:35:52.712+02:00 | WARN | [WebSecurity         ] | You are asking Spring Security to ignore Mvc [pattern='//.js', GET]. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-06-12T15:35:52.712+02:00 | INFO | [DefaultSecurityFilterChain] | Will not secure Mvc [pattern='//.js', GET]
+2024-06-12T15:35:52.934+02:00 | INFO | [Http11NioProtocol   ] | Starting ProtocolHandler ["https-jsse-nio-8443"]
+2024-06-12T15:35:53.149+02:00 | INFO | [certificate         ] | Connector [https-jsse-nio-8443], TLS virtual host [_default_], certificate type [UNDEFINED] configured from keystore [C:\Users\Mina\.keystore] using alias [server_alias] with trust store [null]
+2024-06-12T15:35:53.160+02:00 | INFO | [TomcatWebServer     ] | Tomcat started on port 8443 (https) with context path '/'
+2024-06-12T15:35:53.162+02:00 | INFO | [SimpleBrokerMessageHandler] | Starting...
+2024-06-12T15:35:53.162+02:00 | INFO | [SimpleBrokerMessageHandler] | BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4ed096cc]]
+2024-06-12T15:35:53.163+02:00 | INFO | [SimpleBrokerMessageHandler] | Started.
+2024-06-12T15:35:53.175+02:00 | INFO | [MarketingAcencyApplication] | Started MarketingAcencyApplication in 6.743 seconds (process running for 8.091)
+2024-06-12T15:35:56.216+02:00 | INFO | [[/]                 ] | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-12T15:35:56.217+02:00 | INFO | [DispatcherServlet   ] | Initializing Servlet 'dispatcherServlet'
+2024-06-12T15:35:56.218+02:00 | INFO | [DispatcherServlet   ] | Completed initialization in 1 ms
+2024-06-12T15:35:56.223+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:35:56.250+02:00 | WARN | [HandlerMappingIntrospector] | Cache miss for REQUEST dispatch to '/ws/info' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-06-12T15:36:25.309+02:00 | INFO | [UserController      ] | User with email batranovicnina@gmail.com has role: ROLE_ADMIN
+2024-06-12T15:36:25.607+02:00 | INFO | [AuthenticationController] | User with email batranovicnina@gmail.com successfully logged in.
+2024-06-12T15:36:28.008+02:00 | WARN | [UserService         ] | User with email FDSF does not exist.
+2024-06-12T15:36:52.966+02:00 | INFO | [WebSocketMessageBrokerStats] | WebSocketSession[2 current WS(2)-HttpStream(0)-HttpPoll(0), 2 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(2)-CONNECTED(2)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 12, active threads = 0, queued tasks = 0, completed tasks = 12], outboundChannel[pool size = 8, active threads = 0, queued tasks = 0, completed tasks = 8], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 4, completed tasks = 18]
+2024-06-12T15:37:05.772+02:00 | WARN | [UserService         ] | User with email FDSF does not exist.
+2024-06-12T15:37:17.267+02:00 | WARN | [UserService         ] | User with email FDSF does not exist.
+2024-06-12T15:37:38.926+02:00 | WARN | [UserService         ] | User with email FDSF does not exist.

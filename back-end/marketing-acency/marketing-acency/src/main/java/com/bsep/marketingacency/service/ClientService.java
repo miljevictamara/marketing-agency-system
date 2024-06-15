@@ -19,18 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.SecretKey;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ClientService {
@@ -81,9 +70,24 @@ public class ClientService {
 //
 //        return this.clientRepository.save(client);
 //    }
+public User findUser(UUID tokenId){
+    ClientActivationToken token = clientActivationTokenService.findById(tokenId);
+    Optional<Client> client = clientRepository.findById(token.getUser().getId());
+    if(isExpired(token)){
+        //userService.delete(token.getUser());
+        //clientService.delete(client);
+        return  null;
+    }
+    User user = token.getUser();
+    return user;
+}
+public boolean isExpired(ClientActivationToken token){
+        Date currentTime = new Date();
+        Date expirationTime = new Date(token.getCreationDate().getTime() + token.getDuration() * 60 * 1000);
+        return currentTime.after(expirationTime);
+    }
 
-    public Client save(ClientDto clientDto, SecretKey key) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-
+public Client save(ClientDto clientDto, SecretKey key) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
         String mail = clientDto.getUser();
         User user = userService.findByMail(mail);
         if (user == null) {
