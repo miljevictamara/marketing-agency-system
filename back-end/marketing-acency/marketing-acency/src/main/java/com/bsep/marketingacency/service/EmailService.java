@@ -65,7 +65,7 @@ public class EmailService {
         String activationLinkWithHmac = activationLink + "/" + hmac;
 
         String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
-        String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+        String message = "Welcome, " + "\n\nThank you for choosing Marketing Agency System." +
                 "To activate your account, please click the following link:\n\n " + activationLinkWithHmac +
                 "\n\nBest regards,\nThe MarketingSupport Team";
 
@@ -138,7 +138,7 @@ public class EmailService {
         mail.setSubject("Rejected registration");
 
         String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
-        String message = "Welcome " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+        String message = "Welcome,  " + "\n\nThank you for choosing Marketing Agency System." +
                 "Your registration request has been rejected for the following reason: \n\n" +
                 "\"" + reason + "\"" +
                 "\n\nBest regards,\nThe MarketingSupport Team";
@@ -283,7 +283,7 @@ public class EmailService {
             //String loginLinkWithHmac = loginLink + "?hmac=" + hmac;
 
             String clientName = client.getFirstName() != null ? client.getFirstName() : client.getCompanyName();
-            String text = "Hello " + clientName + ",\n\nThank you for choosing Marketing Agency System." +
+            String text = "Hello, " + "\n\nThank you for choosing Marketing Agency System." +
                     "To login without password, please click the following link:\n\n " + loginLink +
                     "\n\nBest regards,\nThe MarketingSupport Team";
 

@@ -13,6 +13,7 @@ import com.bsep.marketingacency.repository.ClientRepository;
 import com.bsep.marketingacency.repository.ResetPasswordTokenRepository;
 import com.bsep.marketingacency.repository.UserRepository;
 import com.bsep.marketingacency.util.HashUtil;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,6 +243,7 @@ public class UserService {
 //        userRepository.deleteById(userId);
 //    }
 
+    @Transactional
     public void deleteUser(Long userId) {
         try {
             resetPasswordTokenRepository.deleteByUserId(userId);

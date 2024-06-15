@@ -392,7 +392,7 @@ public class ClientController {
             Client updated = clientService.updateClient(updatedClient, secretKey);
 
             if (updated != null) {
-                logger.info("Client {} successfully updated.", updated.getUser());
+                logger.info("Client {} successfully updated.", updated.getUser().getMail());
                 return new ResponseEntity<>(clientDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

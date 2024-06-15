@@ -161,7 +161,7 @@ public class UserController {
     @DeleteMapping(value = "/{userId}/{password}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId, @PathVariable String password) throws IOException {
         User user = userService.findUserById(userId);
-        logger.info("{} trying wants to be deleted.", user.getMail());
+        logger.info("{}  wants to be deleted.", user.getMail());
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
@@ -174,7 +174,6 @@ public class UserController {
         clientService.deleteClient(userId);
         loginTokenService.delete(userId);
         clientActivationTokenService.delete(userId);
-        refreshTokenService.deleteByUserId(userId);
         rejectionNoteService.delete(userId);
         userService.deleteUser(userId);
 

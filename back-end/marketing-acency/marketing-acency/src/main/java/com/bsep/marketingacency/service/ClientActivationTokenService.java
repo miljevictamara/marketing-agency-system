@@ -5,6 +5,7 @@ import com.bsep.marketingacency.model.Client;
 import com.bsep.marketingacency.model.ClientActivationToken;
 import com.bsep.marketingacency.model.User;
 import com.bsep.marketingacency.repository.ClientActivationTokenRepository;
+import com.bsep.marketingacency.repository.UserRepository;
 import com.bsep.marketingacency.util.HashUtil;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -22,10 +23,11 @@ public class ClientActivationTokenService {
     private ClientActivationTokenRepository clientActivationTokenRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UserService userService;
 
-  //  @Autowired
- //   private  ClientService clientService;
     private Logger logger =  LoggerFactory.getLogger(ClientActivationTokenService.class);
 
     public ClientActivationToken save(ClientActivationToken token){
@@ -119,10 +121,11 @@ public class ClientActivationTokenService {
 
     public void delete(Long userId) {
         try {
-            clientActivationTokenRepository.deleteAllByUserId(userId);
+            //clientActivationTokenRepository.deleteByUserId(userId);
+            clientActivationTokenRepository.deleteByUser(userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId)));
            // logger.info("Deleted all client activation tokens for user with userId {}", userId);
         } catch (Exception e) {
-            logger.error("Error while deleting activation tokens for user {}.", userId);
+            logger.error("Error while deleting activation tokens for user {}.", HashUtil.hash(userId.toString()));
         }
     }
 }
