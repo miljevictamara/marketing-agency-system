@@ -27,4 +27,8 @@ As part of the project task, it is necessary to implement an information system 
 
 ![Screenshot (109)](https://github.com/Batranovic/marketing-agency/assets/117094666/75760407-9089-4cc2-9958-7783e208d733)
 
+![Screenshot (111)](https://github.com/Batranovic/marketing-agency/assets/117094666/86fdd08f-bd58-456d-8325-6013b6a6d467)
+
+![Screenshot (112)](https://github.com/Batranovic/marketing-agency/assets/117094666/88e2d916-9d61-413f-b110-516eebfd7a79)
+
 ![Screenshot (110)](https://github.com/Batranovic/marketing-agency/assets/117094666/50acca82-b01d-45d5-ad71-fc3149323c4b)
