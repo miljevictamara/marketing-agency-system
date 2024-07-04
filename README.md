@@ -13,6 +13,25 @@ RA 210/2020 Adrian Antonić
 
 As part of the project task, it is necessary to implement an information system that keeps records of clients and employees in a marketing agency. The information system should include services for working with users (employees and clients), a service for monitoring events in the system, and a PKI service for certificate management. Access to the system is granted to employees, clients, and system administrators. The main purpose of the application is to maintain records of employees, currently active and previous clients, as well as all security-relevant events within the system.
 
+# Marketing agency roles
+Client
+Employee
+Admin
+Unauthenticated users
+
+# System Functionalities
+
+User Registration: Users can register by providing email, password, name, address details, and type (individual or legal entity). For legal entities, business name and registration ID are required.
+Client Registration Approval: Administrators review and approve or reject registrations. Approved clients receive an activation link via email.
+Password and Passwordless Login: Users can log in with email and password or opt for passwordless login. Access and refresh tokens are generated upon successful login.
+Two-Factor Authentication: Users can enable two-factor authentication using TOTP for added security.
+CAPTCHA: Implemented for login security, requiring users to solve simple puzzles.
+Access Control: Role-based access control (RBAC) ensures authorized access to system resources.
+Data Encryption: Sensitive data is encrypted before storage, adhering to GDPR guidelines.
+User Management: Admins manage users, including blocking and password resets.
+Logging and Monitoring: Comprehensive logging and real-time event monitoring ensure system security and integrity.
+HTTPS: Secure communication between client and server using HTTPS protocol.
+
 # Screenshots
 ![Screenshot (113)](https://github.com/Batranovic/marketing-agency/assets/117094666/d8ff99c2-1341-4c84-ba67-9fd2de45b672)
 
