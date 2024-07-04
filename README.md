@@ -13,7 +13,8 @@ RA 210/2020 Adrian Antonić
 
 As part of the project task, it is necessary to implement an information system that keeps records of clients and employees in a marketing agency. The information system should include services for working with users (employees and clients), a service for monitoring events in the system, and a PKI service for certificate management. Access to the system is granted to employees, clients, and system administrators. The main purpose of the application is to maintain records of employees, currently active and previous clients, as well as all security-relevant events within the system.
 
-![Screenshot (104)](https://github.com/Batranovic/marketing-agency/assets/117094666/57c8b53d-9c7d-4614-9da8-9bdb4bbc899e)
+
+![Screenshot (113)](https://github.com/Batranovic/marketing-agency/assets/117094666/d8ff99c2-1341-4c84-ba67-9fd2de45b672)
 
 ![Screenshot (103)](https://github.com/Batranovic/marketing-agency/assets/117094666/48601714-5d67-4f73-8ec1-425e289e1548)
 
