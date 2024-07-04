@@ -22,14 +22,23 @@ Unauthenticated users
 # System Functionalities
 
 User Registration: Users can register by providing email, password, name, address details, and type (individual or legal entity). For legal entities, business name and registration ID are required.
+
 Client Registration Approval: Administrators review and approve or reject registrations. Approved clients receive an activation link via email.
+
 Password and Passwordless Login: Users can log in with email and password or opt for passwordless login. Access and refresh tokens are generated upon successful login.
+
 Two-Factor Authentication: Users can enable two-factor authentication using TOTP for added security.
+
 CAPTCHA: Implemented for login security, requiring users to solve simple puzzles.
+
 Access Control: Role-based access control (RBAC) ensures authorized access to system resources.
+
 Data Encryption: Sensitive data is encrypted before storage, adhering to GDPR guidelines.
+
 User Management: Admins manage users, including blocking and password resets.
+
 Logging and Monitoring: Comprehensive logging and real-time event monitoring ensure system security and integrity.
+
 HTTPS: Secure communication between client and server using HTTPS protocol.
 
 # Screenshots
