@@ -50,7 +50,7 @@ HTTPS: Secure communication between client and server using HTTPS protocol.
 
 ![Screenshot (106)](https://github.com/Batranovic/marketing-agency/assets/117094666/9a01ec79-a140-47ab-a664-ac9e6a4dadce)
 
-![Screenshot (107)](https://github.com/Batranovic/marketing-agency/assets/117094666/32f721c2-a88c-475e-bab8-7cf9005899fd
+![Screenshot (107)](https://github.com/Batranovic/marketing-agency/assets/117094666/32f721c2-a88c-475e-bab8-7cf9005899fd)
 
 ![Screenshot (108)](https://github.com/Batranovic/marketing-agency/assets/117094666/a3d303d7-06ad-44d2-81f6-7d76f24e3e71)
 
